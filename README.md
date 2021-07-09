@@ -1,2 +1,2 @@
 # AnimeHub-Front-End
-The front end of AnimeHub.
+The front end of AnimeHub
