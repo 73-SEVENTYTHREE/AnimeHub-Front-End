@@ -15,8 +15,8 @@ buildJob:
   script:
     - npm install -g cnpm --registry=https://registry.npm.taobao.org
     - cnpm -v
-    - npm install
-    - npm build
+    - cnpm install
+    - cnpm run build
   artifacts:
     paths:
       - build/
