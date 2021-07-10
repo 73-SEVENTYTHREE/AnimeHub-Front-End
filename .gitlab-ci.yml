@@ -27,6 +27,5 @@ deployJob:
     - AnimeHub-Front-End
   script:
     - echo "Set deployment variables"
-    - rm -r /web/web/*
-    - mv build/* /web/web
+    - serve -s build
     - echo "Deployment scripts"
