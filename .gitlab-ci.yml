@@ -1,3 +1,4 @@
+
 stages:
   - build
   - deploy
@@ -14,8 +15,10 @@ buildJob:
     - yarn install
     - yarn build
   artifacts:
+    name: "$CI_PIPELINE_ID"
     paths:
       - build/
+    when: on_success
 
 deployJob:
   stage: deploy
