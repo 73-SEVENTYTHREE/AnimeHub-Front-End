@@ -1,3 +1,4 @@
+image: node:latest
 
 stages:
   - build
@@ -12,13 +13,12 @@ buildJob:
   tags:
     - AnimeHub-Front-End
   script:
-    - yarn install
-    - yarn build
+    - npm install -g cnpm --registry=https://registry.npm.taobao.org
+    - cnpm install
+    - npm run build
   artifacts:
-    name: "$CI_PIPELINE_ID"
     paths:
       - build/
-    when: on_success
 
 deployJob:
   stage: deploy
@@ -26,6 +26,6 @@ deployJob:
     - AnimeHub-Front-End
   script:
     - echo "Set deployment variables"
-    - rm -r /web/web/*
+    - "rm -r /web/web/*"
     - mv build/* /web/web
     - echo "Deployment scripts"
