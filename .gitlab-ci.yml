@@ -1,7 +1,4 @@
 image: node:latest
-before_script:
-  - PATH=$PATH:.
-  - make clean
 
 stages:
   - fetch
@@ -15,21 +12,24 @@ cache:
 fetchJob:
   stage: fetch
   script:
-    - npm install
+    - yarn install
 
 buildJob:
   stage: build
-  tags:
-    - go
   script:
-    - npm run build
-    - "rm -r /web/web/* || true"
-    - mv build/* /web/web
+    - export REACT_APP_SECRET_API_KEY=$API_KEY # set REACT_APP variables before build command
+    - yarn install
+    - yarn build
+  artifacts:
+    name: "$CI_PIPELINE_ID"
+    paths:
+      - build
+    when: on_success
 
 deployJob:
   stage: deploy
-  only:
-    - main
+  dependencies:
+    - build_app
   script:
-    - "rm -r /web/web/* || true"
-    - mv build/* /web/web
+    - echo "Set deployment variables"
+    - echo "Deployment scripts"
