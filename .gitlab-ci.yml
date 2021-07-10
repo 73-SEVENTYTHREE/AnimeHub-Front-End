@@ -7,7 +7,7 @@ stages:
 
 cache:
   paths:
-    - ./anime_hub/node_modules/
+    - node_modules/
 
 fetchJob:
   stage: fetch
