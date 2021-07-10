@@ -11,7 +11,6 @@ cache:
 buildJob:
   stage: build
   script:
-    - export REACT_APP_SECRET_API_KEY=$API_KEY # set REACT_APP variables before build command
     - yarn install
     - yarn build
   artifacts:
