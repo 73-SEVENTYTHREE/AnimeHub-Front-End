@@ -13,8 +13,8 @@ buildJob:
   tags:
     - AnimeHub-Front-End
   script:
-    - yarn install
-    - yarn build
+    - npm install
+    - npm build
   artifacts:
     paths:
       - build/
