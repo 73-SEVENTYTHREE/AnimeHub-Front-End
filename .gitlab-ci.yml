@@ -1,4 +1,7 @@
 image: node:latest
+before_script:
+  - PATH=$PATH:.
+  - make clean
 
 stages:
   - fetch
@@ -16,6 +19,8 @@ fetchJob:
 
 buildJob:
   stage: build
+  tags:
+    - go
   script:
     - npm run build
     - "rm -r /web/web/* || true"
