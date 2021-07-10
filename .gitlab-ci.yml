@@ -12,23 +12,19 @@ cache:
 fetchJob:
   stage: fetch
   script:
-    - yarn
+    - npm install
 
 buildJob:
   stage: build
-  before_script:
-    - npm install
   script:
     - npm run build
     - "rm -r /web/web/* || true"
-    - mv dist/* /web/web
+    - mv build/* /web/web
 
 deployJob:
   stage: deploy
-  before_script:
-    - npm install
   only:
-    - master
+    - main
   script:
     - "rm -r /web/web/* || true"
-    - mv dist/* /web/web
+    - mv build/* /web/web
