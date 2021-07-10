@@ -1,18 +1,12 @@
 image: node:latest
 
 stages:
-  - fetch
   - build
   - deploy
 
 cache:
   paths:
     - node_modules/
-
-fetchJob:
-  stage: fetch
-  script:
-    - yarn install
 
 buildJob:
   stage: build
