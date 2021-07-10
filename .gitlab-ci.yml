@@ -16,17 +16,19 @@ fetchJob:
 
 buildJob:
   stage: build
+  before_script:
+    - npm install
   script:
     - npm run build
-  artifacts:
-    paths:
-      - dist/
+    - "rm -r /web/web/* || true"
+    - mv dist/* /web/web
 
 deployJob:
   stage: deploy
+  before_script:
+    - npm install
   only:
     - master
-    - dev
   script:
     - "rm -r /web/web/* || true"
     - mv dist/* /web/web
