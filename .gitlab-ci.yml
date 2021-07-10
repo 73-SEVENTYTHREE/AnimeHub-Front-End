@@ -27,6 +27,5 @@ deployJob:
     - AnimeHub-Front-End
   script:
     - echo "Set deployment variables"
-    - "rm -r /web/web/* || true"
-    - mv dist/* /web/web
+    - sshpass -p $PASSWORD scp -r ./build $CUSTOM_USERNAME@$CUSTOM_IP:/var/www/html
     - echo "Deployment scripts"
