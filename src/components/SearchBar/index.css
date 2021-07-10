@@ -1,7 +1,6 @@
-div.search {
+div .search{
     padding: 30px 0;
     position: absolute;
-    top: 20%;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -9,12 +8,54 @@ div.search {
 
 form {
     position: relative;
-    width: 50%;
+
     border-radius: 10px;
     display: flex;
     justify-content: center;
     /*border: 1px solid black;*/
     /*overflow: hidden;*/
+}
+
+@media screen and (max-width: 500px) {
+    form{
+        width: 80vw;
+    }
+    input{
+        font-size: 1rem;
+        height: 2.8rem;
+    }
+    .bar2 button {
+        height: 2.3rem;
+        width: 2.3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0.8rem;
+        background: rgb(55, 133, 140);
+    }
+    div.search {
+        top: 9rem;
+    }
+}
+
+@media screen and (min-width: 500px) {
+    form{
+        width: 30rem;
+    }
+    input{
+        font-size: 1.2rem;
+        height: 3rem;
+    }
+    .bar2 button {
+        height: 2.3rem;
+        width: 2.3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0.6rem;
+        background: rgb(55, 133, 140);
+    }
+    div.search {
+        top: 10.5rem;
+    }
 }
 
 input, button {
@@ -24,15 +65,18 @@ input, button {
 
 input {
     width: 100%;
-    height: 80px;
     padding-left: 13px;
-    font-size: 1.5rem;
-    color: rgba(250,250,250,0.2);
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+input::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: black;
 }
 
 button {
-    height: 42px;
-    width: 42px;
     cursor: pointer;
     position: absolute;
 }
@@ -42,20 +86,15 @@ button {
     border-radius: 10px;
 }
 .bar2 input {
-    background: rgba(250,250,250,0.2);
+    background: white;
+
 }
-.bar2 button {
-    height: 60px;
-    width: 60px;
-    top: 10px;
-    right: 15px;
-    background: rgb(234, 122, 153);
-}
+
 .bar2 button:before {
     content: "\f105";
     font-family: FontAwesome;
     color: #F9F0DA;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     display: inline-block;
     position: relative;
@@ -63,7 +102,7 @@ button {
 }
 
 #indexSearchBox{
-    transition:all 0.5s ease-in-out;
+    transition:all 1s;
 }
 
 #indexSearchBox:hover{

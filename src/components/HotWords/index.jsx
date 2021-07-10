@@ -11,9 +11,9 @@ function HotWords (props) {
         return 'rgb' + '(' + r + ',' + g + ',' + b + ')';
     }
     useMount(() => {
-        let radius = 140;
+        let radius = 150;
         let dtr = Math.PI / 180;
-        let d = 280;
+        let d = 300;
 
         let mcList = [];
         let active = false;
@@ -43,9 +43,9 @@ function HotWords (props) {
         oDiv = document.getElementById('hotwords');
 
         aA = oDiv.getElementsByTagName('a');
-        Array.from(aA).forEach(item => {
-            item.style.color = generateRandomColor();
-        })
+        // Array.from(aA).forEach(item => {
+        //     item.style.color = generateRandomColor();
+        // })
 
         for (i = 0; i < aA.length; i++) {
             oTag = {};

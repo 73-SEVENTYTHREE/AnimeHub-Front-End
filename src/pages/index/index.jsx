@@ -6,14 +6,13 @@ import './index.css'
 
 function Index (props) {
     return (
-        <div>
-            <div id='content'>
-                <div id="top">
-                    <Header/>
-                    <SearchBar/>
-                </div>
-                <HotWords/>
+        <div id={'content'}>
+            <div id="bg"/>
+            <div id="top">
+                <Header/>
+                <SearchBar/>
             </div>
+            <HotWords/>
         </div>
     );
 }
