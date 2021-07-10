@@ -1,10 +1,18 @@
-div.search {padding: 30px 0;}
+div.search {
+    padding: 30px 0;
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
 form {
     position: relative;
     width: 50%;
     border-radius: 10px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
     /*border: 1px solid black;*/
     /*overflow: hidden;*/
 }
@@ -19,6 +27,7 @@ input {
     height: 80px;
     padding-left: 13px;
     font-size: 1.5rem;
+    color: rgba(250,250,250,0.2);
 }
 
 button {
@@ -33,14 +42,14 @@ button {
     border-radius: 10px;
 }
 .bar2 input {
-    background: #F9F0DA;
+    background: rgba(250,250,250,0.2);
 }
 .bar2 button {
     height: 60px;
     width: 60px;
     top: 10px;
-    right: 3px;
-    background: #F15B42;
+    right: 15px;
+    background: rgb(234, 122, 153);
 }
 .bar2 button:before {
     content: "\f105";
@@ -48,4 +57,15 @@ button {
     color: #F9F0DA;
     font-size: 40px;
     font-weight: bold;
+    display: inline-block;
+    position: relative;
+    left: 3px;
+}
+
+#indexSearchBox{
+    transition:all 0.5s ease-in-out;
+}
+
+#indexSearchBox:hover{
+    transform:scale(1.1);
 }

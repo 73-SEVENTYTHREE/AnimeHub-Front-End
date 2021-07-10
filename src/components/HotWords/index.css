@@ -1,0 +1,24 @@
+#hotwords{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    height:400px;
+    width:450px;
+    margin:10px auto;
+}
+
+#hotwords a{
+    position:absolute;
+    top:0;
+    left:0;
+    color:#fff;
+    font-weight:bold;
+    padding:3px 6px;
+}
+
+#hotwords a:hover{
+    border:1px solid #eee;
+    background:#000;
+    border-radius:5px;
+}
