@@ -12,8 +12,8 @@ buildJob:
   tags:
     - AnimeHub-Front-End
   script:
-    - sudo yarn install
-    - sudo yarn build
+    - yarn install
+    - yarn build
   artifacts:
     name: "$CI_PIPELINE_ID"
     paths:
