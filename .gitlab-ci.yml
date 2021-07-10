@@ -18,7 +18,7 @@ buildJob:
   artifacts:
     name: "$CI_PIPELINE_ID"
     paths:
-      - build
+      - build/
     when: on_success
 
 deployJob:
@@ -27,4 +27,5 @@ deployJob:
     - AnimeHub-Front-End
   script:
     - echo "Set deployment variables"
+    - yarn start
     - echo "Deployment scripts"
