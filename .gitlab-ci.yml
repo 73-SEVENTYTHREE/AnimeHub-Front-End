@@ -28,8 +28,6 @@ buildJob:
 
 deployJob:
   stage: deploy
-  dependencies:
-    - build_app
   script:
     - echo "Set deployment variables"
     - echo "Deployment scripts"
