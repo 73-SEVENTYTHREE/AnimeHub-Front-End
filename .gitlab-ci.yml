@@ -13,6 +13,8 @@ buildJob:
   tags:
     - AnimeHub-Front-End
   script:
+    - npm install -g cnpm --registry=https://registry.npm.taobao.org
+    - cnpm -v
     - npm install
     - npm build
   artifacts:
