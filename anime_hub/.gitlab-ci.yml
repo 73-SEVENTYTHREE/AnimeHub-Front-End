@@ -1,0 +1,32 @@
+image: node:latest
+
+stages:
+  - fetch
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+fetchJob:
+  stage: fetch
+  script:
+    - yarn
+
+buildJob:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+deployJob:
+  stage: deploy
+  only:
+    - master
+    - dev
+  script:
+    - "rm -r /web/web/* || true"
+    - mv dist/* /web/web
