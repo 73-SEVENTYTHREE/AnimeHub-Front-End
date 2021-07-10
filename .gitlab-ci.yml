@@ -10,6 +10,8 @@ cache:
 
 buildJob:
   stage: build
+  tags:
+    - AnimeHub-Front-End
   script:
     - yarn install
     - yarn build
@@ -21,6 +23,8 @@ buildJob:
 
 deployJob:
   stage: deploy
+  tags:
+    - AnimeHub-Front-End
   script:
     - echo "Set deployment variables"
     - echo "Deployment scripts"
