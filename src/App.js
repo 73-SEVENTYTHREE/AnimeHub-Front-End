@@ -1,5 +1,6 @@
-import Index from "./pages/index";
-import Result from "./pages/result";
+import Index from "./pages/Index";
+import Result from "./pages/Result";
+import DetailInfo from "./pages/DetailInfo";
 import './App.css';
 import {Route, Switch, Redirect} from "react-router-dom";
 
@@ -7,9 +8,10 @@ function App() {
    return (
        <div className="App">
             <Switch>
-                <Route path={"/index"} component={Index}/>
-                <Route path={"/result"} component={Result}/>
-                <Redirect to={"/index"}/>
+                <Route path={"/Index"} component={Index}/>
+                <Route path={"/Result"} component={Result}/>
+                <Route path={"/DetailInfo"} component={DetailInfo}/>
+                <Redirect to={"/Index"}/>
             </Switch>
        </div>
   );

@@ -1,12 +1,19 @@
+#banner{
+    display:flex;
+    align-items:center;
+    height:4.2rem;
+    background: url("../../images/banner.png");
+    background-size: cover;
+}
 
 .search-bar-container {
     position: relative;
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    padding-left: 2.5rem;
-    /*border: 1px solid black;*/
-    /*overflow: hidden;*/
+    align-items: center;
+    margin-right: 1rem;
+    height: 3rem;
 }
 
 #searchInput, #searchButton {
@@ -38,47 +45,46 @@
     content: "\f105";
     font-family: FontAwesome;
     color: #F9F0DA;
-    font-size: 30px;
+    font-size: 1.5rem;
     font-weight: bold;
     display: inline-block;
-    position: relative;
-    left: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-30%, -50%);
 }
 
+#searchButton {
+    height: 2.3rem;
+    width: 2.3rem;
+    right: 0.5rem;
+    background: rgb(55, 133, 140);
+}
 
 @media screen and (max-width: 500px) {
     .search-bar-container{
-        width: 80vw;
+        width: 30rem;
+        padding-left: 1rem;
     }
     #searchInput{
-        font-size: 1rem;
+        font-size: 0.9rem;
         height: 2.8rem;
     }
-    #searchButton {
-        height: 2.3rem;
-        width: 2.3rem;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0.8rem;
-        background: rgb(55, 133, 140);
-    }
+
 }
 
 @media screen and (min-width: 500px) {
     .search-bar-container{
-        width: 30rem;
+        width: 35rem;
+        padding-left: 2.5rem;
     }
     #searchInput{
         font-size: 0.9rem;
         height: 100%;
     }
-    #searchButton {
-        height: 2rem;
-        width: 2rem;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0.6rem;
-        background: rgb(55,133,140);
-    }
 }
+
+
+
+
 
