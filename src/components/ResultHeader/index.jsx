@@ -11,7 +11,7 @@ function ResultHeader(props) {
             </Link>
             <div className={'search-bar-container'}>
                 <input id={'searchInput'}  type="text" placeholder="请输入搜索内容..."/>
-                <button id={'searchButton'} onClick={()=>{ window.location.href = '/Result' }}/>
+                <button id={'searchButton'} onClick={()=>{ props.history.push('result') }}/>
             </div>
         </div>
     );

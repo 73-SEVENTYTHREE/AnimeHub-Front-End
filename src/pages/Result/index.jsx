@@ -5,7 +5,7 @@ function Result(props) {
 
     return (
         <div>
-            <ResultHeader/>
+            <ResultHeader history={props.history}/>
         </div>
     );
 }
