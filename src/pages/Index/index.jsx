@@ -10,7 +10,7 @@ function Index (props) {
             <div id="bg"/>
             <div id="top">
                 <Header/>
-                <SearchBar/>
+                <SearchBar history={props.history}/>
             </div>
             <HotWords/>
         </div>
