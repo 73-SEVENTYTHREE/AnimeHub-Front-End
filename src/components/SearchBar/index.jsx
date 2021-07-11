@@ -18,10 +18,10 @@ function SearchBar (props) {
     }
     return (
         <div className="search bar2">
-            <form id={'indexSearchBox'}>
+            <div className={'form'} id={'indexSearchBox'}>
                 <input type="text" placeholder="请输入搜索内容..." onFocus={onFocus} onBlur={onBlur}/>
-                    <button type="submit"/>
-            </form>
+                    <button onClick={()=>{ window.location.href = '/result' }}/>
+            </div>
         </div>
     );
 }

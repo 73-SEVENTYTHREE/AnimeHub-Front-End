@@ -6,7 +6,7 @@ div .search{
     justify-content: center;
 }
 
-form {
+.form {
     position: relative;
 
     border-radius: 10px;
@@ -17,7 +17,7 @@ form {
 }
 
 @media screen and (max-width: 500px) {
-    form{
+    .form{
         width: 80vw;
     }
     input{
@@ -38,7 +38,7 @@ form {
 }
 
 @media screen and (min-width: 500px) {
-    form{
+    .form{
         width: 30rem;
     }
     input{
