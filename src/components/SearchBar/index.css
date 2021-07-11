@@ -6,7 +6,7 @@ div .search{
     justify-content: center;
 }
 
-form {
+.form {
     position: relative;
 
     border-radius: 10px;
@@ -17,14 +17,14 @@ form {
 }
 
 @media screen and (max-width: 500px) {
-    form{
+    .form{
         width: 80vw;
     }
-    input{
+    #indexInput{
         font-size: 1rem;
         height: 2.8rem;
     }
-    .bar2 button {
+    #indexButton {
         height: 2.3rem;
         width: 2.3rem;
         top: 50%;
@@ -38,14 +38,14 @@ form {
 }
 
 @media screen and (min-width: 500px) {
-    form{
+    .form{
         width: 30rem;
     }
-    input{
+    #indexInput{
         font-size: 1.2rem;
         height: 3rem;
     }
-    .bar2 button {
+    #indexButton {
         height: 2.3rem;
         width: 2.3rem;
         top: 50%;
@@ -58,12 +58,12 @@ form {
     }
 }
 
-input, button {
+#indexInput, #indexButton {
     border: none;
     outline: none;
 }
 
-input {
+#indexInput {
     width: 100%;
     padding-left: 13px;
     display: flex;
@@ -71,26 +71,25 @@ input {
     color: black;
 }
 
-input::-webkit-input-placeholder {
+#indexInput::-webkit-input-placeholder {
     /* WebKit browsers */
     color: black;
 }
 
-button {
+#indexButton {
     cursor: pointer;
     position: absolute;
 }
 
-/*.bar2 {background: #DABB52;}*/
-.bar2 input, .bar2 button {
+#indexInput, #indexButton {
     border-radius: 10px;
 }
-.bar2 input {
+#indexInput {
     background: white;
 
 }
 
-.bar2 button:before {
+#indexButton:before {
     content: "\f105";
     font-family: FontAwesome;
     color: #F9F0DA;

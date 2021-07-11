@@ -227,21 +227,21 @@ function HotWords (props) {
     })
     return (
         <div id="hotwords">
-            <a href="http://www.lanrentuku.com" target="_blank">起名取名</a> <a
-            href="http://www.lanrentuku.com" target="_blank">宣传策划</a> <a
-            href="http://www.lanrentuku.com" target="_blank">网游试玩</a> <a
-            href="http://www.lanrentuku.com" target="_blank">短信表白</a> <a
-            href="http://www.lanrentuku.com" target="_blank">卡片设计</a> <a
-            href="http://www.lanrentuku.com" target="_blank">网页设计</a> <a
-            href="http://www.lanrentuku.com" target="_blank">SEO优化</a> <a
-            href="http://www.lanrentuku.com" target="_blank">外语翻译</a> <a
-            href="http://www.lanrentuku.com" target="_blank">产品推广</a> <a
-            href="http://www.lanrentuku.com" target="_blank">网络营销</a> <a
-            href="http://www.lanrentuku.com" target="_blank">动漫设计</a> <a
-            href="http://www.lanrentuku.com" target="_blank">招聘求职</a> <a
-            href="http://www.lanrentuku.com" target="_blank">家居装修</a> <a
-            href="http://www.lanrentuku.com" target="_blank">影视创作</a> <a
-            href="http://www.lanrentuku.com" target="_blank">照片美化</a>
+            <a href="http://www.lanrentuku.com" target="_blank">伊藤诚</a> <a
+            href="http://www.lanrentuku.com" target="_blank">我妻由乃</a> <a
+            href="http://www.lanrentuku.com" target="_blank">秋月爱莉</a> <a
+            href="http://www.lanrentuku.com" target="_blank">结城梨斗</a> <a
+            href="http://www.lanrentuku.com" target="_blank">时崎狂三</a> <a
+            href="http://www.lanrentuku.com" target="_blank">漩涡鸣人</a> <a
+            href="http://www.lanrentuku.com" target="_blank">火影忍者</a> <a
+            href="http://www.lanrentuku.com" target="_blank">进击的巨人</a> <a
+            href="http://www.lanrentuku.com" target="_blank">花泽香菜</a> <a
+            href="http://www.lanrentuku.com" target="_blank">埃罗芒阿老师</a> <a
+            href="http://www.lanrentuku.com" target="_blank">名侦探柯南</a> <a
+            href="http://www.lanrentuku.com" target="_blank">金木研</a> <a
+            href="http://www.lanrentuku.com" target="_blank">白上吹雪</a> <a
+            href="http://www.lanrentuku.com" target="_blank">从零开始的异界生活</a> <a
+            href="http://www.lanrentuku.com" target="_blank">海贼王</a>
         </div>
     );
 }
