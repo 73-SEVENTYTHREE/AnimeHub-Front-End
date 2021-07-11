@@ -4,7 +4,8 @@ import ResultHeader from "../../components/ResultHeader";
 import './index.css';
 import TV from '../../images/icons/tv.png';
 import BiliBili from '../../images/icons/bilibili.png';
-import Bangumi from '../../images/icons/bangumi.png'
+import Bangumi from '../../images/icons/bangumi.png';
+import TypeTag from "../../components/TypeTag";
 import {useMount, useUnmount} from "ahooks";
 
 const { TabPane } = Tabs;
@@ -84,12 +85,12 @@ function DetailInfo (props) {
         <div>
             <ResultHeader/>
             <div id="result-container">
-                <Divider orientation="left" style={{fontSize:'1.3rem'}}>
-                    はたらく細胞
-                    &nbsp;
-                    <Tag icon={<img src={TV} alt={'tv'} style={{width:'.8rem'}}/>}>
-                        &nbsp;番剧
-                    </Tag>
+                <Divider orientation="left" style={{fontSize:'1.4rem'}}>
+                    <div style={{display:'flex', alignItems:'center'}}>
+                        はたらく細胞
+                        &nbsp;
+                        <TypeTag/>
+                    </div>
                 </Divider>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingTop:'1rem', minHeight:'75vh'}}>
                     <Col className="gutter-row" span={mobile ? 24 : 8} style={mobile ? {marginBottom:'2rem'} : {}}>
