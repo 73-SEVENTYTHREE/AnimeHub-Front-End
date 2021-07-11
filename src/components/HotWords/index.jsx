@@ -1,6 +1,7 @@
 import React from 'react';
 import {useMount, useMouse} from 'ahooks'
 import './index.css'
+import {Link} from "react-router-dom";
 
 function HotWords (props) {
     const mouse = useMouse();
@@ -229,8 +230,8 @@ function HotWords (props) {
         <div id="hotwords">
             <a href="http://www.lanrentuku.com" target="_blank">伊藤诚</a> <a
             href="http://www.lanrentuku.com" target="_blank">我妻由乃</a> <a
-            href="http://www.lanrentuku.com" target="_blank">秋月爱莉</a> <a
-            href="http://www.lanrentuku.com" target="_blank">结城梨斗</a> <a
+            href="http://www.lanrentuku.com" target="_blank">秋月爱莉</a> <Link
+            to={'/detailInfo'} target="_blank">工作细胞</Link> <a
             href="http://www.lanrentuku.com" target="_blank">时崎狂三</a> <a
             href="http://www.lanrentuku.com" target="_blank">漩涡鸣人</a> <a
             href="http://www.lanrentuku.com" target="_blank">火影忍者</a> <a

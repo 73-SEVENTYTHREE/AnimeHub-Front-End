@@ -12,7 +12,7 @@ function Index (props) {
                 <Header/>
                 <SearchBar history={props.history}/>
             </div>
-            <HotWords/>
+            <HotWords history={props.history}/>
         </div>
     );
 }
