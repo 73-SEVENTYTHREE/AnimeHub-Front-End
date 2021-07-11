@@ -11,7 +11,8 @@ module.exports = override(
         lessOptions: {
             javascriptEnabled: true,
             modifyVars: {
-                '@primary-color': 'rgb(55, 133, 140)'
+                '@primary-color': 'rgb(55, 133, 140)',
+                '@border-radius-base' : '10px'
             },
         }
     }),

@@ -6,6 +6,7 @@ import './index.css';
 function ResultHeader(props) {
     return (
         <div id={'banner'}>
+            <div id="banner-bg" />
             <Link to={"/Index"}>
                 <img style={{width:'10rem',paddingLeft:'.6rem'}} src={logo} alt="logo"/>
             </Link>

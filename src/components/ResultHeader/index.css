@@ -2,8 +2,19 @@
     display:flex;
     align-items:center;
     height:4.2rem;
+    background-size: cover;
+}
+
+#banner-bg{
+    height: 4.2rem;
+    width: 100%;
     background: url("../../images/banner.png");
     background-size: cover;
+    z-index: -1;
+    /*filter: blur(1px);*/
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .search-bar-container {
