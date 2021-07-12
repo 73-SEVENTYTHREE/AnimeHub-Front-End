@@ -1,3 +1,18 @@
+#result-container{
+    margin-top:1.5rem;
+}
+
+#result-container-bg{
+    /*height: 200vh;*/
+    /*min-height: 70vh;*/
+    width: 100%;
+    background: #f3f3f3;
+    background-size: cover;
+    z-index: -1;
+    filter: blur(1px);
+    position: absolute;
+}
+
 .card-container p {
     margin: 0;
 }

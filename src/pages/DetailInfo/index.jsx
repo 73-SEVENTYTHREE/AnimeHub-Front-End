@@ -30,7 +30,7 @@ function DetailInfo (props) {
     const BiliBiliTag = () => (
         <Popover
             style={{ width: 500 }}
-            content={`9.6分 / 7.0万人点评`}
+            content={`9.6分 / 70479人点评`}
             title="BiliBili评分"
             trigger="hover"
             visible={hoverBiliBili}
@@ -94,7 +94,8 @@ function DetailInfo (props) {
                     <TypeTag/>
                 </div>
             </Divider>
-            <div style={{backgroundColor: '#F3F3F3', marginTop:'1.5rem'}} id={'result-container'}>
+            <div id={'result-container'}>
+                <div id={'result-container-bg'}/>
                 <div style={{padding: '0 1.2rem'}}>
                     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingTop:'1rem', minHeight:'75vh'}}>
                         <Col className="gutter-row" span={mobile ? 24 : 6} style={mobile ? {marginBottom:'2rem'} : {}}>
