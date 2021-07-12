@@ -47,5 +47,8 @@
     ]
   },
   "homepage": ".",
-  "proxy": "http://api.bilibili.com"
+  "proxy": "http://api.bilibili.com",
+  "devDependencies": {
+    "@ant-design/icons": "^4.6.2"
+  }
 }

@@ -80,7 +80,7 @@ function SearchResult(props) {
 
                 </div>
                 <div style={{width: '20%'}}>
-                    <div style={{backgroundColor: '#fff', height: '100px', borderRadius:'1rem'}}>其他展示栏</div>
+                    <div style={{backgroundColor: '#fff', height: '100px', borderRadius:'1rem'}}>相关人物</div>
                 </div>
             </div>
         </div>
