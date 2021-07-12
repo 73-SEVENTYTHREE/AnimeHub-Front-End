@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "ahooks": "^2.10.7",
     "antd": "^4.16.6",
+    "axios": "^0.21.1",
     "babel-plugin-import": "^1.13.3",
     "customize-cra": "^1.0.0",
     "eslint-plugin-jest": "^24.3.6",
@@ -45,5 +46,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "."
+  "homepage": ".",
+  "proxy": "http://api.bilibili.com"
 }
