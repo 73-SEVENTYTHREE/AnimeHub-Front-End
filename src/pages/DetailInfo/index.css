@@ -13,7 +13,7 @@
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     padding: 2rem;
-    min-height: 90vh;
+    min-height: 70vh;
     background: white;
 }
 .card-container > .ant-tabs-card > .ant-tabs-nav::before {
