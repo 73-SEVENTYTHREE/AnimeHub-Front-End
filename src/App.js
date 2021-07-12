@@ -11,7 +11,7 @@ function App() {
                 <Route path={"/index"} component={Index}/>
                 <Route path={"/result"} component={Result}/>
                 <Route path={"/detailInfo"} component={DetailInfo}/>
-                <Redirect to={"/Index"}/>
+                <Redirect to={"/index"}/>
             </Switch>
        </div>
   );

@@ -1,0 +1,39 @@
+#top{
+    height: 100%;
+    /*border: 1px solid black;*/
+}
+a{
+    text-decoration:none
+}
+
+
+
+@media screen and (min-width: 500px) {
+    #bg{
+        height: 100%;
+        width: 100%;
+        background-image: url("../../images/opacity.png"), url("../../images/bg1.png");
+        background-size: cover;
+        content: "";
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #bg{
+        height: 100%;
+        width: 100%;
+        background-image: url("../../images/opacity.png"), url("../../images/bg2.jpg");
+        background-position: bottom;
+
+        background-size: cover;
+        content: "";
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
