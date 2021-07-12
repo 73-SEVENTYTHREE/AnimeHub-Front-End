@@ -1,25 +1,20 @@
-#result-container{
-    padding: 1.2rem;
-}
-
 .card-container p {
     margin: 0;
 }
 
 .card-container{
-    padding: .8rem;
-    background-color: #F3F3F3;
     border-radius: 10px;
-    height: 100%;
 }
 
 .card-container > .ant-tabs-card .ant-tabs-content {
-    min-height: 75vh;
+    margin-bottom: 0;
     margin-top: -16px;
+    /*border-radius: 10px;*/
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-    padding: 16px;
-    background: #fff;
+    padding: 2rem;
+    min-height: 90vh;
+    background: white;
 }
 .card-container > .ant-tabs-card > .ant-tabs-nav::before {
     display: none;
