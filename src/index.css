@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: black;
+  /*background-color: black;*/
   background-size: 100% 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -12,7 +12,7 @@ body {
 }
 img{
   outline-width:0;
-  vertical-align:top;
+  vertical-align:center;
 }
 
 code {
