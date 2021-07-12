@@ -93,16 +93,17 @@ function DetailInfo (props) {
         setTimeout(() => {
             setLoading(false);
         }, 2000);
-        let searchResult = (await axios.get (`/x/web-interface/search/type`, {
+        let searchResult = (await axios.get (`/bilibili/x/web-interface/search/type`, {
             params: {
                 search_type: 'media_bangumi',
                 keyword: name
             }
         })).data;
+        console.log(searchResult);
         const resultLength = searchResult.data.result.length;
         if(resultLength > 0){
             const md_id = searchResult.data.result[0].media_id;
-            let BiliBiliData = (await axios.get(`/pgc/review/user`, {
+            let BiliBiliData = (await axios.get(`/bilibili/pgc/review/user`, {
                 params:{media_id:md_id}
             })).data;
             setBiliBiliData(BiliBiliData.result.media);
