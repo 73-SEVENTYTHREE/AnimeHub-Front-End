@@ -20,7 +20,7 @@ function SearchBar (props) {
         <div className="search bar2">
             <div className={'form'} id={'indexSearchBox'}>
                 <input type="text" placeholder="请输入搜索内容..." onFocus={onFocus} onBlur={onBlur} id={'indexInput'}/>
-                    <button type="submit" id={'indexButton'} onClick={()=>props.history.push('result')}/>
+                    <button type="submit" id={'indexButton'} onClick={()=>props.history.push({pathname:'result',state:{searchString:'工作细胞'}})}/>
             </div>
         </div>
     );
