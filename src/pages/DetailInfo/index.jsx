@@ -10,6 +10,7 @@ import BangumiScoreTag from "../../components/BangumiScoreTag";
 import {useMount, useUnmount} from "ahooks";
 import './index.css';
 import axios from "axios";
+import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 
 const { TabPane } = Tabs;
 
@@ -50,16 +51,10 @@ function DetailInfo (props) {
         setTimeout(() => {
             setLoading(false);
         }, 2000);
-        let searchResult = (await axios.get (`/x/web-interface/search/type`, {
-            params: {
-                search_type: 'media_bangumi',
-                keyword: name
-            }
-        })).data;
+        let searchResult = await getBiliBiliDataByMediaName(name);
         console.log(searchResult)
-        const resultLength = searchResult.data.result;
-        if(resultLength !== undefined){
-            setBiliBiliData(searchResult.data.result[0]);
+        if(searchResult.result !== undefined){
+            setBiliBiliData(searchResult.result[0]);
         }
         const relevantContainer = document.getElementById('relevant-container');
         relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height;
