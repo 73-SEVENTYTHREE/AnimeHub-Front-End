@@ -27,7 +27,7 @@ function DetailInfo (props) {
     const [mobile, setMobile] = useState(false);
     const [hoverBiliBili, setHoverBiliBili] = useState(false);
     const [hoverBangumi, setHoverBangumi] = useState(false);
-    const [bilibiliData, setBiliBiliData] = useState({rating:{}});
+    const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
 
     const keys = Object.keys(workData);
     const handleHoverChange1 = visible => {
@@ -40,17 +40,17 @@ function DetailInfo (props) {
 
     const BiliBiliTag = () => <Popover
             style={{ width: 500 }}
-            content={`${bilibiliData.rating.score}分 / ${bilibiliData.rating.count}人点评`}
+            content={`${bilibiliData.media_score.score}分 / ${bilibiliData.media_score.user_count}人点评`}
             title="BiliBili评分"
             trigger="hover"
             visible={hoverBiliBili}
             onVisibleChange={handleHoverChange1}>
-            <Tag icon={<img src={BiliBili} alt={'bilibili'} style={{width:'1.3rem'}}/>}
-                 style={{fontSize:'1rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'4rem'}}
+            <Tag icon={<img src={BiliBili} alt={'bilibili'} style={{width:'1rem'}}/>}
+                 style={{fontSize:'.5rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'3.5rem'}}
                  color={'#EA7A99'}
             >
 
-                &nbsp;{bilibiliData.rating.score}
+                &nbsp;{bilibiliData.media_score.score}
             </Tag>
         </Popover>
 
@@ -62,8 +62,8 @@ function DetailInfo (props) {
             trigger="hover"
             visible={hoverBangumi}
             onVisibleChange={handleHoverChange2}>
-            <Tag icon={<img src={Bangumi} alt={'bangumi'} style={{width:'1.3rem'}}/>}
-                 style={{fontSize:'1rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'4rem'}}
+            <Tag icon={<img src={Bangumi} alt={'bangumi'} style={{width:'1rem'}}/>}
+                 style={{fontSize:'.5rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'3.5rem'}}
                  color={'#EE868E'}
             >
 
@@ -99,18 +99,10 @@ function DetailInfo (props) {
                 keyword: name
             }
         })).data;
-        console.log(searchResult);
-        const resultLength = searchResult.data.result.length;
-        if(resultLength > 0){
-            const md_id = searchResult.data.result[0].media_id;
-            let BiliBiliData = (await axios.get(`/bilibili/pgc/review/user`, {
-                params:{media_id:md_id}
-            })).data;
-            setBiliBiliData(BiliBiliData.result.media);
-        }
-        else{
-            setBiliBiliData({rating:{score:'暂无', count:'暂无'}})
-            setBiliBiliData({rating:{score:'暂无', count:'暂无'}})
+        console.log(searchResult)
+        const resultLength = searchResult.data.result;
+        if(resultLength !== undefined){
+            setBiliBiliData(searchResult.data.result[0]);
         }
         const relevantContainer = document.getElementById('relevant-container');
         relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height;
@@ -125,7 +117,7 @@ function DetailInfo (props) {
             <ResultHeader history={props.history}/>
             <Divider orientation="left" style={{fontSize:'1.4rem', marginTop:'1.5rem'}}>
                 <div style={{display:'flex', alignItems:'center'}}>
-                    はたらく細胞
+                    {bilibiliData.org_title.replace(/<[^<>]+>/g,'')}
                     &nbsp;
                     <TypeTag/>
                 </div>
@@ -138,11 +130,7 @@ function DetailInfo (props) {
                         <Col className="gutter-row" span={mobile ? 24 : 6} style={mobile ? {marginBottom:'2rem'} : {}}>
                             <div className="card-container">
                                 <Card title="剧情概览" style={{marginBottom:'2rem', overflow:'scroll', maxHeight:'18rem'}} headStyle={{fontSize:'1.3rem'}}>
-                                    这是一个关于你自身的故事。你体内的故事——。<br/>
-                                    人的细胞数量，约为37兆2千亿个。<br/>
-                                    细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。<br/>
-                                    运送着氧气的红细胞，与细菌战斗的白细胞……！<br/>
-                                    这里，有着细胞们不为人知的故事。
+                                    {bilibiliData.desc}
                                 </Card>
                                 <Card title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', maxHeight:'35rem'}} headStyle={{fontSize:'1.3rem'}}>
                                     <div style={{margin:'1rem', display:'flex', justifyContent:'center'}}>
