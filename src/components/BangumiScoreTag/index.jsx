@@ -20,6 +20,11 @@ const BangumiScoreTag = (props) => {
             width:'3.5rem'
         }:
         props.style;
+    const logoStyle = props.logoStyle === undefined ?
+        {
+            width:'1rem'
+        }:
+        props.logoStyle;
     return(
         <Popover
             style={{ width: 500 }}
@@ -28,7 +33,7 @@ const BangumiScoreTag = (props) => {
             trigger="hover"
             visible={hoverBangumi}
             onVisibleChange={handleHoverChange}>
-            <Tag icon={<img src={Bangumi} alt={'bangumi'} style={{width:'1rem'}}/>}
+            <Tag icon={<img src={Bangumi} alt={'bangumi'} style={{...logoStyle}}/>}
                  style={{display:'flex', alignItems:'center', justifyContent:'center', ...style}}
                  color={'#EE868E'}
             >

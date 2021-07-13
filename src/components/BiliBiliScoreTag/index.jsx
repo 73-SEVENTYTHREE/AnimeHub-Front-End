@@ -20,6 +20,11 @@ const BiliBiliScoreTag = (props) => {
             width:'3.5rem'
         }:
         props.style;
+    const logoStyle = props.logoStyle === undefined ?
+        {
+            width:'1rem'
+        }:
+        props.logoStyle;
     return (
         <Popover
             style={{ width: 500 }}
@@ -28,7 +33,7 @@ const BiliBiliScoreTag = (props) => {
             trigger="hover"
             visible={hoverBiliBili}
             onVisibleChange={handleHoverChange}>
-            <Tag icon={<img src={BiliBili} alt={'bilibili'} style={{width:'1rem'}}/>}
+            <Tag icon={<img src={BiliBili} alt={'bilibili'} style={{...logoStyle}}/>}
                  style={{display:'flex', alignItems:'center', justifyContent:'center', ...style}}
                  color={'#EA7A99'}
             >
