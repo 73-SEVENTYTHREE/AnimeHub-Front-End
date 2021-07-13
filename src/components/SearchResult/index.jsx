@@ -76,8 +76,7 @@ function SearchResult(props) {
             <div style={{display: 'flex', justifyContent: 'space-around', padding: '1.5rem',}}>
                 <div style={{width: '70%', backgroundColor: '#fff', borderRadius: '1rem'}}>
                     {/*<Divider orientation={'left'}><b>搜索结果</b></Divider>*/}
-                    <FilterHeader/>
-
+                    <FilterHeader searchString={props.searchString}/>
                 </div>
                 <div style={{width: '20%'}}>
                     <div style={{backgroundColor: '#fff', height: '100px', borderRadius:'1rem'}}>相关人物</div>
