@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Row, Col, Divider, Tag, Tabs, Card, Image, Popover, Descriptions, Skeleton} from 'antd';
+import {Row, Col, Divider, Tag, Tabs, Card, Image, Descriptions, Skeleton} from 'antd';
 import ResultHeader from "../../components/ResultHeader";
 import TypeTag from "../../components/TypeTag";
 import tagInfo from './tagInfo';
@@ -25,7 +25,7 @@ function DetailInfo (props) {
         name = sessionStorage.getItem ('name');// 当state没有参数时，取sessionStorage中的参数
     }
     const [loading, setLoading] = useState(true);
-    const [mobile, setMobile] = useState(false);
+    const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
 
     const keys = Object.keys(workData);

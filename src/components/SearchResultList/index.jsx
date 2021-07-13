@@ -7,7 +7,7 @@ import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/ico
 import Tags from '../Tags';
 import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import {Link} from "react-router-dom";
-import {useMount} from "ahooks";
+import {useMount, useUnmount} from "ahooks";
 import PubSub from 'pubsub-js'
 
 const {Paragraph} = Typography
@@ -27,6 +27,8 @@ class InsideFilter extends Component{
 function SearchResultList  (props) {
     const [searchString, setSearchString] = useState(props.searchString);
     const [listData, setListData] = useState([]);
+    let token = null;
+    //根据传入的字符串获取相关信息，和后端的交互主要在这个函数里。
     const getDataBySearchString = async str => {
         let ListData = [];
         ListData.push({
@@ -53,11 +55,16 @@ function SearchResultList  (props) {
         setListData(ListData);
     }
     useMount(async () => {
-        let token = PubSub.subscribe('ChangeInput', async (msg, data) => {
+        //订阅上方导航栏输入的消息，获取对应字符串
+        token = PubSub.subscribe('ChangeInput', async (msg, data) => {
             setSearchString(data);
             await getDataBySearchString (data);
         });
         await getDataBySearchString(searchString);
+    })
+
+    useUnmount(() => {
+        if(token !== null) PubSub.unsubscribe(token);
     })
 
     return (
