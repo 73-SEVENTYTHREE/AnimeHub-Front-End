@@ -37,15 +37,8 @@ function DetailInfo (props) {
 
 
     const handleResize = e => setMobile(e.target.innerWidth <= 1000);
-    const setCookie = (name, value, days) => {
-        const d = new Date ();
-        d.setTime(d.getTime() + (days*24*60*60*1000));
-        const expires = "expires=" + d.toUTCString ();
-        document.cookie = name + "=" + value + "; " + expires;
-    }
+
     useMount(async () => {
-        axios.defaults.withCredentials=true;
-        setCookie('SESSDATA', "xxx", 1000);
         setMobile(document.documentElement.clientWidth <= 1000);
         window.addEventListener('resize', handleResize);
         setTimeout(() => {

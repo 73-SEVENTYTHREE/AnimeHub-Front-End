@@ -19,7 +19,15 @@
  *  Data: 2021/07/13
  */
 import axios from "axios";
+const setCookie = (name, value, days) => {
+    const d = new Date ();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    const expires = "expires=" + d.toUTCString ();
+    document.cookie = name + "=" + value + "; " + expires;
+}
 export default async (name) => {
+    axios.defaults.withCredentials=true;
+    setCookie('SESSDATA', "xxx", 1000);
     return (await axios.get (`/x/web-interface/search/type`, {
         params: {
             search_type: 'media_bangumi',
