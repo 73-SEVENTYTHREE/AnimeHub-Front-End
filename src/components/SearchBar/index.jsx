@@ -1,7 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './index.css';
+import {message} from "antd";
 
 function SearchBar (props) {
+    const [inputString, setInputString] = useState('');
+    const inputElement = useRef();
     const onFocus = (e) => {
         let hotWords = document.getElementById('hotwords');
         hotWords.style.transition = 'filter 1s';
@@ -16,11 +19,28 @@ function SearchBar (props) {
         let bg = document.getElementById('bg');
         bg.style.filter = 'blur(0px)';
     }
+    const handleSubmit = () => {
+        if(inputString === ''){
+            message.warning('请输入搜索内容！', 1);
+            return;
+        }
+        props.history.push({pathname:'result',state:{searchString:inputString}});
+    }
     return (
         <div className="search bar2">
             <div className={'form'} id={'indexSearchBox'}>
-                <input type="text" placeholder="请输入搜索内容..." onFocus={onFocus} onBlur={onBlur} id={'indexInput'}/>
-                    <button type="submit" id={'indexButton'} onClick={()=>props.history.push({pathname:'result',state:{searchString:'工作细胞'}})}/>
+                <input type="text"
+                       placeholder="请输入搜索内容..."
+                       onFocus={onFocus}
+                       onBlur={onBlur}
+                       id={'indexInput'}
+                       ref={inputElement}
+                       onChange={() => setInputString(inputElement.current.value)}
+                />
+                    <button type="submit"
+                            id={'indexButton'}
+                            onClick={handleSubmit}
+                    />
             </div>
         </div>
     );

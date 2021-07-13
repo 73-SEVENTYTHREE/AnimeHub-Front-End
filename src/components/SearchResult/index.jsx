@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Tabs} from 'antd';
 import {AppleOutlined, AndroidOutlined} from '@ant-design/icons';
 import SearchResultList from "../SearchResultList";
@@ -6,7 +6,6 @@ import SearchResultList from "../SearchResultList";
 const {TabPane} = Tabs;
 
 function FilterHeader(props) {
-
     return (
         <div>
             <Tabs defaultActiveKey="1" centered size={'large'}>
@@ -19,7 +18,7 @@ function FilterHeader(props) {
                     }
                     key="1"
                 >
-                    <SearchResultList></SearchResultList>
+                    <SearchResultList searchString={props.searchString}/>
                 </TabPane>
                 <TabPane
                     tab={

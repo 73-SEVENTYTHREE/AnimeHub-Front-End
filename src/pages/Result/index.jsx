@@ -1,22 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ResultHeader from '../../components/ResultHeader'
 import SearchResult from "../../components/SearchResult";
 import {useMount} from "ahooks";
 
 function Result(props) {
+    const [SearchString, setSearchString] = useState(
+        props.location.state && props.location.state.searchString?
+            props.location.state.searchString:sessionStorage.getItem('searchString')
+    );
     useMount(()=>{
         const {location}=props;
-        let searchString;
-
         if(location.state&&location.state.searchString){//判断当前有参数
-            searchString=location.state.searchString;
+            let searchString=location.state.searchString;
             sessionStorage.setItem('searchString',searchString);// 存入到sessionStorage中
         }
     })
     return (
         <div>
-            <ResultHeader history={props.history}/>
-            <SearchResult searchString={props.location.state.searchString}/>
+            <ResultHeader history={props.history} searchString={SearchString}/>
+            <SearchResult searchString={SearchString}/>
         </div>
     );
 }
