@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Row, Col, Divider, Tag, Tabs, Card, Image, Popover, Descriptions} from 'antd';
 import ResultHeader from "../../components/ResultHeader";
-import BiliBili from '../../images/icons/bilibili.png';
-import Bangumi from '../../images/icons/bangumi.png';
 import TypeTag from "../../components/TypeTag";
 import tagInfo from './tagInfo';
 import workData from './workDetails'
 import Tags from "../../components/Tags";
+import BiliBiliScoreTag from "../../components/BiliBiliScoreTag";
+import BangumiScoreTag from "../../components/BangumiScoreTag";
 import {useMount, useUnmount} from "ahooks";
 import './index.css';
 import axios from "axios";
@@ -25,65 +25,22 @@ function DetailInfo (props) {
     }
     const [loading, setLoading] = useState(true);
     const [mobile, setMobile] = useState(false);
-    const [hoverBiliBili, setHoverBiliBili] = useState(false);
-    const [hoverBangumi, setHoverBangumi] = useState(false);
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
 
     const keys = Object.keys(workData);
-    const handleHoverChange1 = visible => {
-        setHoverBiliBili(visible);
-    }
-
-    const handleHoverChange2 = visible => {
-        setHoverBangumi(visible);
-    }
-
-    const BiliBiliTag = () => <Popover
-            style={{ width: 500 }}
-            content={`${bilibiliData.media_score.score}分 / ${bilibiliData.media_score.user_count}人点评`}
-            title="BiliBili评分"
-            trigger="hover"
-            visible={hoverBiliBili}
-            onVisibleChange={handleHoverChange1}>
-            <Tag icon={<img src={BiliBili} alt={'bilibili'} style={{width:'1rem'}}/>}
-                 style={{fontSize:'.5rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'3.5rem'}}
-                 color={'#EA7A99'}
-            >
-
-                &nbsp;{bilibiliData.media_score.score}
-            </Tag>
-        </Popover>
-
-
-    const BangumiTag = () => <Popover
-            style={{ width: 500 }}
-            content={`7.0分 / 4634人点评`}
-            title="Bangumi评分"
-            trigger="hover"
-            visible={hoverBangumi}
-            onVisibleChange={handleHoverChange2}>
-            <Tag icon={<img src={Bangumi} alt={'bangumi'} style={{width:'1rem'}}/>}
-                 style={{fontSize:'.5rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'3.5rem'}}
-                 color={'#EE868E'}
-            >
-
-                &nbsp;7.0
-            </Tag>
-        </Popover>
-
 
     const Score = () => <div style={{width:'9rem', display:'flex', justifyContent:'space-between'}}>
-            <BiliBiliTag/>
-            <BangumiTag/>
+            <BiliBiliScoreTag score={bilibiliData.media_score.score} user_count={bilibiliData.media_score.user_count}/>
+            <BangumiScoreTag score={'暂无'} user_count={'暂无'}/>
         </div>
 
 
     const handleResize = e => setMobile(e.target.innerWidth <= 1000);
-    function setCookie(cname, cvalue, exdays) {
+    const setCookie = (name, value, days) => {
         const d = new Date ();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        d.setTime(d.getTime() + (days*24*60*60*1000));
         const expires = "expires=" + d.toUTCString ();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
+        document.cookie = name + "=" + value + "; " + expires;
     }
     useMount(async () => {
         axios.defaults.withCredentials=true;
