@@ -93,7 +93,7 @@ function DetailInfo (props) {
         setTimeout(() => {
             setLoading(false);
         }, 2000);
-        let searchResult = (await axios.get (`/bilibili/x/web-interface/search/type`, {
+        let searchResult = (await axios.get (`/x/web-interface/search/type`, {
             params: {
                 search_type: 'media_bangumi',
                 keyword: name
