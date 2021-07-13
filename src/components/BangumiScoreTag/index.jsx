@@ -13,6 +13,13 @@ const BangumiScoreTag = (props) => {
     const handleHoverChange = visible => {
         setHoverBangumi(visible);
     }
+    const style = props.style === undefined ?
+        {
+            fontSize:'.5rem',
+            padding:'.2rem',
+            width:'3.5rem'
+        }:
+        props.style;
     return(
         <Popover
             style={{ width: 500 }}
@@ -22,7 +29,7 @@ const BangumiScoreTag = (props) => {
             visible={hoverBangumi}
             onVisibleChange={handleHoverChange}>
             <Tag icon={<img src={Bangumi} alt={'bangumi'} style={{width:'1rem'}}/>}
-                 style={{fontSize:'.5rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'3.5rem'}}
+                 style={{display:'flex', alignItems:'center', justifyContent:'center', ...style}}
                  color={'#EE868E'}
             >
 

@@ -13,6 +13,13 @@ const BiliBiliScoreTag = (props) => {
     const handleHoverChange = visible => {
         setHoverBiliBili(visible);
     }
+    const style = props.style === undefined ?
+        {
+            fontSize:'.5rem',
+            padding:'.2rem',
+            width:'3.5rem'
+        }:
+        props.style;
     return (
         <Popover
             style={{ width: 500 }}
@@ -22,7 +29,7 @@ const BiliBiliScoreTag = (props) => {
             visible={hoverBiliBili}
             onVisibleChange={handleHoverChange}>
             <Tag icon={<img src={BiliBili} alt={'bilibili'} style={{width:'1rem'}}/>}
-                 style={{fontSize:'.5rem', display:'flex', alignItems:'center', justifyContent:'center', padding:'.2rem', width:'3.5rem'}}
+                 style={{display:'flex', alignItems:'center', justifyContent:'center', ...style}}
                  color={'#EA7A99'}
             >
 
@@ -31,5 +38,4 @@ const BiliBiliScoreTag = (props) => {
         </Popover>
     )
 }
-
 export default BiliBiliScoreTag;
