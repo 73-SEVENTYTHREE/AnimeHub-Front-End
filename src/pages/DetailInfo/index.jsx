@@ -75,14 +75,16 @@ function DetailInfo (props) {
                         <Col className="gutter-row" span={mobile ? 24 : 6} style={mobile ? {marginBottom:'2rem'} : {}}>
                             <div className="card-container">
                                 <Card title="剧情概览" style={{marginBottom:'2rem', overflow:'scroll', maxHeight:'18rem'}} headStyle={{fontSize:'1.3rem'}}>
-                                    {bilibiliData.desc}
+                                    {
+                                        loading ? <Skeleton active />:bilibiliData.desc
+                                    }
                                 </Card>
                                 <Card title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', maxHeight:'35rem'}} headStyle={{fontSize:'1.3rem'}}>
-                                    <div style={{margin:'1rem', display:'flex', justifyContent:'center'}}>
+                                    <div style={{margin:'1rem', display:'flex', justifyContent:'center', minHeight:'20rem'}}>
                                         <Image src={bilibiliData.cover}
                                                style={{borderRadius:'10px', width:'15rem'}}
                                                placeholder = {
-                                                   <Skeleton.Image active={true}/>
+                                                   <Skeleton.Image active={true} style={{width:'15rem', height:'20rem'}}/>
                                                }
                                         />
                                     </div>
@@ -94,18 +96,21 @@ function DetailInfo (props) {
                             <div className="card-container">
                                 <Tabs type="card">
                                     <TabPane tab="作品详情" key="1">
+                                        {
+                                            loading ? <Skeleton active />:
+                                                <Descriptions
+                                                    bordered
+                                                    size={'small'}
+                                                    column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+                                                >
+                                                    {
+                                                        keys.map(item =>
+                                                            <Descriptions.Item label={item}>{workData[item]}</Descriptions.Item>
+                                                        )
+                                                    }
+                                                </Descriptions>
+                                        }
 
-                                        <Descriptions
-                                            bordered
-                                            size={'small'}
-                                            column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
-                                        >
-                                            {
-                                                keys.map(item =>
-                                                    <Descriptions.Item label={item}>{workData[item]}</Descriptions.Item>
-                                                )
-                                            }
-                                        </Descriptions>
 
                                     </TabPane>
                                     <TabPane tab="作品时间轴" key="2">

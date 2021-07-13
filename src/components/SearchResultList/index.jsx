@@ -44,6 +44,7 @@ function SearchResultList  (props) {
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
             const result  = await getBiliBiliDataByMediaName(item.title).result;
+            console.log(result)
             if(result === undefined){
                 item.bilibili_score='暂无'
                 item.bilibili_user_count='暂无'
