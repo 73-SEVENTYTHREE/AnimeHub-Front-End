@@ -8,7 +8,8 @@ import Tags from '../Tags';
 import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import {Link} from "react-router-dom";
 import {useMount, useUnmount} from "ahooks";
-import PubSub from 'pubsub-js'
+import PubSub from 'pubsub-js';
+import outLineKeyWords from "../../utils/outLineKeyWords";
 
 const {Paragraph} = Typography
 
@@ -53,7 +54,6 @@ function SearchResultList  (props) {
                 item.bilibili_score = result[0].media_score.score
                 item.bilibili_user_count = result[0].media_score.user_count
             }
-            console.log(str)
             item.title = outLineKeyWords([str], item.title);
             console.log(item.title)
         }
