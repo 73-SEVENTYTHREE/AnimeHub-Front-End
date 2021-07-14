@@ -29,14 +29,13 @@ function SearchResultList  (props) {
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(true);
     let token = null;
+    console.log(searchString)
     //根据传入的字符串获取相关信息，和后端的交互主要在这个函数里。
     const getDataBySearchString = async str => {
         setLoading(true);
         let ListData = [];
         ListData.push({
-            href:'https://ant.design',
-            title: str,
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            title: '工作细胞',
             tags:['搞笑','战斗','日常','声控'],
             overview:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
             start_date:'2019年7月',

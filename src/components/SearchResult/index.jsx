@@ -19,7 +19,7 @@ function FilterHeader(props) {
                     }
                     key="1"
                 >
-                    <SearchResultList></SearchResultList>
+                    <SearchResultList searchString={props.searchString}/>
                 </TabPane>
                 <TabPane
                     tab={
