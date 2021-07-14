@@ -45,12 +45,9 @@ function DetailInfo (props) {
             setLoading(false);
         }, 2000);
         let searchResult = await getBiliBiliDataByMediaName(name);
-        console.log(searchResult)
         if(searchResult.result !== undefined){
             setBiliBiliData(searchResult.result[0]);
         }
-        const relevantContainer = document.getElementById('relevant-container');
-        relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height;
     })
 
     useUnmount(() => {
@@ -60,13 +57,15 @@ function DetailInfo (props) {
     return (
         <div>
             <ResultHeader history={props.history}/>
-            <Divider orientation="left" style={{fontSize:'1.4rem', marginTop:'1.5rem'}}>
-                <div style={{display:'flex', alignItems:'center'}}>
-                    {bilibiliData.org_title.replace(/<[^<>]+>/g,'')}
-                    &nbsp;
-                    <TypeTag/>
-                </div>
-            </Divider>
+            <div style={{overflow:'auto'}}>
+                <Divider orientation="left" style={{fontSize:'1.4rem', marginTop:'1.5rem'}}>
+                    <div style={{display:'flex', alignItems:'center'}}>
+                        {bilibiliData.org_title.replace(/<[^<>]+>/g,'')}
+                        &nbsp;
+                        <TypeTag/>
+                    </div>
+                </Divider>
+            </div>
             <div style={{backgroundColor:'white', height:'.7rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
                 <div id={'result-container-bg'} style={{ background:`url("${bilibiliData.cover}")`}}/>
@@ -144,22 +143,6 @@ function DetailInfo (props) {
                     </Row>
                 </div>
             </div>
-            {
-                mobile ? <div id="relevant-container"/> :
-                    <div id="relevant-container">
-                        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingTop:'1rem'}}>
-                            <Col className="gutter-row" span={24}>
-                                <div id="otherInfo">
-                                    <Card title="相关推荐" bordered={false} headStyle={{fontSize:'1.3rem'}}>
-                                        <p>Card content</p>
-                                        <p>Card content</p>
-                                        <p>Card content</p>
-                                    </Card>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-            }
         </div>
     );
 }

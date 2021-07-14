@@ -3,11 +3,12 @@
     align-items:center;
     height:4.2rem;
     background-size: cover;
+
 }
 
 #banner-bg{
     height: 4.2rem;
-    width: 100%;
+    width: 100vw;
     background: url("../../images/banner.png");
     background-size: cover;
     z-index: -1;

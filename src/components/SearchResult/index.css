@@ -1,0 +1,26 @@
+@media screen and (max-width: 1000px) {
+    #searchContainer{
+        flex-direction: column;
+    }
+    #infoContainer{
+        width: 100%;
+    }
+    #relatedContainer{
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    #infoContainer{
+        width: 76%;
+        border-radius: 10px;
+    }
+    #relatedContainer{
+        width: 23%;
+        border-radius: 10px;
+    }
+    #searchContainer{
+        padding: 1rem;
+    }
+}

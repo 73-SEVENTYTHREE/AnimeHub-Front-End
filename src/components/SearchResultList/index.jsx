@@ -45,10 +45,8 @@ function SearchResultList  (props) {
         })
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
-            console.log(item.title)
             const data  = await getBiliBiliDataByMediaName(item.title);
             const result = data.result;
-            console.log(data)
             if(result === undefined){
                 item.bilibili_score='暂无'
                 item.bilibili_user_count='暂无'
@@ -117,7 +115,7 @@ function SearchResultList  (props) {
                                     <BiliBiliScoreTag
                                         score={item.bilibili_score}
                                         user_count={item.bilibili_user_count}
-                                        style={{fontSize:'0.3rem',padding:'0.1rem',width:'2.7rem',height:'1.2rem'}}
+                                        style={{fontSize:'0.7rem',padding:'0.1rem',width:'2.7rem',height:'1.2rem'}}
                                         logoStyle={{width:'.8rem'}}
                                     />
                                 </div>
