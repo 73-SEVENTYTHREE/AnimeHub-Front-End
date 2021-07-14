@@ -15,7 +15,7 @@ const BiliBiliScoreTag = (props) => {
     }
     const style = props.style === undefined ?
         {
-            fontSize:'.5rem',
+            fontSize:'.8rem',
             padding:'.2rem',
             width:'3.5rem'
         }:
