@@ -8,7 +8,7 @@ const {TabPane} = Tabs;
 function FilterHeader(props) {
     return (
         <div>
-            <Tabs defaultActiveKey="1" centered size={'large'}>
+            <Tabs defaultActiveKey="1" centered size={'large'} style={{minHeight:'90vh'}}>
                 <TabPane
                     tab={
                         <span>
@@ -71,9 +71,9 @@ function FilterHeader(props) {
 
 function SearchResult(props) {
     return (
-        <div style={{backgroundColor: '#f3f3f3'}}>
+        <div style={{backgroundColor: '#f3f3f3', minHeight:'100vh'}}>
             <div style={{display: 'flex', justifyContent: 'space-around', padding: '1.5rem',}}>
-                <div style={{width: '70%', backgroundColor: '#fff', borderRadius: '1rem'}}>
+                <div style={{width: '70%', backgroundColor: '#fff', borderRadius: '1rem', padding:'0 1rem'}}>
                     {/*<Divider orientation={'left'}><b>搜索结果</b></Divider>*/}
                     <FilterHeader searchString={props.searchString}/>
                 </div>
