@@ -50,7 +50,8 @@ function SearchResultList  (props) {
             start_date:'2019年7月',
             episode_count:12,
             score_general:9.6,
-            image_url:"http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg"
+            image_url:"http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg",
+            type:'anime'
         })
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
@@ -128,7 +129,7 @@ function SearchResultList  (props) {
                                         >
 
                                         </Link>&nbsp;&nbsp;
-                                        <TypeTag/>
+                                        <TypeTag type={item.type}/>
                                     </div>}
                                     description={item.tags.map(item=>{return <Tag>{item}</Tag>})}
                                 />

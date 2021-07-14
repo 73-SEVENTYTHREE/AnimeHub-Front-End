@@ -1,3 +1,16 @@
+/**
+ * 词条类型标签。
+ * 需要传入type参数，有一下五种取值：
+ * 1. anime
+ * 2. game
+ * 3. book
+ * 4. character
+ * 5. company
+ * 6. person
+ * 7. music
+ * Author: Wei Liu
+ * Data: 2021/07/14
+ */
 import React from 'react';
 import TV from "../../images/icons/tv.png";
 import Game from "../../images/icons/game.png";
@@ -25,14 +38,14 @@ function TypeTag (props) {
         book:'漫画 / 小说',
         character:'虚拟人物',
         company:'公司',
-        real_person:'',
-        music:Music
+        real_person:'人物',
+        music:'音乐'
     }
     return (
-        <Tag icon={<img src={iconSelector[type]} alt={type} style={{display:'inline-block', width:'.6rem'}}/>}
+        <Tag icon={<img src={iconSelector[type]} alt={type} style={{display:'inline-block', width:'.8rem'}}/>}
              style={{height:'1.4rem', display:'flex', alignItems:'center', justifyContent:'center'}}
         >
-            &nbsp;番剧
+            &nbsp;{nameSelector[type]}
         </Tag>
     );
 }
