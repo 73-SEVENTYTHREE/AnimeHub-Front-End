@@ -33,13 +33,15 @@ function DetailInfo (props) {
 
     const keys = Object.keys(workData);
 
-    const Score = () => <div style={{width:'9rem', display:'flex', justifyContent:'space-between'}}>
+    const Score = () => <div style={{width:'8rem', display:'flex', justifyContent:'space-between'}}>
             <BiliBiliScoreTag score={bilibiliData.media_score.score} user_count={bilibiliData.media_score.user_count}/>
             <BangumiScoreTag score={'暂无'} user_count={'暂无'}/>
         </div>
 
 
-    const handleResize = e => setMobile(e.target.innerWidth <= 1000);
+    const handleResize = e => {
+        setMobile(e.target.innerWidth <= 1000);
+    }
 
     useMount(async () => {
         setMobile(document.documentElement.clientWidth <= 1000);
@@ -51,6 +53,9 @@ function DetailInfo (props) {
         if(searchResult.result !== undefined){
             setBiliBiliData(searchResult.result[0]);
         }
+        const relevantContainer = document.getElementById('relevant-container');
+        relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container-bg')).height
+        console.log(relevantContainer.style)
     })
 
     useUnmount(() => {
@@ -61,7 +66,7 @@ function DetailInfo (props) {
         <div>
             <ResultHeader history={props.history}/>
             <NameDivider title={bilibiliData.org_title} type={type}/>
-            <div style={{backgroundColor:'white', height:'.7rem', marginBottom:'-1px'}}/>
+            <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
                 <div id={'result-container-bg'} style={{ background:`url("${bilibiliData.cover}")`}}/>
                 <div style={{padding: '0 1.2rem'}}>
@@ -73,7 +78,7 @@ function DetailInfo (props) {
                                         loading ? <Skeleton active />:bilibiliData.desc
                                     }
                                 </Card>
-                                <Card title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', maxHeight:'35rem'}} headStyle={{fontSize:'1.3rem'}}>
+                                <Card title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', maxHeight:'40rem'}} headStyle={{fontSize:'1.3rem'}}>
                                     <div style={{margin:'1rem', display:'flex', justifyContent:'center', minHeight:'20rem'}}>
                                         <Image src={bilibiliData.cover}
                                                style={{borderRadius:'10px', width:'15rem'}}
@@ -88,7 +93,7 @@ function DetailInfo (props) {
                         </Col>
                         <Col className="gutter-row" span={mobile ? 24 : 18}>
                             <div className="card-container">
-                                <Tabs type="card">
+                                <Tabs type="card" size={'large'}>
                                     <TabPane tab="作品详情" key="1">
                                         {
                                             loading ? <Skeleton active />:
@@ -106,11 +111,6 @@ function DetailInfo (props) {
                                         }
 
 
-                                    </TabPane>
-                                    <TabPane tab="作品时间轴" key="2">
-                                        <p>Content of Tab Pane 1</p>
-                                        <p>Content of Tab Pane 1</p>
-                                        <p>Content of Tab Pane 1</p>
                                     </TabPane>
                                     <TabPane tab="章节概要" key="3">
                                         <p>Content of Tab Pane 1</p>
@@ -137,6 +137,9 @@ function DetailInfo (props) {
                         </Col>
                     </Row>
                 </div>
+            </div>
+            <div id={'relevant-container'}>
+                2222
             </div>
         </div>
     );

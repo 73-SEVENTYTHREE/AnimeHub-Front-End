@@ -3,19 +3,28 @@
     width: 100%;
     /*background: #f3f3f3;*/
     position: absolute;
+    overflow: auto;
 }
 
 @media screen and (min-width: 500px){
     #result-container{
-        min-height: 75vh;
+        max-height: 70rem;
+    }
+    .card-container{
+        height: 100%;
     }
 }
 
-#otherInfo{
-    /*min-height: 30vh;*/
+@media screen and (max-width: 500px){
+    #result-container{
+        height: auto;
+    }
+}
 
-    margin-top: -.5rem;
-    padding: .6rem 0;
+#relevant-container{
+    height: 40rem;
+    position: relative;
+    padding: 0rem 1rem;
 }
 
 #result-container-bg{
@@ -29,7 +38,6 @@
     -moz-filter: blur(10px);
     -o-filter: blur(10px);
     -ms-filter: blur(10px);
-
     position: absolute;
 }
 
@@ -39,6 +47,9 @@
 
 .card-container{
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card-container > .ant-tabs-card .ant-tabs-content {
