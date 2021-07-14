@@ -3,8 +3,6 @@ import {List, Tag, Typography, Menu, Space, Button, message, Skeleton} from 'ant
 import TypeTag from "../TypeTag";
 import './index.css';
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
-import Tags from '../Tags';
 import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import {Link} from "react-router-dom";
 import {useMount, useUnmount} from "ahooks";
@@ -12,8 +10,6 @@ import PubSub from 'pubsub-js';
 import outLineKeyWords from "../../utils/outLineKeyWords";
 
 const {Paragraph} = Typography
-
-const {SubMenu} = Menu
 
 class InsideFilter extends Component{
     render() {
@@ -32,7 +28,6 @@ function SearchResultList  (props) {
     const observer = new IntersectionObserver((entries,observer)=>{
         entries.forEach(entry=>{
             if(entry.isIntersecting){
-                console.log(entry)
                 entry.target.classList.add('animate')
                 observer.unobserve(entry.target)
             }
@@ -43,6 +38,26 @@ function SearchResultList  (props) {
     const getDataBySearchString = async str => {
         setLoading(true);
         let ListData = [];
+        ListData.push({
+            title: '工作细胞',
+            tags:['搞笑','战斗','日常','声控'],
+            description:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
+            start_date:'2019年7月',
+            episode_count:12,
+            score_general:9.6,
+            image_url:"http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg",
+            type:'anime'
+        })
+        ListData.push({
+            title: '工作细胞',
+            tags:['搞笑','战斗','日常','声控'],
+            description:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
+            start_date:'2019年7月',
+            episode_count:12,
+            score_general:9.6,
+            image_url:"http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg",
+            type:'anime'
+        })
         ListData.push({
             title: '工作细胞',
             tags:['搞笑','战斗','日常','声控'],
@@ -66,7 +81,10 @@ function SearchResultList  (props) {
             }
             item.title = outLineKeyWords([str], item.title);
             item.description = outLineKeyWords([str], item.description);
-            console.log(item.title)
+            item.tags = item.tags.map(tag=>{
+                return outLineKeyWords([str],tag)
+            })
+            console.log(item.tags)
         }
         setListData(ListData);
         setLoading(false);
@@ -131,7 +149,7 @@ function SearchResultList  (props) {
                                         </Link>&nbsp;&nbsp;
                                         <TypeTag type={item.type}/>
                                     </div>}
-                                    description={item.tags.map(item=>{return <Tag>{item}</Tag>})}
+                                    description={item.tags.map(item=>{return <Tag><div dangerouslySetInnerHTML={item}/></Tag>})}
                                 />
                                 <div className={'item-info-tag'}>
                                     <Tag color={'geekblue'}>评分:</Tag>
