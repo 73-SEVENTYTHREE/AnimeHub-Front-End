@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Tabs} from 'antd';
 import {AppleOutlined, AndroidOutlined} from '@ant-design/icons';
 import SearchResultList from "../SearchResultList";
+import './index.css'
 
 const {TabPane} = Tabs;
 
 function FilterHeader(props) {
-
     return (
         <div>
             <Tabs defaultActiveKey="1" centered size={'large'}>
@@ -14,7 +14,7 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AppleOutlined/>
-                          综合
+                          动画
                         </span>
                     }
                     key="1"
@@ -25,7 +25,7 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AndroidOutlined/>
-                          动画
+                          书籍
                         </span>
                     }
                     key="2"
@@ -36,7 +36,7 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AndroidOutlined/>
-                          漫画
+                          音乐
                         </span>
                     }
                     key="3"
@@ -58,12 +58,34 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AndroidOutlined/>
-                          资讯专栏
+                          人物
                         </span>
                     }
                     key="5"
                 >
                     Tab 5
+                </TabPane>
+                <TabPane
+                    tab={
+                        <span>
+                          <AndroidOutlined/>
+                          虚拟人物
+                        </span>
+                    }
+                    key="6"
+                >
+                    Tab 6
+                </TabPane>
+                <TabPane
+                    tab={
+                        <span>
+                          <AndroidOutlined/>
+                          公司
+                        </span>
+                    }
+                    key="7"
+                >
+                    Tab 7
                 </TabPane>
             </Tabs>
         </div>
@@ -72,14 +94,14 @@ function FilterHeader(props) {
 
 function SearchResult(props) {
     return (
-        <div style={{backgroundColor: '#f3f3f3'}}>
-            <div style={{display: 'flex', justifyContent: 'space-around', padding: '1.5rem',}}>
-                <div style={{width: '70%', backgroundColor: '#fff', borderRadius: '1rem'}}>
+        <div style={{backgroundColor: '#f3f3f3', minHeight:'100vh'}}>
+            <div style={{display: 'flex', justifyContent: 'space-between'}} id={'searchContainer'}>
+                <div style={{backgroundColor: '#fff', padding:'0 1rem 1rem 1rem'}} id={'infoContainer'}>
                     {/*<Divider orientation={'left'}><b>搜索结果</b></Divider>*/}
                     <FilterHeader searchString={props.searchString}/>
                 </div>
-                <div style={{width: '20%'}}>
-                    <div style={{backgroundColor: '#fff', height: '100px', borderRadius:'1rem'}}>相关人物</div>
+                <div id={'relatedContainer'} style={{backgroundColor: '#fff', height: '100px', padding:'1rem'}}>
+                    相关人物
                 </div>
             </div>
         </div>
