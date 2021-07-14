@@ -10,9 +10,12 @@ mark{
     background-repeat: no-repeat;
     background-size: 0 0;
     background-position: 0 100%;
-    animation:1s highlight ease-in-out forwards;
     padding: 0;
     margin: 0;
+}
+
+mark.animate{
+    animation:1s highlight ease-in-out forwards;
 }
 
 @keyframes highlight {
