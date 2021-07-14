@@ -1,7 +1,16 @@
+
 import React, {useState} from 'react';
 import {Tabs} from 'antd';
 import {AppleOutlined, AndroidOutlined} from '@ant-design/icons';
 import SearchResultList from "../SearchResultList";
+import TypeTag from "../TypeTag";
+import TV from "../../images/icons/tv.png";
+import Game from "../../images/icons/game.png";
+import Book from "../../images/icons/book.png";
+import Character from "../../images/icons/character.png";
+import Company from "../../images/icons/company.png";
+import Person from "../../images/icons/person.png";
+import Music from "../../images/icons/music.png";
 import './index.css'
 
 const {TabPane} = Tabs;
@@ -12,21 +21,21 @@ function FilterHeader(props) {
             <Tabs defaultActiveKey="1" centered size={'large'}>
                 <TabPane
                     tab={
-                        <span>
-                          <AppleOutlined/>
-                          动画
-                        </span>
+                        <div>
+                            <img src={TV} style={{display:'inline-block', width:'.8rem'}} alt={'动画'}/>
+                            &nbsp;动画
+                        </div>
                     }
                     key="1"
                 >
-                    <SearchResultList searchString={props.searchString}/>
+                    <SearchResultList searchString={props.searchString} searchType={'anime'}/>
                 </TabPane>
                 <TabPane
                     tab={
-                        <span>
-                          <AndroidOutlined/>
-                          书籍
-                        </span>
+                        <div>
+                            <img src={Book} style={{display:'inline-block', width:'.8rem'}} alt={'动画'}/>
+                            &nbsp;书籍
+                        </div>
                     }
                     key="2"
                 >
@@ -34,10 +43,10 @@ function FilterHeader(props) {
                 </TabPane>
                 <TabPane
                     tab={
-                        <span>
-                          <AndroidOutlined/>
-                          音乐
-                        </span>
+                        <div>
+                            <img src={Music} style={{display:'inline-block', width:'.8rem'}} alt={'动画'}/>
+                            &nbsp;音乐
+                        </div>
                     }
                     key="3"
                 >
@@ -45,10 +54,10 @@ function FilterHeader(props) {
                 </TabPane>
                 <TabPane
                     tab={
-                        <span>
-                          <AndroidOutlined/>
-                          游戏
-                        </span>
+                        <div>
+                            <img src={Game} style={{display:'inline-block', width:'.8rem'}} alt={'动画'}/>
+                            &nbsp;游戏
+                        </div>
                     }
                     key="4"
                 >
@@ -56,10 +65,10 @@ function FilterHeader(props) {
                 </TabPane>
                 <TabPane
                     tab={
-                        <span>
-                          <AndroidOutlined/>
-                          人物
-                        </span>
+                        <div>
+                            <img src={Person} style={{display:'inline-block', width:'.8rem'}} alt={'动画'}/>
+                            &nbsp;人物
+                        </div>
                     }
                     key="5"
                 >
@@ -67,10 +76,10 @@ function FilterHeader(props) {
                 </TabPane>
                 <TabPane
                     tab={
-                        <span>
-                          <AndroidOutlined/>
-                          虚拟人物
-                        </span>
+                        <div>
+                            <img src={Character} style={{display:'inline-block', width:'.8rem'}} alt={'动画'}/>
+                            &nbsp;虚拟人物
+                        </div>
                     }
                     key="6"
                 >
@@ -78,10 +87,10 @@ function FilterHeader(props) {
                 </TabPane>
                 <TabPane
                     tab={
-                        <span>
-                          <AndroidOutlined/>
-                          公司
-                        </span>
+                        <div>
+                            <img src={Company} style={{display:'inline-block', width:'.8rem'}} alt={'动画'}/>
+                            &nbsp;公司
+                        </div>
                     }
                     key="7"
                 >
