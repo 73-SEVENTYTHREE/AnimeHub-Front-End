@@ -29,6 +29,15 @@ function SearchResultList  (props) {
     const [searchString, setSearchString] = useState(props.searchString);
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const observer = new IntersectionObserver((entries,observer)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                console.log(entry)
+                entry.target.classList.add('animate')
+                observer.unobserve(entry.target)
+            }
+        })
+    })
     let token = null;
     //根据传入的字符串获取相关信息，和后端的交互主要在这个函数里。
     const getDataBySearchString = async str => {
@@ -55,18 +64,26 @@ function SearchResultList  (props) {
                 item.bilibili_user_count = result[0].media_score.user_count
             }
             item.title = outLineKeyWords([str], item.title);
+            item.description = outLineKeyWords([str], item.description);
             console.log(item.title)
         }
         setListData(ListData);
         setLoading(false);
+    }
+    const handleMark = ()=>{
+        document.querySelectorAll('mark').forEach(mark=>{
+            observer.observe(mark)
+        })
     }
     useMount(async () => {
         //订阅上方导航栏输入的消息，获取对应字符串
         token = PubSub.subscribe('ChangeInput', async (msg, data) => {
             setSearchString(data);
             await getDataBySearchString (data);
+            handleMark()
         });
         await getDataBySearchString(searchString);
+        handleMark()
     })
 
     useUnmount(() => {
@@ -126,7 +143,7 @@ function SearchResultList  (props) {
                                 </div>
                                 <div className={'item-info-tag'}><Tag color={'geekblue'}>总话数:</Tag>{item.episode_count}</div>
                                 <div className={'item-info-tag'}><Tag color={'geekblue'}>放送日期:</Tag>{item.start_date}</div>
-                                <div className={'item-info-tag'}><Tag color={'geekblue'}>简介:</Tag>{item.description}</div>
+                                <div className={'item-info-tag'}><Tag color={'geekblue'}>简介:</Tag><div dangerouslySetInnerHTML={item.description}/></div>
                             </List.Item>
                         )}
                     />
