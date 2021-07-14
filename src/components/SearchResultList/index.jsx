@@ -3,8 +3,6 @@ import {List, Tag, Typography, Menu, Space} from 'antd';
 import TypeTag from "../TypeTag";
 import './index.css';
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
-import Tags from '../Tags';
 import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import {Link} from "react-router-dom";
 
@@ -30,12 +28,14 @@ class SearchResultList extends Component {
 
     async componentDidMount() {
         let {listData,searchString} = this.state
-        if(sessionStorage.getItem('searchString')!==undefined){
-            searchString = sessionStorage.getItem('searchString')
-        }
+        // if(sessionStorage.getItem('searchString')!==undefined){
+        //     searchString = sessionStorage.getItem('searchString')
+        // }
+        searchString = this.props.searchString
+        console.log(searchString)
         listData.push({
             href:'https://ant.design',
-            title:'工作细胞',
+            title:searchString,
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
             tags:['搞笑','战斗','日常','声控'],
             overview:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
@@ -45,7 +45,7 @@ class SearchResultList extends Component {
         })
         for(let i=0,length=listData.length;i<length;i++){
             let item = listData[i]
-            const { result } = await getBiliBiliDataByMediaName(item.title)
+            const result = await getBiliBiliDataByMediaName(item.title).result
             console.log(result)
             if(result===undefined){
                 item.bilibili_score='暂无'
@@ -55,7 +55,7 @@ class SearchResultList extends Component {
                 item.bilibili_user_count = result[0].media_score.user_count
             }
         }
-        this.setState({listData: [...listData]})
+        this.setState({listData: [...listData],searchString: searchString})
     }
 
     render() {
