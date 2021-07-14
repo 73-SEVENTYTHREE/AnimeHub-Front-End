@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Row, Col, Divider, Tag, Tabs, Card, Image, Descriptions, Skeleton} from 'antd';
 import ResultHeader from "../../components/ResultHeader";
-import TypeTag from "../../components/TypeTag";
 import tagInfo from './tagInfo';
 import workData from './workDetails'
 import Tags from "../../components/Tags";
 import BiliBiliScoreTag from "../../components/BiliBiliScoreTag";
 import BangumiScoreTag from "../../components/BangumiScoreTag";
+import NameDivider from "../../components/NameDivider";
 import {useMount, useUnmount} from "ahooks";
 import './index.css';
 import axios from "axios";
@@ -15,14 +15,17 @@ import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 const { TabPane } = Tabs;
 
 function DetailInfo (props) {
-    const {location}=props;
-    let name;
+    const {state}=props.location;
+    let name, type;
 
-    if(location.state&&location.state.name){//判断当前有参数
-        name=location.state.name;
-        sessionStorage.setItem('name',name);// 存入到sessionStorage中
+    if(state && state.name && state.type){//判断当前有参数
+        name = state.name;
+        type = state.type;
+        sessionStorage.setItem('name', name);// 存入到sessionStorage中
+        sessionStorage.setItem('type', type);
     }else {
         name = sessionStorage.getItem ('name');// 当state没有参数时，取sessionStorage中的参数
+        type = sessionStorage.getItem('type')
     }
     const [loading, setLoading] = useState(true);
     const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
@@ -57,15 +60,7 @@ function DetailInfo (props) {
     return (
         <div>
             <ResultHeader history={props.history}/>
-            <div style={{overflow:'auto'}}>
-                <Divider orientation="left" style={{fontSize:'1.4rem', marginTop:'1.5rem'}}>
-                    <div style={{display:'flex', alignItems:'center'}}>
-                        {bilibiliData.org_title.replace(/<[^<>]+>/g,'')}
-                        &nbsp;
-                        <TypeTag/>
-                    </div>
-                </Divider>
-            </div>
+            <NameDivider title={bilibiliData.org_title} type={type}/>
             <div style={{backgroundColor:'white', height:'.7rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
                 <div id={'result-container-bg'} style={{ background:`url("${bilibiliData.cover}")`}}/>

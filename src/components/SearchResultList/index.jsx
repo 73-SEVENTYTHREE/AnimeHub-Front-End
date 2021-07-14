@@ -9,6 +9,7 @@ import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import {Link} from "react-router-dom";
 import {useMount, useUnmount} from "ahooks";
 import PubSub from 'pubsub-js'
+import outLineKeyWords from "../../utils/outLineKeyWords";
 
 const {Paragraph} = Typography
 
@@ -35,7 +36,7 @@ function SearchResultList  (props) {
         let ListData = [];
         ListData.push({
             href:'https://ant.design',
-            title: str,
+            title: '工作细胞',
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
             tags:['搞笑','战斗','日常','声控'],
             overview:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
@@ -54,6 +55,9 @@ function SearchResultList  (props) {
                 item.bilibili_score = result[0].media_score.score
                 item.bilibili_user_count = result[0].media_score.user_count
             }
+            console.log(str)
+            item.title = outLineKeyWords([str], item.title);
+            console.log(item.title)
         }
         setListData(ListData);
         setLoading(false);
@@ -103,8 +107,11 @@ function SearchResultList  (props) {
                             >
                                 <List.Item.Meta
                                     title={<div style={{display:'flex',alignItems:'center',height:'2rem'}}>
-                                        <Link to={{pathname:'/detailinfo',state:{name:item.title}}} style={{fontSize:'1.1rem',color:'black'}}>
-                                            <mark>{item.title}</mark>
+                                        <Link to={{pathname:'/detailinfo',state:{name:item.title}}}
+                                              style={{fontSize:'1.1rem',color:'black'}}
+                                              dangerouslySetInnerHTML={item.title}
+                                        >
+
                                         </Link>&nbsp;&nbsp;
                                         <TypeTag/>
                                     </div>}
@@ -129,5 +136,4 @@ function SearchResultList  (props) {
         </div>
     )
 }
-
 export default SearchResultList;

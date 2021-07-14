@@ -231,18 +231,18 @@ function HotWords (props) {
             <a href="http://www.lanrentuku.com" target="_blank">伊藤诚</a> <a
             href="http://www.lanrentuku.com" target="_blank">我妻由乃</a> <a
             href="http://www.lanrentuku.com" target="_blank">秋月爱莉</a> <Link
-            to={{pathname:'/detailInfo', state:{name:'工作细胞'}}}>工作细胞</Link> <a
+            to={{pathname:'/detailInfo', state:{name:'工作细胞', type:'anime'}}}>工作细胞</Link> <a
             href="http://www.lanrentuku.com" target="_blank">时崎狂三</a> <a
             href="http://www.lanrentuku.com" target="_blank">漩涡鸣人</a>
-            <Link to={{pathname:'/detailInfo', state:{name:'火影忍者'}}}>火影忍者</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'进击的巨人'}}}>进击的巨人</Link> <a
+            <Link to={{pathname:'/detailInfo', state:{name:'火影忍者', type:'anime'}}}>火影忍者</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'进击的巨人', type:'anime'}}}>进击的巨人</Link> <a
             href="http://www.lanrentuku.com" target="_blank">花泽香菜</a>
-            <Link to={{pathname:'/detailInfo', state:{name:'埃罗芒阿老师'}}}>埃罗芒阿老师</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'名侦探柯南'}}}>名侦探柯南</Link> <a
+            <Link to={{pathname:'/detailInfo', state:{name:'埃罗芒阿老师', type:'anime'}}}>埃罗芒阿老师</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'名侦探柯南', type:'anime'}}}>名侦探柯南</Link> <a
             href="http://www.lanrentuku.com" target="_blank">金木研</a> <a
             href="http://www.lanrentuku.com" target="_blank">白上吹雪</a>
-            <Link to={{pathname:'/detailInfo', state:{name:'从零开始的异界生活'}}}>从零开始的异界生活</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'海贼王'}}}>海贼王</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'从零开始的异界生活', type:'anime'}}}>从零开始的异界生活</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'海贼王', type:'anime'}}}>海贼王</Link>
         </div>
     );
 }
