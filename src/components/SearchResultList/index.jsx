@@ -9,7 +9,6 @@ import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import {Link} from "react-router-dom";
 import {useMount, useUnmount} from "ahooks";
 import PubSub from 'pubsub-js'
-import outLineKeyWords from "../../utils/outLineKeyWords";
 
 const {Paragraph} = Typography
 
@@ -35,14 +34,13 @@ function SearchResultList  (props) {
         setLoading(true);
         let ListData = [];
         ListData.push({
-            href:'https://ant.design',
             title: '工作细胞',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
             tags:['搞笑','战斗','日常','声控'],
-            overview:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
+            description:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
             start_date:'2019年7月',
             episode_count:12,
-            score_general:9.6
+            score_general:9.6,
+            image_url:"http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg"
         })
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
@@ -99,7 +97,7 @@ function SearchResultList  (props) {
                                             <img
                                                 style={{height:'15rem'}}
                                                 alt="logo"
-                                                src="http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg"
+                                                src={item.image_url}
                                             />
                                         </Link>
                                     </div>
@@ -128,7 +126,7 @@ function SearchResultList  (props) {
                                 </div>
                                 <div className={'item-info-tag'}><Tag color={'geekblue'}>总话数:</Tag>{item.episode_count}</div>
                                 <div className={'item-info-tag'}><Tag color={'geekblue'}>放送日期:</Tag>{item.start_date}</div>
-                                <div className={'item-info-tag'}><Tag color={'geekblue'}>简介:</Tag>{item.overview}</div>
+                                <div className={'item-info-tag'}><Tag color={'geekblue'}>简介:</Tag>{item.description}</div>
                             </List.Item>
                         )}
                     />
@@ -136,4 +134,5 @@ function SearchResultList  (props) {
         </div>
     )
 }
+
 export default SearchResultList;

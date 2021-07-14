@@ -14,7 +14,7 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AppleOutlined/>
-                          综合
+                          动画
                         </span>
                     }
                     key="1"
@@ -25,7 +25,7 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AndroidOutlined/>
-                          动画
+                          书籍
                         </span>
                     }
                     key="2"
@@ -36,7 +36,7 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AndroidOutlined/>
-                          漫画
+                          音乐
                         </span>
                     }
                     key="3"
@@ -58,12 +58,34 @@ function FilterHeader(props) {
                     tab={
                         <span>
                           <AndroidOutlined/>
-                          资讯专栏
+                          人物
                         </span>
                     }
                     key="5"
                 >
                     Tab 5
+                </TabPane>
+                <TabPane
+                    tab={
+                        <span>
+                          <AndroidOutlined/>
+                          虚拟人物
+                        </span>
+                    }
+                    key="6"
+                >
+                    Tab 6
+                </TabPane>
+                <TabPane
+                    tab={
+                        <span>
+                          <AndroidOutlined/>
+                          公司
+                        </span>
+                    }
+                    key="7"
+                >
+                    Tab 7
                 </TabPane>
             </Tabs>
         </div>
