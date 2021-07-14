@@ -6,7 +6,7 @@ import SearchResultList from "../SearchResultList";
 const {TabPane} = Tabs;
 
 function FilterHeader(props) {
-    console.log(props.searchString)
+
     return (
         <div>
             <Tabs defaultActiveKey="1" centered size={'large'}>
@@ -19,7 +19,7 @@ function FilterHeader(props) {
                     }
                     key="1"
                 >
-                    <SearchResultList searchString={props.searchString}/>
+                    <SearchResultList></SearchResultList>
                 </TabPane>
                 <TabPane
                     tab={
@@ -71,7 +71,6 @@ function FilterHeader(props) {
 }
 
 function SearchResult(props) {
-    console.log(props.searchString)
     return (
         <div style={{backgroundColor: '#f3f3f3'}}>
             <div style={{display: 'flex', justifyContent: 'space-around', padding: '1.5rem',}}>

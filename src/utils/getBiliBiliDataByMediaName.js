@@ -19,6 +19,7 @@
  *  Data: 2021/07/13
  */
 import axios from "axios";
+axios.defaults.timeout = 10000;
 const setCookie = (name, value, days) => {
     const d = new Date ();
     d.setTime(d.getTime() + (days*24*60*60*1000));
