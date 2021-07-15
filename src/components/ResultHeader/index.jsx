@@ -37,7 +37,13 @@ function ResultHeader(props) {
                        defaultValue={props.searchString === undefined ? '':props.searchString}
                         placeholder={props.searchString === undefined ? '请输入搜索内容...':''}
                         ref={inputElement}
-                        onChange={() => setInputString(inputElement.current.value)}/>
+                        onChange={() => setInputString(inputElement.current.value)}
+                       onKeyDown={(e) => {
+                           if(e.code === 'Enter'){
+                               handleSubmit();
+                           }
+                       }}
+                />
                 <button id={'searchButton'} onClick={handleSubmit}/>
             </div>
         </div>

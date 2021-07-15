@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './index.css';
 import {message} from "antd";
+import {useMount, useUnmount} from "ahooks";
 
 function SearchBar (props) {
     const [inputString, setInputString] = useState('');
@@ -35,7 +36,14 @@ function SearchBar (props) {
                        onBlur={onBlur}
                        id={'indexInput'}
                        ref={inputElement}
-                       onChange={() => setInputString(inputElement.current.value)}
+                       onChange={(e) => {
+                           setInputString(e.target.value)
+                       }}
+                       onKeyDown={(e) => {
+                           if(e.code === 'Enter'){
+                               handleSubmit();
+                           }
+                       }}
                 />
                     <button type="submit"
                             id={'indexButton'}
