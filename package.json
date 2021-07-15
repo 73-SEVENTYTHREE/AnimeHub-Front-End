@@ -17,6 +17,7 @@
     "http-proxy-middleware": "^2.0.1",
     "less": "^4.1.1",
     "less-loader": "6.0.0",
+    "moment": "^2.29.1",
     "pubsub-js": "^1.9.3",
     "react": "^17.0.2",
     "react-app-rewired": "^2.1.8",

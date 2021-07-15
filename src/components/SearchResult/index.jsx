@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react';
-import {Tabs} from 'antd';
+import {Divider, Tabs} from 'antd';
 import {AppleOutlined, AndroidOutlined} from '@ant-design/icons';
 import SearchResultList from "../SearchResultList";
 import TypeTag from "../TypeTag";
@@ -12,6 +12,7 @@ import Company from "../../images/icons/company.png";
 import Person from "../../images/icons/person.png";
 import Music from "../../images/icons/music.png";
 import './index.css'
+import {Link} from "react-router-dom";
 
 const {TabPane} = Tabs;
 
@@ -109,9 +110,23 @@ function SearchResult(props) {
                     {/*<Divider orientation={'left'}><b>搜索结果</b></Divider>*/}
                     <FilterHeader searchString={props.searchString}/>
                 </div>
-                <div id={'relatedContainer'} style={{backgroundColor: '#fff', height: '100px', padding:'1rem'}}>
-                    相关人物
+                <div id={'relatedContainer'}>
+                    <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem'}}>
+                        <Divider>相关搜索条目</Divider>
+                        <ul>
+                            <li><Link>工作细胞</Link></li>
+                            <li><Link>红细胞</Link></li>
+                        </ul>
+                    </div>
+                    <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem',marginTop:'1rem'}}>
+                        <Divider>搜索热榜</Divider>
+                        <ol>
+                            <li><Link>工作细胞</Link></li>
+                            <li><Link>红细胞</Link></li>
+                        </ol>
+                    </div>
                 </div>
+
             </div>
         </div>
     );

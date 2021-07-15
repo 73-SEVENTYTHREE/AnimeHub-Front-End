@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {List, Tag} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
+import moment from 'moment';
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
 
 
@@ -17,6 +18,7 @@ class InsideFilter extends React.Component{
         const { selectedTag } = this.state;
         if(checked){
             this.setState({selectedTag: tag})
+            console.log(moment('2019年7月'))
         }
     }
 
