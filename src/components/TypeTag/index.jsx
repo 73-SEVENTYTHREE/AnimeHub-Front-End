@@ -6,7 +6,7 @@
  * 3. book
  * 4. character
  * 5. company
- * 6. person
+ * 6. real_person
  * 7. music
  * Author: Wei Liu
  * Data: 2021/07/14
