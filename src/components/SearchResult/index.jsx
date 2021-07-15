@@ -40,7 +40,7 @@ function FilterHeader(props) {
                     }
                     key="2"
                 >
-                    Tab 2
+                    <SearchResultList searchString={props.searchString} searchType={'book'}/>
                 </TabPane>
                 <TabPane
                     tab={
@@ -51,7 +51,7 @@ function FilterHeader(props) {
                     }
                     key="3"
                 >
-                    Tab 3
+                    <SearchResultList searchString={props.searchString} searchType={'music'}/>
                 </TabPane>
                 <TabPane
                     tab={
@@ -62,7 +62,7 @@ function FilterHeader(props) {
                     }
                     key="4"
                 >
-                    Tab 4
+                    <SearchResultList searchString={props.searchString} searchType={'game'}/>
                 </TabPane>
                 <TabPane
                     tab={
@@ -73,7 +73,7 @@ function FilterHeader(props) {
                     }
                     key="5"
                 >
-                    Tab 5
+                    <SearchResultList searchString={props.searchString} searchType={'real_person'}/>
                 </TabPane>
                 <TabPane
                     tab={
@@ -84,7 +84,7 @@ function FilterHeader(props) {
                     }
                     key="6"
                 >
-                    Tab 6
+                    <SearchResultList searchString={props.searchString} searchType={'character'}/>
                 </TabPane>
                 <TabPane
                     tab={
@@ -95,7 +95,7 @@ function FilterHeader(props) {
                     }
                     key="7"
                 >
-                    Tab 7
+                    <SearchResultList searchString={props.searchString} searchType={'company'}/>
                 </TabPane>
             </Tabs>
         </div>
@@ -107,7 +107,6 @@ function SearchResult(props) {
         <div style={{backgroundColor: '#f3f3f3', minHeight:'100vh'}}>
             <div style={{display: 'flex', justifyContent: 'space-between'}} id={'searchContainer'}>
                 <div style={{backgroundColor: '#fff', padding:'0 1rem 1rem 1rem'}} id={'infoContainer'}>
-                    {/*<Divider orientation={'left'}><b>搜索结果</b></Divider>*/}
                     <FilterHeader searchString={props.searchString}/>
                 </div>
                 <div id={'relatedContainer'}>

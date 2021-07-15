@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useUpdate} from 'ahooks';
 import {List, Tag} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
@@ -44,23 +45,21 @@ function AnimeShowList(props) {
     const {listData, searchString} = props
     return (
         <div>
-            <InsideFilter></InsideFilter>
+            <InsideFilter/>
             {
                     <List
                         itemLayout="vertical"
                         size="large"
                         pagination={{
                             onChange: page => {
-                                page=1
                                 console.log(page);
                             },
                             pageSize: 3,
-                            current:1,
                         }}
                         dataSource={listData}
                         renderItem={item => (
                             <List.Item
-                                key={item.title}
+                                key={item.unique_id}
                                 extra={
                                     <div style={{width:'10rem',height:'15rem',display:'flex',justifyContent:'center',alignItems:'center'}}>
                                         <Link to={{pathname:'/detailinfo',state:{name:item.id,type:'anime'}}}>
@@ -79,7 +78,6 @@ function AnimeShowList(props) {
                                               style={{fontSize:'1.1rem',color:'black'}}
                                               dangerouslySetInnerHTML={item.title}
                                         >
-
                                         </Link>&nbsp;&nbsp;
                                         <TypeTag type={item.type}/>
                                     </div>}
