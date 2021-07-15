@@ -1,23 +1,59 @@
 import React, {useState} from 'react';
-import {List, Skeleton, Tag} from "antd";
+import {List, Tag} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
+
+
+const { CheckableTag } = Tag;
+const tagsData = ['综合排序','最高评分', '最多浏览', '最近更新'];
+
+class InsideFilter extends React.Component{
+    state = {
+        selectedTag: '综合排序',
+    };
+
+    handleChange(tag, checked) {
+        const { selectedTag } = this.state;
+        if(checked){
+            this.setState({selectedTag: tag})
+        }
+    }
+
+    render() {
+        const { selectedTag } = this.state;
+        return (
+            <div style={{marginLeft:'3%'}}>
+                {tagsData.map(tag => (
+                    <CheckableTag
+                        key={tag}
+                        checked={selectedTag===tag}
+                        onChange={checked => this.handleChange(tag, checked)}
+                    >
+                        {tag}
+                    </CheckableTag>
+                ))}
+            </div>
+        );
+    }
+}
 
 function AnimeShowList(props) {
     const {listData, searchString} = props
     return (
         <div>
-            {/*<InsideFilter></InsideFilter>*/}
+            <InsideFilter></InsideFilter>
             {
                     <List
                         itemLayout="vertical"
                         size="large"
                         pagination={{
                             onChange: page => {
+                                page=1
                                 console.log(page);
                             },
                             pageSize: 3,
+                            current:1,
                         }}
                         dataSource={listData}
                         renderItem={item => (

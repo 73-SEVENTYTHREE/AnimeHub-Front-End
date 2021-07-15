@@ -10,18 +10,6 @@ import PubSub from 'pubsub-js';
 import outLineKeyWords from "../../utils/outLineKeyWords";
 import AnimeShowList from "../AnimeShowList";
 
-const {Paragraph} = Typography
-
-class InsideFilter extends Component{
-    render() {
-        return (
-            <div>
-
-            </div>
-        )
-    }
-}
-
 function SearchResultList  (props) {
     const [searchString, setSearchString] = useState(props.searchString);
     const [listData, setListData] = useState([]);
