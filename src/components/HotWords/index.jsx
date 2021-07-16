@@ -239,7 +239,7 @@ function HotWords (props) {
             <Link to={{pathname:'/detailInfo', state:{name:'花泽香菜', type:'real_person'}}}>花泽香菜</Link>
             <Link to={{pathname:'/detailInfo', state:{name:'埃罗芒阿老师', type:'anime'}}}>埃罗芒阿老师</Link>
             <Link to={{pathname:'/detailInfo', state:{name:'名侦探柯南', type:'anime'}}}>名侦探柯南</Link>
-            <a href="http://www.lanrentuku.com" target="_blank">金木研</a>
+            <Link to={{pathname:'/detailInfo', state:{name:'廻廻奇譚', type:'music'}}}>廻廻奇譚</Link>
             <a href="http://www.lanrentuku.com" target="_blank">白上吹雪</a>
             <Link to={{pathname:'/detailInfo', state:{name:'从零开始的异界生活', type:'anime'}}}>从零开始的异界生活</Link>
             <Link to={{pathname:'/detailInfo', state:{name:'海贼王', type:'anime'}}}>海贼王</Link>
