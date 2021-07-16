@@ -8,8 +8,8 @@ import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import getBiliBiliDataByRealPersonName from "../../utils/getBiliBiliDataByRealPersonName";
 import AnimeInfo from "../../components/AnimeInfo";
 import RealPersonInfo from "../../components/RealPersonInfo";
-import MusicInfo from "../../components/MusicInfo";
 import Meta from "antd/es/card/Meta";
+import MusicInfo from "../../components/MusicInfo";
 
 const { TabPane } = Tabs;
 
@@ -75,8 +75,8 @@ function DetailInfo (props) {
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
                 {type === 'anime' ? <AnimeInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
-                {type === 'real_person' ? <RealPersonInfo data={bilibiliData}/> : ''}
-                {type === 'music' ? <MusicInfo data={bilibiliData}/> : ''}
+                {type === 'real_person' ? <RealPersonInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
+                {type === 'music' ? <MusicInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
             </div>
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
