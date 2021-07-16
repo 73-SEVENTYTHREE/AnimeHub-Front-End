@@ -6,13 +6,13 @@ function MusicInfo(props) {
     return (
         <Card style={{margin:'1rem 2rem 2rem 2rem', minHeight:'60rem'}} hoverable>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{height:'60rem'}}>
-                <Col className="gutter-row" span={mobile ? 24 : 6}>
-                    <div id={'person-description'}>
+                <Col span={mobile ? 24 : 6}>
+                    <div>
 
                     </div>
                 </Col>
                 <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}}/>
-                <Col className="gutter-row" span={mobile ? 24:17}>
+                <Col span={mobile ? 24:17}>
                     222
                 </Col>
             </Row>

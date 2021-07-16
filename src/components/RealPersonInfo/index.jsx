@@ -3,7 +3,6 @@ import {Card, Col, Divider, Row, Tag, Timeline} from "antd";
 import './index..css'
 import {useMount} from "ahooks";
 import { Tabs } from 'antd';
-import { StickyContainer, Sticky } from 'react-sticky';
 import {TwitterOutlined, UserOutlined, WeiboOutlined} from "@ant-design/icons";
 
 const { TabPane } = Tabs;
