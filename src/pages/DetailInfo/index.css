@@ -22,9 +22,8 @@
 }
 
 #relevant-container{
-    height: 40rem;
     position: relative;
-    padding: 0rem 1rem;
+    padding: 0 2rem ;
 }
 
 #result-container-bg{
@@ -39,6 +38,26 @@
     -o-filter: blur(10px);
     -ms-filter: blur(10px);
     position: absolute;
+}
+
+.relevant-card{
+    width: 10rem;
+    height:15rem;
+    margin-right:2rem;
+    margin-bottom: 1rem;
+}
+
+.relevant-image{
+    width:100%;
+    border-radius: 10px 10px 0 0;
+    height:0;
+    padding-bottom: 100%;
+    overflow:hidden;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    background-size:cover;
 }
 
 .card-container p {
@@ -56,14 +75,12 @@
     margin-bottom: 0;
     margin-top: -16px;
     padding-bottom: 1rem;
-
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     padding: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 75vh;
     background: white;
 }
 .card-container > .ant-tabs-card > .ant-tabs-nav::before {
