@@ -102,7 +102,6 @@ function DetailInfo (props) {
                         </Tabs>
                     </Col>
                 </Row>
-
             </div>
         </div>
     );
