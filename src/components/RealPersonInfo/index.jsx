@@ -69,8 +69,8 @@ function RealPersonInfo (props) {
                 <Col className="gutter-row" span={mobile ? 24:17}>
                     <StickyContainer>
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="详细信息" key="1">
-                                <h2>职业: 声优 音乐人</h2>
+                            <TabPane tab="详细信息" key="1" style={{paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                                <Tag color="cyan" style={{marginBottom:'1rem', height:'2rem', width:'11rem', fontSize:'1.2rem', display:'flex', alignItems:'center'}}>职业: 声优 音乐人</Tag>
                                 <Timeline>
                                 <Timeline.Item>花泽香菜（1989年2月25日－），是一名日本女性艺人、声优、演员。大泽事务所所属，前Smile-Monkey所属。2007年开始是大学生，到2011年为止都是半工半读。<br/></Timeline.Item>
                                 <Timeline.Item>从幼女到青少年的少女，被多次选拔为主角役。近来则出演过随和系，小大人系，娇蛮系，腹黑少女，纯情派等多种多样的角色。歌曲演唱好象还在修行中。很多配音的角色都是平刘海短发学生头，而且大都不是正常人类（主角正常人类的也少），且不知为何以眼镜娘居多。<br/></Timeline.Item>
@@ -98,10 +98,10 @@ function RealPersonInfo (props) {
                                 <Timeline.Item>2020年7月8日，宣布已与小野贤章结婚。<br/></Timeline.Item>
                                 </Timeline>
                             </TabPane>
-                            <TabPane tab="相关作品" key="2">
+                            <TabPane tab="出演作品" key="2">
                                 Content of Tab Pane 2
                             </TabPane>
-                            <TabPane tab="Tab 3" key="3">
+                            <TabPane tab="吐槽评论" key="3">
                                 Content of Tab Pane 3
                             </TabPane>
                         </Tabs>

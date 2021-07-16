@@ -3,12 +3,12 @@
     width: 100%;
     /*background: #f3f3f3;*/
     position: absolute;
-    overflow: auto;
+    overflow: hidden;
 }
 
 @media screen and (min-width: 500px){
     #result-container{
-        max-height: 70rem;
+        max-height: 80rem;
     }
     .card-container{
         height: 100%;
