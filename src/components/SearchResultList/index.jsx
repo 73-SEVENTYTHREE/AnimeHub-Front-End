@@ -29,7 +29,7 @@ function SearchResultList  (props) {
     const getDataBySearchString = async str => {
         setLoading(true);
         let ListData = [];
-        for(let i=1;i<=5;i++){
+        for(let i=1;i<=4;i++){
             ListData.push({
                 id:'工作细胞',
                 unique_id:i,
@@ -43,7 +43,7 @@ function SearchResultList  (props) {
                 type:'anime'
             })
         }
-        for(let i=0,length=ListData.length;i<length;i++){
+        for(let i=0;i<4;i++){
             let item = ListData[i]
             const data  = await getBiliBiliDataByMediaName(item.title);
             const result = data.result;
@@ -64,6 +64,39 @@ function SearchResultList  (props) {
         setLoading(false);
     }
 
+    const getData = async ()=>{
+        listData[3]={
+            id:'工作细胞',
+            unique_id:4,
+            title: '工作细胞',
+            tags:['搞笑','战斗','日常','声控'],
+            description:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
+            start_date:'2019年7月',
+            episode_count:12,
+            score_general:9.6,
+            image_url:"http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg",
+            type:'anime'
+        }
+        listData.push({})
+        listData.push({})
+        let item = listData[3]
+        const data  = await getBiliBiliDataByMediaName(item.title);
+        const result = data.result;
+        if(result === undefined){
+            item.bilibili_score='暂无'
+            item.bilibili_user_count='暂无'
+        }else{
+            item.bilibili_score = result[0].media_score.score
+            item.bilibili_user_count = result[0].media_score.user_count
+        }
+        item.title = outLineKeyWords([searchString], item.title);
+        item.description = outLineKeyWords([searchString], item.description);
+        item.tags = item.tags.map(tag=>{
+            return outLineKeyWords([searchString],tag)
+        })
+        setListData(listData)
+        console.log(listData)
+    }
     // const handleMark = ()=>{
     //     document.querySelectorAll('mark').forEach(mark=>{
     //         observer.observe(mark)
@@ -87,14 +120,14 @@ function SearchResultList  (props) {
     })
 
     switch(props.searchType){
-        case 'anime': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+        case 'anime': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData} getData={getData}/>);
         case 'book': return (loading ? <Skeleton active/> : <BookShowList searchString={searchString} listData={listData}/>);
-        case 'music': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);;
-        case 'game': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);;
-        case 'character': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);;
-        case 'real_person': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);;
-        case 'company': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);;
-        default : return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);;
+        case 'music': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+        case 'game': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+        case 'character': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+        case 'real_person': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+        case 'company': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+        default : return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
 
     }
 }
