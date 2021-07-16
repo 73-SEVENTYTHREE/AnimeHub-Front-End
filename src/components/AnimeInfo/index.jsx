@@ -24,12 +24,12 @@ function AnimeInfo (props) {
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingTop:'1rem'}}>
                     <Col className="gutter-row" span={mobile ? 24 : 6} style={mobile ? {marginBottom:'2rem'} : {}}>
                         <div className="card-container">
-                            <Card title="剧情概览" style={{marginBottom:'2rem', overflow:'scroll', maxHeight:'18rem'}} headStyle={{fontSize:'1.3rem'}}>
+                            <Card hoverable title="剧情概览" style={{marginBottom:'2rem', overflow:'scroll', maxHeight:'18rem'}} headStyle={{fontSize:'1.3rem'}}>
                                 {
                                     loading ? <Skeleton active />:data.desc
                                 }
                             </Card>
-                            <Card title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', maxHeight:'40rem'}} headStyle={{fontSize:'1.3rem'}}>
+                            <Card hoverable title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', maxHeight:'40rem'}} headStyle={{fontSize:'1.3rem'}}>
                                 <div style={{margin:'1rem', display:'flex', justifyContent:'center', minHeight:'20rem'}}>
                                     <Image src={data.cover}
                                            style={{borderRadius:'10px', width:'15rem'}}
