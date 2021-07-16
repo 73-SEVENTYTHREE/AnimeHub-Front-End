@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {List, Tag} from "antd";
+import {List, Tag, Collapse} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
-import moment from 'moment';
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
 
-
 const { CheckableTag } = Tag;
+const {Panel} = Collapse
 const tagsData = ['综合排序','最高评分', '最多浏览', '最近更新'];
 
 class InsideFilter extends React.Component{
@@ -18,23 +17,26 @@ class InsideFilter extends React.Component{
         const { selectedTag } = this.state;
         if(checked){
             this.setState({selectedTag: tag})
-            console.log(moment('2019年7月'))
         }
     }
 
     render() {
         const { selectedTag } = this.state;
         return (
-            <div style={{marginLeft:'3%'}}>
-                {tagsData.map(tag => (
-                    <CheckableTag
-                        key={tag}
-                        checked={selectedTag===tag}
-                        onChange={checked => this.handleChange(tag, checked)}
-                    >
-                        {tag}
-                    </CheckableTag>
-                ))}
+            <div style={{marginLeft:'1%'}}>
+                <Collapse ghost>
+                    <Panel header={'高级筛选'}>
+                        {tagsData.map(tag => (
+                            <CheckableTag
+                                key={tag}
+                                checked={selectedTag===tag}
+                                onChange={checked => this.handleChange(tag, checked)}
+                            >
+                                {tag}
+                            </CheckableTag>
+                        ))}
+                    </Panel>
+                </Collapse>
             </div>
         );
     }
@@ -44,7 +46,7 @@ function BookShowList(props) {
     const {listData} = props
     return (
         <div>
-            <InsideFilter></InsideFilter>
+            <InsideFilter/>
             {
                 <List
                     itemLayout="vertical"
@@ -54,8 +56,7 @@ function BookShowList(props) {
                             page=1
                             console.log(page);
                         },
-                        pageSize: 3,
-                        current:1,
+                        pageSize: 3
                     }}
                     dataSource={listData}
                     renderItem={item => (

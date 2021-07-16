@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useUpdate} from 'ahooks';
-import {List, Tag} from "antd";
+import {Collapse, List, Tag} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
 import moment from 'moment';
@@ -8,6 +8,7 @@ import BiliBiliScoreTag from "../BiliBiliScoreTag";
 
 
 const { CheckableTag } = Tag;
+const { Panel } = Collapse
 const tagsData = ['综合排序','最高评分', '最多浏览', '最近更新'];
 
 class InsideFilter extends React.Component{
@@ -26,23 +27,28 @@ class InsideFilter extends React.Component{
     render() {
         const { selectedTag } = this.state;
         return (
-            <div style={{marginLeft:'3%'}}>
-                {tagsData.map(tag => (
-                    <CheckableTag
-                        key={tag}
-                        checked={selectedTag===tag}
-                        onChange={checked => this.handleChange(tag, checked)}
-                    >
-                        {tag}
-                    </CheckableTag>
-                ))}
+            <div style={{marginLeft:'1%'}}>
+                <Collapse ghost>
+                    <Panel header={'高级筛选'}>
+                        {tagsData.map(tag => (
+                            <CheckableTag
+                                key={tag}
+                                checked={selectedTag===tag}
+                                onChange={checked => this.handleChange(tag, checked)}
+                            >
+                                {tag}
+                            </CheckableTag>
+                        ))}
+                    </Panel>
+                </Collapse>
             </div>
         );
     }
 }
 
 function AnimeShowList(props) {
-    const {listData, searchString} = props
+    const [currentPage, setCurrentPage] = useState(1)
+
     return (
         <div>
             <InsideFilter/>
@@ -51,12 +57,16 @@ function AnimeShowList(props) {
                         itemLayout="vertical"
                         size="large"
                         pagination={{
-                            onChange: page => {
+                            onChange: async page => {
+                                // await props.getData();
                                 console.log(page);
+                                setCurrentPage(page)
                             },
                             pageSize: 3,
+                            current:currentPage,
+                            total:5,
                         }}
-                        dataSource={listData}
+                        dataSource={props.listData}
                         renderItem={item => (
                             <List.Item
                                 key={item.unique_id}

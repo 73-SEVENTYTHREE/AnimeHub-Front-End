@@ -112,15 +112,15 @@ function SearchResult(props) {
                 <div id={'relatedContainer'}>
                     <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem'}}>
                         <Divider>相关搜索条目</Divider>
-                        <ul>
-                            <li><Link>工作细胞</Link></li>
+                        <ul className={'related-search-list'}>
+                            <li ><Link>工作细胞</Link></li>
                             <li><Link>红细胞</Link></li>
                         </ul>
                     </div>
                     <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem',marginTop:'1rem'}}>
                         <Divider>搜索热榜</Divider>
                         <ol>
-                            <li><Link>工作细胞</Link></li>
+                            <li className={'hot-word-item'}><Link>工作细胞</Link></li>
                             <li><Link>红细胞</Link></li>
                         </ol>
                     </div>
