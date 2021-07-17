@@ -27,6 +27,9 @@ function SearchBar (props) {
         }
         props.history.push({pathname:'result',state:{searchString:inputString}});
     }
+    useMount(() => {
+        
+    })
     return (
         <div className="search bar2">
             <div className={'form'} id={'indexSearchBox'}>

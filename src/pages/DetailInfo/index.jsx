@@ -89,7 +89,7 @@ function DetailInfo (props) {
                                                             style={{backgroundImage:`url("${bilibiliData.cover}")`}}/>}
                                             >
                                                 <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>番外篇</Tag></div>}
-                                                      description={<div style={{display:'flex', justifyContent:'center', overflow:'auto'}}>www.instagram.com</div>} />
+                                                      description={<div style={{display:'flex', justifyContent:'center'}}><p className={'relevant-title'}>www.instagram.com</p></div>} />
                                             </Card>
                                         )
                                     }
