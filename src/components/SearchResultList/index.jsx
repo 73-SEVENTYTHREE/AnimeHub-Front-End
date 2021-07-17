@@ -128,7 +128,6 @@ function SearchResultList  (props) {
         case 'real_person': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
         case 'company': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
         default : return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
-
     }
 }
 
