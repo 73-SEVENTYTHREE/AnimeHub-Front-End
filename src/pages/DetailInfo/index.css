@@ -3,10 +3,16 @@
     width: 100%;
     /*background: #f3f3f3;*/
     position: absolute;
-    overflow: hidden;
+    overflow: auto;
 }
 
-@media screen and (min-width: 500px){
+.relevant-title{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 800px){
     #result-container{
         max-height: 80rem;
     }
@@ -15,7 +21,7 @@
     }
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 800px){
     #result-container{
         height: auto;
     }

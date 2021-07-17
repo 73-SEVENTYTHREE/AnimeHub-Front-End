@@ -10,7 +10,11 @@ module.exports = function(app) {
                 changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:3000
                 changeOrigin默认值为false，但我们一般将changeOrigin值设为true
             */
-        }
+        },
+            createProxyMiddleware('/api', {
+                target:'http://10.214.241.121:8301',
+                changeOrigin:true
+            })
         )
     )
 }
