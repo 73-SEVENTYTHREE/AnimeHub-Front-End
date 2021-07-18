@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {useUpdate} from 'ahooks';
-import {Collapse, List, Tag} from "antd";
+import {Collapse, List, Tag, Typography} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
 import moment from 'moment';
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
-
+import './index.css';
 
 const { CheckableTag } = Tag;
 const { Panel } = Collapse
+const {Paragraph} = Typography
 const tagsData = ['综合排序','最高评分', '最多浏览', '最近更新'];
 
 class InsideFilter extends React.Component{
@@ -58,25 +59,23 @@ function AnimeShowList(props) {
                         size="large"
                         pagination={{
                             onChange: async page => {
-                                // await props.getData();
                                 console.log(page);
                                 setCurrentPage(page)
                             },
                             pageSize: 3,
                             current:currentPage,
-                            total:5,
                         }}
                         dataSource={props.listData}
                         renderItem={item => (
                             <List.Item
-                                key={item.unique_id}
+                                key={item.guid}
                                 extra={
                                     <div style={{width:'10rem',height:'15rem',display:'flex',justifyContent:'center',alignItems:'center'}}>
-                                        <Link to={{pathname:'/detailinfo',state:{name:item.id,type:'anime'}}}>
+                                        <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'anime',name:item.primary_name}}}>
                                             <img
                                                 style={{height:'15rem'}}
                                                 alt="logo"
-                                                src={item.image_url}
+                                                src={item.image_urls.substring(0,item.image_urls.length-1)}
                                             />
                                         </Link>
                                     </div>
@@ -84,9 +83,9 @@ function AnimeShowList(props) {
                             >
                                 <List.Item.Meta
                                     title={<div style={{display:'flex',alignItems:'center',height:'2rem'}}>
-                                        <Link to={{pathname:'/detailinfo',state:{name:item.id,type:'anime'}}}
+                                        <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'anime',name:item.primary_name}}}
                                               style={{fontSize:'1.1rem',color:'black'}}
-                                              dangerouslySetInnerHTML={item.title}
+                                              dangerouslySetInnerHTML={item.zh_name}
                                         >
                                         </Link>&nbsp;&nbsp;
                                         <TypeTag type={item.type}/>
@@ -102,9 +101,12 @@ function AnimeShowList(props) {
                                         logoStyle={{width:'.8rem'}}
                                     />
                                 </div>
-                                <div className={'item-info-tag'}><Tag color={'geekblue'}>总话数:</Tag>{item.episode_count}</div>
-                                <div className={'item-info-tag'}><Tag color={'geekblue'}>放送日期:</Tag>{item.start_date}</div>
-                                <div className={'item-info-tag'}><Tag color={'geekblue'}>简介:</Tag><div dangerouslySetInnerHTML={item.description}/></div>
+                                <div className={'item-info-tag'}><Tag color={'geekblue'}>总话数:</Tag>{item.episode_count || '暂无'}</div>
+                                <div className={'item-info-tag'}><Tag color={'geekblue'}>放送日期:</Tag>{item.start_date || '暂无'}</div>
+                                <div className={'item-info-tag'}><Tag color={'geekblue'}>简介:</Tag>
+                                    <div id={'description-wrapper'} dangerouslySetInnerHTML={item.description}>
+                                    </div>
+                                </div>
                             </List.Item>
                         )}
                     />

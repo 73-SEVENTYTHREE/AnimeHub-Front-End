@@ -13,6 +13,7 @@ import Person from "../../images/icons/person.png";
 import Music from "../../images/icons/music.png";
 import './index.css'
 import {Link} from "react-router-dom";
+import WordCloud from "../WordCloud";
 
 const {TabPane} = Tabs;
 
@@ -119,10 +120,7 @@ function SearchResult(props) {
                     </div>
                     <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem',marginTop:'1rem'}}>
                         <Divider>搜索热榜</Divider>
-                        <ol>
-                            <li className={'hot-word-item'}><Link>工作细胞</Link></li>
-                            <li><Link>红细胞</Link></li>
-                        </ol>
+                        <WordCloud />
                     </div>
                 </div>
 
