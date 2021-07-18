@@ -92,12 +92,14 @@ function AnimeInfo (props) {
                                                     </div>
                                                 </div>
                                                 <Descriptions
-                                                    style={{margin:'1rem 2rem 2rem 2rem', fontSize:'.8rem'}}
+                                                    style={{margin:'0rem 2rem 2rem 2rem'}}
                                                     bordered
                                                     size={'small'}
+                                                    // layout="vertical"
+                                                    column={5}
                                                 >
                                                     {
-                                                        keys.map(item => <Descriptions.Item label={item}>{item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]}</Descriptions.Item>)
+                                                        keys.map(item => <Descriptions.Item label={item} style={{fontSize:'.8rem'}}>{item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]}</Descriptions.Item>)
                                                     }
                                                 </Descriptions>
                                             </div>
@@ -107,13 +109,10 @@ function AnimeInfo (props) {
                                 <TabPane tab="虚拟角色" key="2" style={{borderRadius:'10px'}}>
                                     <p>虚拟角色</p>
                                 </TabPane>
-                                <TabPane tab="制作人员" key="3" style={{borderRadius:'10px'}}>
-                                    <p>制作人员</p>
-                                </TabPane>
-                                <TabPane tab="动漫评论" key="4" style={{borderRadius:'10px'}}>
+                                <TabPane tab="动漫评论" key="3" style={{borderRadius:'10px'}}>
                                     <p>动漫评论</p>
                                 </TabPane>
-                                <TabPane tab="知识图谱" key="5" style={{borderRadius:'10px'}}>
+                                <TabPane tab="知识图谱" key="4" style={{borderRadius:'10px'}}>
                                     <p>知识图谱</p>
                                 </TabPane>
                             </Tabs>
