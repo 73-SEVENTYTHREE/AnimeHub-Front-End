@@ -89,12 +89,10 @@
     padding-bottom: 1rem;
     min-height: 50rem;
     height: 100%;
+    overflow: auto;
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /*padding: 2rem;*/
     background: white;
 }
 .card-container > .ant-tabs-card > .ant-tabs-nav::before {

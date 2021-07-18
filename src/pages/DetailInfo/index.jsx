@@ -35,7 +35,7 @@ function DetailInfo (props) {
     const [loading, setLoading] = useState(true);
     const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
-    const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[]});
+    const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[]});
 
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
@@ -95,11 +95,11 @@ function DetailInfo (props) {
             <NameDivider title={info.primary_name} type={type}/>
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
-                {type === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading}/> : ''}
-                {type === 'real_person' ? <RealPersonInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
-                {type === 'music' ? <MusicInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
-                {type === 'book' ? <BookInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
-                {type === 'game' ? <GameInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
+                {type === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'real_person' ? <RealPersonInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'music' ? <MusicInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'book' ? <BookInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'game' ? <GameInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
             </div>
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -115,6 +115,9 @@ function DetailInfo (props) {
                                                     className={'relevant-card'}
                                                     cover={<div className="relevant-image"
                                                                 style={{backgroundImage:`url("${item.visuals}")`}}/>}
+                                                    onClick={() => {
+                                                        props.history.push({pathname:'result',state:{searchString:item.primary_name}});
+                                                    }}
                                                 >
                                                     <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>{item.type}</Tag></div>}
                                                           description={<div style={{display:'flex', justifyContent:'center'}}><p className={'relevant-title'}>{item.primary_name}</p></div>} />

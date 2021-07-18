@@ -13,7 +13,7 @@ function Tags (props) {
         <div style={{display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'center', marginBottom:'-0.4rem'}}>
             {
                 tags.map(item =>
-                    <Tag style={{marginBottom:'.4rem'}} color={generateRandomColor()}>
+                    <Tag style={{marginBottom:'.4rem'}} color={generateRandomColor()} onClick={() => {props.history.push({pathname:'result',state:{searchString:item}});}}>
                         {item}
                     </Tag>
                 )

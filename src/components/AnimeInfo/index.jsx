@@ -4,7 +4,8 @@ import BiliBiliScoreTag from "../BiliBiliScoreTag";
 import BangumiScoreTag from "../BangumiScoreTag";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import {PlayCircleOutlined} from "@ant-design/icons";
-import WordCloud from "../WordCloud";
+import InfoItem from "../InfoItem";
+import {Link} from "react-router-dom";
 const { TabPane } = Tabs;
 function AnimeInfo (props) {
     const data = props.data;
@@ -20,6 +21,7 @@ function AnimeInfo (props) {
     const episode_count = data.episode_count;
     const music_composer = data.music_composer;
     const producer = data.producer;
+    const keys = Object.keys(data.extra_data);
     const generateRandomColor = () => {
         const r = Math.floor(Math.random()*200);
         const g = Math.floor(Math.random()*200);
@@ -37,7 +39,7 @@ function AnimeInfo (props) {
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingTop:'1rem'}}>
                     <Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {}}>
                         <Card hoverable title="剧情概览" extra={bilibiliData.goto_url ?
-                                <Button style={{backgroundColor:'#EA7A99', border:'0'}}
+                                <Button style={{backgroundColor:'#EA7A99', border:'0', display:'flex', alignItems:'center'}}
                                         type={'primary'}
                                         onClick={() => window.location.href=bilibiliData.goto_url}><PlayCircleOutlined />
                                     B站播放</Button>:''} style={{marginBottom:'2rem', overflow:'scroll', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
@@ -48,7 +50,7 @@ function AnimeInfo (props) {
                     </Col>
                     <Col className="gutter-row" span={mobile ? 24 : 6} style={mobile ? {marginBottom:'2rem'} : {minHeight:'40rem'}}>
                         <div className="card-container">
-                            <Card hoverable title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', height:'100%', maxHeight:'60rem', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
+                            <Card hoverable title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', height:'100%', maxHeight:'55rem', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
                                 <div style={{minHeight:'40rem', display:'flex', alignItems:'center', flexDirection:'column', justifyContent:'space-around'}}>
                                     <div style={{margin:'1rem', display:'flex', justifyContent:'center'}}>
                                         <Image src={removeLastCharacter(data.visuals)}
@@ -59,7 +61,7 @@ function AnimeInfo (props) {
                                         />
                                     </div>
                                     {/*<WordCloud words={data.tags.map(item => ({text:item, value:Math.floor(Math.random()*256)}))}/>*/}
-                                    <Tags tags={data.tags}/>
+                                    <Tags tags={data.tags} history={props.history}/>
                                 </div>
                             </Card>
                         </div>
@@ -70,25 +72,36 @@ function AnimeInfo (props) {
                                 <TabPane tab="作品详情" key="1" style={{borderRadius:'0 10px 10px 10px'}}>
                                     {
                                         loading ? <Skeleton active />:
-                                            <Descriptions
-                                                bordered
-                                                size={'small'}
-                                                style={{maxHeight:'45rem', overflow:'auto'}}
-                                                column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
-                                            >
-                                                <Descriptions.Item label={'中文名'}>{zh_name}</Descriptions.Item>
-                                                <Descriptions.Item label={'别名'}>{names}</Descriptions.Item>
-                                                <Descriptions.Item label={'动画制作公司'}>{animation_company}</Descriptions.Item>
-                                                <Descriptions.Item label={'音乐制作人'}>{music_composer}</Descriptions.Item>
-                                                <Descriptions.Item label={'全局制作'}>{made}</Descriptions.Item>
-                                                {/*<Descriptions.Item label={'声优表'}>{chara_list}</Descriptions.Item>*/}
-                                                <Descriptions.Item label={'导演'}>{director}</Descriptions.Item>
-                                                <Descriptions.Item label={'别名'}>{names}</Descriptions.Item>
-                                                <Descriptions.Item label={'动画制作人'}>{producer}</Descriptions.Item>
-                                                <Descriptions.Item label={'话数'}>{episode_count}</Descriptions.Item>
-                                            </Descriptions>
-                                    }
+                                            <div>
+                                                <div style={{display:'flex', alignContent:'flex-start',justifyContent:'space-around', alignItems:'self-start', flexWrap:'wrap',marginTop:'1rem'}}>
+                                                    <div style={{width:'80%',height:'100%', display:'flex', flexWrap:'wrap', justifyContent:'space-around', alignContent:'flex-start', alignItems:'self-start'}}>
+                                                        {zh_name ? <InfoItem title={'中文名'} content={zh_name} history={props.history}/> :''}
+                                                        {animation_company ? <InfoItem title={'动画制作公司'} content={animation_company} history={props.history}/> :''}
+                                                        {director ? <InfoItem title={'导演'} content={director} history={props.history}/> :''}
+                                                        {made ? <InfoItem title={'全局制作'} content={made} history={props.history}/> :''}
+                                                        {producer ? <InfoItem title={'动画制作人'} content={producer} history={props.history}/> :''}
+                                                        {episode_count ? <InfoItem title={'话数'} content={episode_count} history={props.history}/> :''}
+                                                    </div>
+                                                    <div style={{width:'20%',height:'100%', display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
+                                                        {names[0] !== "" ? <InfoItem title={'别名'} content={names} history={props.history}/> :''}
+                                                        <div style={{display:'flex', width:'40%', height:'100%', alignContent:'flex-start',justifyContent:'space-around', alignItems:'self-start', flexWrap:'wrap'}}>
+                                                            {music_composer ? <InfoItem title={'音乐制作人'} content={music_composer} history={props.history}/> :''}
 
+                                                        </div>
+                                                        {/*{zh_name ? <InfoItem title={'声优表'} content={chara_list}/> :''}*/}
+                                                    </div>
+                                                </div>
+                                                <Descriptions
+                                                    style={{margin:'1rem 2rem 2rem 2rem', fontSize:'.8rem'}}
+                                                    bordered
+                                                    size={'small'}
+                                                >
+                                                    {
+                                                        keys.map(item => <Descriptions.Item label={item}>{item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]}</Descriptions.Item>)
+                                                    }
+                                                </Descriptions>
+                                            </div>
+                                    }
 
                                 </TabPane>
                                 <TabPane tab="虚拟角色" key="2" style={{borderRadius:'10px'}}>

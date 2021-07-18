@@ -42,6 +42,7 @@ function SearchResultList  (props) {
             let item = ListData[i]
             item.zh_name = outLineKeyWords([str], item.zh_name);
             item.description = outLineKeyWords([str], item.description);
+            item.primary_name = outLineKeyWords([str], item.primary_name);
             if(item.tags!==null){
                 item.tags = item.tags.map(tag=>{
                     return outLineKeyWords([str],tag)
