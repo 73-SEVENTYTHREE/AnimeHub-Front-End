@@ -229,7 +229,7 @@ function HotWords (props) {
         <div id="hotwords">
             <Link to={{pathname:'/detailInfo', state:{name:'伊藤诚', type:'real_person'}}}>伊藤诚</Link>
             <Link to={{pathname:'/detailInfo', state:{name:'我妻由乃', type:'anime'}}}>我妻由乃</Link>
-            <a href="http://www.lanrentuku.com" target="_blank">秋月爱莉</a>
+            <Link to={{pathname:'/detailInfo', state:{name:'辉夜大小姐', type:'book'}}}>辉夜大小姐</Link>
             <Link to={{pathname:'/detailInfo', state:{name:'工作细胞', type:'anime'}}}>工作细胞</Link>
             <a href="http://www.lanrentuku.com" target="_blank">时崎狂三</a>
             <a href="http://www.lanrentuku.com" target="_blank">漩涡鸣人</a>
