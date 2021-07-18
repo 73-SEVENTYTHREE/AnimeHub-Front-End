@@ -4,7 +4,6 @@ import './index.css'
 import {Link} from "react-router-dom";
 
 function HotWords (props) {
-    const mouse = useMouse();
     const generateRandomColor = () => {
         const r = Math.floor(Math.random()*256);
         const g = Math.floor(Math.random()*256);

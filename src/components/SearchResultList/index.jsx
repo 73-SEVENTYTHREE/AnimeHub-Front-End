@@ -16,6 +16,7 @@ function SearchResultList  (props) {
     const [searchString, setSearchString] = useState(props.searchString);
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [dataLength, setDataLength] =useState(0);
     // const observer = new IntersectionObserver((entries,observer)=>{
     //     entries.forEach(entry=>{
     //         if(entry.isIntersecting){
@@ -29,47 +30,44 @@ function SearchResultList  (props) {
     const getDataBySearchString = async (str,page,orderby,type) => {
         setLoading(true);
         const pageNum = 10
+        const start_index = pageNum*(page-1)
+        const end_index = pageNum*page-1
         let searchData = {
             searchString:str,
-            range:[pageNum*(page-1),pageNum*page],
+            range:[start_index, end_index],
             orderby:orderby,
             type:type
         }
-        const data = await axios.post('/api/search',searchData).data
-        console.log(data)
-        // let ListData = [];
-        // for(let i=1;i<=4;i++){
-        //     ListData.push({
-        //         id:'工作细胞',
-        //         unique_id:i,
-        //         title: '工作细胞',
-        //         tags:['搞笑','战斗','日常','声控'],
-        //         description:'这是一个关于你自身的故事。你体内的故事——。人的细胞数量，约为37兆2千亿个。细胞们在名为身体的世界中，今天也精神满满、无休无眠地在工作着。运送着氧气的红细胞，与细菌战斗的白细胞……！这里，有着细胞们不为人知的故事。',
-        //         start_date:'2019年7月',
-        //         episode_count:12,
-        //         score_general:9.6,
-        //         image_url:"http://lain.bgm.tv/pic/cover/l/84/fc/235612_EHO4Q.jpg",
-        //         type:'anime'
-        //     })
-        // }
-        // for(let i=0,length=listData.length;i<length;i++){
-        //     let item = ListData[i]
-        //     const data  = await getBiliBiliDataByMediaName(item.title);
-        //     const result = data.result;
-        //     if(result === undefined){
-        //         item.bilibili_score='暂无'
-        //         item.bilibili_user_count='暂无'
-        //     }else{
-        //         item.bilibili_score = result[0].media_score.score
-        //         item.bilibili_user_count = result[0].media_score.user_count
-        //     }
-        //     item.title = outLineKeyWords([str], item.title);
-        //     item.description = outLineKeyWords([str], item.description);
-        //     item.tags = item.tags.map(tag=>{
-        //         return outLineKeyWords([str],tag)
-        //     })
-        // }
-        // setListData(ListData);
+        let {data} = await axios.post('/api/search',searchData)
+        if(data.code === 1){
+            message.error('获取数据失败：'+data.msg)
+            return;
+        }
+        data = data.data
+        let data_length = data.data_length
+        let ListData = data.items
+        console.log(ListData.length)
+        for(let i=0,length=ListData.length;i<length;i++){
+            let item = ListData[i]
+            console.log(item)
+            const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
+            const result = bilibili_data.result;
+            if(result === undefined){
+                item.bilibili_score='暂无'
+                item.bilibili_user_count='暂无'
+            }else{
+                item.bilibili_score = result[0].media_score.score
+                item.bilibili_user_count = result[0].media_score.user_count
+            }
+            item.zh_name = outLineKeyWords([str], item.zh_name);
+            item.description = outLineKeyWords([str], item.description);
+            item.tags = item.tags.map(tag=>{
+                return outLineKeyWords([str],tag)
+            })
+            listData[start_index+i] = item
+        }
+        setDataLength(data_length);
+        setListData(listData);
         setLoading(false);
     }
 
@@ -84,10 +82,10 @@ function SearchResultList  (props) {
         //订阅上方导航栏输入的消息，获取对应字符串
         token = PubSub.subscribe('ChangeInput', async (msg, data) => {
             setSearchString(data);
-            await getDataBySearchString (data);
+            await getDataBySearchString (data,1,'score','anime');
             // handleMark()
         });
-        await getDataBySearchString(searchString);
+        await getDataBySearchString(searchString,1,'score','anime');
         // handleMark()
     })
 
