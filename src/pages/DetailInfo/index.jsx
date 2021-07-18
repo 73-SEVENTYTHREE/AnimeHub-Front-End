@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Row, Col, Tag, Tabs, Card, message} from 'antd';
+import {Row, Col, Tag, Tabs, Card, message, Popover} from 'antd';
 import ResultHeader from "../../components/ResultHeader";
 import NameDivider from "../../components/NameDivider";
 import {useMount, useUnmount} from "ahooks";
@@ -45,10 +45,9 @@ function DetailInfo (props) {
 
     useMount(async () => {
         let data = (await axios.post ('/api/detail', {
-            type: 'anime',
-            guid: '1836'
+            type: type,
+            guid: guid
         })).data;
-        console.log(data);
         if(data.code === 1){
             message.warning('数据获取错误')
         }
@@ -102,18 +101,20 @@ function DetailInfo (props) {
                     <Col className="gutter-row" span={24}>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab={<strong style={{fontSize:'1.3rem'}}>相关词条</strong>} key="1" style={{paddingBottom:'1rem'}}>
-                                <div style={{display:'flex', flexWrap:'wrap'}}>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                                     {
                                         info.related_subjects.map(item =>
-                                            <Card
-                                                hoverable
-                                                className={'relevant-card'}
-                                                cover={<div className="relevant-image"
-                                                            style={{backgroundImage:`url("${item.visuals}")`}}/>}
-                                            >
-                                                <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>{item.type}</Tag></div>}
-                                                      description={<div style={{display:'flex', justifyContent:'center'}}><p className={'relevant-title'}>{item.primary_name}</p></div>} />
-                                            </Card>
+                                            <Popover content={item.primary_name}>
+                                                <Card
+                                                    hoverable
+                                                    className={'relevant-card'}
+                                                    cover={<div className="relevant-image"
+                                                                style={{backgroundImage:`url("${item.visuals}")`}}/>}
+                                                >
+                                                    <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>{item.type}</Tag></div>}
+                                                          description={<div style={{display:'flex', justifyContent:'center'}}><p className={'relevant-title'}>{item.primary_name}</p></div>} />
+                                                </Card>
+                                            </Popover>
                                         )
                                     }
                                 </div>
