@@ -12,7 +12,6 @@ import Meta from "antd/es/card/Meta";
 import MusicInfo from "../../components/MusicInfo";
 import axios from "axios";
 import BookInfo from "../../components/BookInfo";
-import removeLastCharacter from "../../utils/removeLastCharacter";
 import GameInfo from "../../components/GameInfo";
 
 const { TabPane } = Tabs;
@@ -39,6 +38,10 @@ function DetailInfo (props) {
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[]});
 
     const handleResize = e => {
+        const relevantContainer = document.getElementById('relevant-container');
+        relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height;
+        const container = document.getElementById('detail-container');
+        container.style.height = document.body.scrollHeight.toString() + 'px';
         setMobile(e.target.innerWidth <= 1000);
     }
 
@@ -72,12 +75,14 @@ function DetailInfo (props) {
             }
         }
         setLoading(false);
-        console.log(searchResult);
+        console.log(searchResult, data);
         if(searchResult.result !== undefined){
             setBiliBiliData(searchResult.result[0]);
         }
         const relevantContainer = document.getElementById('relevant-container');
         relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height
+        const container = document.getElementById('detail-container');
+        container.style.height = document.body.scrollHeight.toString() + 'px';
     })
 
     useUnmount(() => {
@@ -85,7 +90,7 @@ function DetailInfo (props) {
     })
 
     return (
-        <div>
+        <div id={'detail-container'}>
             <ResultHeader history={props.history}/>
             <NameDivider title={info.primary_name} type={type}/>
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>

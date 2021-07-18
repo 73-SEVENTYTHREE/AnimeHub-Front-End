@@ -1,6 +1,7 @@
 #result-container{
     margin-top:.5rem;
     width: 100%;
+    height: auto;
     /*background: #f3f3f3;*/
     position: absolute;
     overflow: auto;
@@ -15,7 +16,7 @@
 
 @media screen and (min-width: 800px){
     #result-container{
-        max-height: 80rem;
+
     }
     .card-container{
         height: 100%;
@@ -78,12 +79,16 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
 }
+
 
 .card-container > .ant-tabs-card .ant-tabs-content {
     margin-bottom: 0;
     margin-top: -16px;
     padding-bottom: 1rem;
+    min-height: 50rem;
+    height: 100%;
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     padding: 2rem;

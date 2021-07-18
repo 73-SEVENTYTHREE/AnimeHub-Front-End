@@ -46,7 +46,7 @@ function SearchResultList  (props) {
         data = data.data
         let data_length = data.data_length
         let ListData = data.items
-        console.log(ListData.length)
+        console.log(ListData.length, data_length)
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
             console.log(item)

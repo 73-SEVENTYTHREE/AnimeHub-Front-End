@@ -3,7 +3,9 @@
     align-items:center;
     height:4.2rem;
     background-size: cover;
-
+    position: sticky;
+    top:0px;
+    z-index: 1;
 }
 
 #banner-bg{

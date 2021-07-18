@@ -36,8 +36,9 @@ const options = {
 };
 
 function WordCloud(props) {
+    if(props.words) words = props.words;
     return (
-        <div style={{width:'100%',height:'10rem'}}>
+        <div style={{width:'100%',height:'100%'}}>
             <ReactWordcloud words={words} options={options}/>
         </div>
     );
