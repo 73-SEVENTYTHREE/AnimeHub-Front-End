@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useUpdate} from 'ahooks';
-import {Collapse, List, Tag, Typography} from "antd";
+import {Collapse, List, Pagination, Tag, Typography} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
 import moment from 'moment';
@@ -49,7 +49,13 @@ class InsideFilter extends React.Component{
 }
 
 function AnimeShowList(props) {
-    const [currentPage, setCurrentPage] = useState(1)
+    const { total,currentPage } = props
+
+    const onChange = async (page,pageNum) => {
+        console.log(page);
+        console.log(pageNum)
+        await props.getData(page,'score','anime',pageNum)
+    }
 
     return (
         <div>
@@ -58,14 +64,6 @@ function AnimeShowList(props) {
                     <List
                         itemLayout="vertical"
                         size="large"
-                        pagination={{
-                            onChange: async page => {
-                                console.log(page);
-                                setCurrentPage(page)
-                            },
-                            pageSize: 3,
-                            current:currentPage,
-                        }}
                         dataSource={props.listData}
                         renderItem={item => (
                             <List.Item
@@ -74,7 +72,7 @@ function AnimeShowList(props) {
                                     <div style={{width:'10rem',height:'15rem',display:'flex',justifyContent:'center',alignItems:'center'}}>
                                         <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'anime',name:item.primary_name}}}>
                                             <img
-                                                style={{height:'15rem'}}
+                                                style={{width:'10rem'}}
                                                 alt="logo"
                                                 src={item.image_urls.substring(0,item.image_urls.length-1)}
                                             />
@@ -91,7 +89,8 @@ function AnimeShowList(props) {
                                         </Link>&nbsp;&nbsp;
                                         <TypeTag type={item.type}/>
                                     </div>}
-                                    description={item.tags.map((item,index)=>{
+                                    description={
+                                        item.tags===null?'':item.tags.map((item,index)=>{
                                         if(index<14){
                                             return <Tag><div dangerouslySetInnerHTML={item}/></Tag>
                                         }
@@ -121,6 +120,11 @@ function AnimeShowList(props) {
                             </List.Item>
                         )}
                     />
+            }
+            {
+                <div style={{float:'right'}}>
+                    <Pagination showQuickJumper total={total} onChange={onChange} current={currentPage} pagesize={10}/>
+                </div>
             }
         </div>
     );
