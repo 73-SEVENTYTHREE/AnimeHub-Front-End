@@ -17,21 +17,13 @@ function SearchResultList  (props) {
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [dataLength, setDataLength] =useState(0);
-    // const observer = new IntersectionObserver((entries,observer)=>{
-    //     entries.forEach(entry=>{
-    //         if(entry.isIntersecting){
-    //             entry.target.classList.add('animate')
-    //             observer.unobserve(entry.target)
-    //         }
-    //     })
-    // })
+    const [currentPage, setCurrentPage] = useState(1);
     let token = null;
     //根据传入的字符串获取相关信息，和后端的交互主要在这个函数里。
-    const getDataBySearchString = async (str,page,orderby,type) => {
+    const getDataBySearchString = async (str,page,orderby,type,pageNum) => {
         setLoading(true);
-        const pageNum = 10
         const start_index = pageNum*(page-1)
-        const end_index = pageNum*page-1
+        let end_index = pageNum*page-1
         let searchData = {
             searchString:str,
             range:[start_index, end_index],
@@ -46,10 +38,15 @@ function SearchResultList  (props) {
         data = data.data
         let data_length = data.data_length
         let ListData = data.items
-        console.log(ListData.length)
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
-            console.log(item)
+            item.zh_name = outLineKeyWords([str], item.zh_name);
+            item.description = outLineKeyWords([str], item.description);
+            if(item.tags!==null){
+                item.tags = item.tags.map(tag=>{
+                    return outLineKeyWords([str],tag)
+                })
+            }
             // const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
             // const result = bilibili_data.result;
             // if(result === undefined){
@@ -59,33 +56,45 @@ function SearchResultList  (props) {
             //     item.bilibili_score = result[0].media_score.score
             //     item.bilibili_user_count = result[0].media_score.user_count
             // }
-            item.zh_name = outLineKeyWords([str], item.zh_name);
-            item.description = outLineKeyWords([str], item.description);
-            item.tags = item.tags.map(tag=>{
-                return outLineKeyWords([str],tag)
-            })
-            listData[start_index+i] = item
         }
         setDataLength(data_length);
-        setListData(listData);
+        setListData(ListData);
         setLoading(false);
+        setCurrentPage(page);
     }
 
-    // const handleMark = ()=>{
-    //     document.querySelectorAll('mark').forEach(mark=>{
-    //         observer.observe(mark)
-    //         console.log('mark')
-    //     })
+    const getData = async(page,orderby,type,pageNum)=>{
+        await getDataBySearchString(searchString,page,orderby,type,pageNum)
+    }
+
+    // const getBilibiliData = async (start_index,end_index,ListData)=>{
+    //     console.log(start_index,end_index, ListData)
+    //     for(let i=start_index;i<=end_index;i++){
+    //         let item = ListData[i]
+    //         if(item!==undefined){
+    //             const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
+    //             const result = bilibili_data.result;
+    //             if(result === undefined){
+    //                 item.bilibili_score='暂无'
+    //                 item.bilibili_user_count='暂无'
+    //             }else{
+    //                 item.bilibili_score = result[0].media_score.score
+    //                 item.bilibili_user_count = result[0].media_score.user_count
+    //             }
+    //             listData[i]=item
+    //         }
+    //     }
+    //     setListData(listData)
     // }
 
     useMount(async () => {
         //订阅上方导航栏输入的消息，获取对应字符串
         token = PubSub.subscribe('ChangeInput', async (msg, data) => {
             setSearchString(data);
-            await getDataBySearchString (data,1,'score','anime');
+            await getDataBySearchString (data,1,'score',props.searchType,10);
             // handleMark()
         });
-        await getDataBySearchString(searchString,1,'score','anime');
+        await getDataBySearchString(searchString,1,'score',props.searchType,10);
         // handleMark()
     })
 
@@ -94,7 +103,7 @@ function SearchResultList  (props) {
     })
 
     switch(props.searchType){
-        case 'anime': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+    case 'anime': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage}/>);
         case 'book': return (loading ? <Skeleton active/> : <BookShowList searchString={searchString} listData={listData}/>);
         case 'music': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
         case 'game': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
