@@ -10,6 +10,7 @@ import AnimeInfo from "../../components/AnimeInfo";
 import RealPersonInfo from "../../components/RealPersonInfo";
 import Meta from "antd/es/card/Meta";
 import MusicInfo from "../../components/MusicInfo";
+import axios from "axios";
 
 const { TabPane } = Tabs;
 
@@ -36,6 +37,11 @@ function DetailInfo (props) {
 
 
     useMount(async () => {
+        let data = (await axios.post ('/api/detail', {
+            type: 'anime',
+            guid: '1836'
+        })).data;
+        console.log(data)
         setMobile(document.documentElement.clientWidth <= 1000);
         window.addEventListener('resize', handleResize);
         setTimeout(() => {
