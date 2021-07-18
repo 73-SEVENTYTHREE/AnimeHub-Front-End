@@ -58,7 +58,6 @@ function AnimeShowList(props) {
                         size="large"
                         pagination={{
                             onChange: async page => {
-                                // await props.getData();
                                 console.log(page);
                                 setCurrentPage(page)
                             },

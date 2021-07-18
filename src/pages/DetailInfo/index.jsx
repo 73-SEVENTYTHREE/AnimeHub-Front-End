@@ -11,6 +11,7 @@ import RealPersonInfo from "../../components/RealPersonInfo";
 import Meta from "antd/es/card/Meta";
 import MusicInfo from "../../components/MusicInfo";
 import BookInfo from "../../components/BookInfo";
+import GameInfo from "../../components/GameInfo";
 
 const { TabPane } = Tabs;
 
@@ -51,6 +52,7 @@ function DetailInfo (props) {
             case 'real_person' : searchResult = await getBiliBiliDataByRealPersonName(name); break;
             case 'music': searchResult = {};break;
             case 'book' : searchResult = {};break;
+            case 'game' : searchResult = {};break;
             default: {
                 message.warning('错误的类型');
                 searchResult = {}
@@ -80,6 +82,7 @@ function DetailInfo (props) {
                 {type === 'real_person' ? <RealPersonInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
                 {type === 'music' ? <MusicInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
                 {type === 'book' ? <BookInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
+                {type === 'game' ? <GameInfo data={bilibiliData} mobile={mobile} loading={loading}/> : ''}
             </div>
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

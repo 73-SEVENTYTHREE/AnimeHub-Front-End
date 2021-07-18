@@ -44,7 +44,7 @@ function BookInfo(props) {
                 </Col>
                 <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}}/>
                 <Col span={mobile ? 24:17}>
-                    <Tabs defaultActiveKey="1" type={'card'}>
+                    <Tabs defaultActiveKey="1">
                         <TabPane key={'1'} tab={"书籍简介"}>
                             <div style={{display:'flex',flexDirection:'column',padding:'1rem'}}>
                                 <Typography.Title level={5} color={'blue'}>内容简介:</Typography.Title>
@@ -69,7 +69,7 @@ function BookInfo(props) {
                                             description={
                                                 <div>
                                                     <Tag>中文名：{item.zh_name}</Tag>
-                                                    <Tag>角色：{item.role}</Tag>
+                                                    <Tag>{item.role}</Tag>
                                                 </div>
                                             }
                                         />
