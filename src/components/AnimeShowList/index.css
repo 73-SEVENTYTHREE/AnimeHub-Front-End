@@ -1,8 +1,8 @@
 #description-wrapper{
     display:-webkit-box;
     overflow:hidden;
-    height:5.3rem;
+    height:2.66rem;
     text-overflow:ellipsis;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
