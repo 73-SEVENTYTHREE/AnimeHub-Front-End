@@ -50,15 +50,15 @@ function SearchResultList  (props) {
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
             console.log(item)
-            const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
-            const result = bilibili_data.result;
-            if(result === undefined){
-                item.bilibili_score='暂无'
-                item.bilibili_user_count='暂无'
-            }else{
-                item.bilibili_score = result[0].media_score.score
-                item.bilibili_user_count = result[0].media_score.user_count
-            }
+            // const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
+            // const result = bilibili_data.result;
+            // if(result === undefined){
+            //     item.bilibili_score='暂无'
+            //     item.bilibili_user_count='暂无'
+            // }else{
+            //     item.bilibili_score = result[0].media_score.score
+            //     item.bilibili_user_count = result[0].media_score.user_count
+            // }
             item.zh_name = outLineKeyWords([str], item.zh_name);
             item.description = outLineKeyWords([str], item.description);
             item.tags = item.tags.map(tag=>{
