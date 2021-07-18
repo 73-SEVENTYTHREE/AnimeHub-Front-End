@@ -10,6 +10,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-size: .8rem;
 }
 
 @media screen and (min-width: 800px){
@@ -29,26 +30,28 @@
 
 #relevant-container{
     position: relative;
-    padding: 0 2rem ;
+    padding: 1rem 2rem ;
+
 }
 
 #result-container-bg{
     height: 100%;
     width: 100%;
     background-size: cover;
+    background-repeat: no-repeat;
     opacity: 0.6;
     z-index: -1;
-    filter: blur(10px);
-    -webkit-filter: blur(10px);
-    -moz-filter: blur(10px);
-    -o-filter: blur(10px);
-    -ms-filter: blur(10px);
+    filter: blur(20px);
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
     position: absolute;
 }
 
 .relevant-card{
-    width: 10rem;
-    height:15rem;
+    width: 8rem;
+    height:13rem;
     margin-right:2rem;
     margin-bottom: 1rem;
 }
@@ -71,7 +74,7 @@
 }
 
 .card-container{
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     display: flex;
     flex-direction: column;
     justify-content: space-between;

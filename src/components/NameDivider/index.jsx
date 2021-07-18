@@ -7,7 +7,7 @@ function NameDivider (props) {
         <div style={{overflow:'auto'}}>
             <Divider orientation="left" style={{fontSize:'1.4rem', marginTop:'1.5rem'}}>
                 <div style={{display:'flex', alignItems:'center'}}>
-                    {props.title.replace(/<[^<>]+>/g,'')}
+                    {props.title}
                     &nbsp;
                     <TypeTag type={props.type}/>
                 </div>
