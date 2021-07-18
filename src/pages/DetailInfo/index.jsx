@@ -37,15 +37,6 @@ function DetailInfo (props) {
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[]});
 
-    const handleResize = e => {
-        const relevantContainer = document.getElementById('relevant-container');
-        relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height;
-        const container = document.getElementById('detail-container');
-        container.style.height = document.body.scrollHeight.toString() + 'px';
-        setMobile(e.target.innerWidth <= 1000);
-    }
-
-
     useMount(async () => {
         let data = (await axios.post ('/api/detail', {
             type: type,
@@ -55,9 +46,7 @@ function DetailInfo (props) {
             message.warning('数据获取错误')
         }
         setInfo(data.data);
-
         setMobile(document.documentElement.clientWidth <= 1000);
-        window.addEventListener('resize', handleResize);
         let searchResult;
         switch (type) {
             case 'anime': {
@@ -75,7 +64,6 @@ function DetailInfo (props) {
             }
         }
         setLoading(false);
-        console.log(searchResult, data);
         if(searchResult.result !== undefined){
             setBiliBiliData(searchResult.result[0]);
         }
@@ -83,10 +71,6 @@ function DetailInfo (props) {
         relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height
         const container = document.getElementById('detail-container');
         container.style.height = document.body.scrollHeight.toString() + 'px';
-    })
-
-    useUnmount(() => {
-        window.removeEventListener('resize', handleResize);
     })
 
     return (

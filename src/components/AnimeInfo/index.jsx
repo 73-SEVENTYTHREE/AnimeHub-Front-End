@@ -73,7 +73,7 @@ function AnimeInfo (props) {
                                     {
                                         loading ? <Skeleton active />:
                                             <div>
-                                                <div style={{display:'flex', alignContent:'flex-start',justifyContent:'space-around', alignItems:'self-start', flexWrap:'wrap',marginTop:'1rem'}}>
+                                                <div style={{display:'flex', alignContent:'flex-start',justifyContent:'space-around', alignItems:'self-start', flexWrap:'wrap',marginTop:'1rem', overflow:'auto'}}>
                                                     <div style={{width:'80%',height:'100%', display:'flex', flexWrap:'wrap', justifyContent:'space-around', alignContent:'flex-start', alignItems:'self-start'}}>
                                                         {zh_name ? <InfoItem title={'中文名'} content={zh_name} history={props.history}/> :''}
                                                         {animation_company ? <InfoItem title={'动画制作公司'} content={animation_company} history={props.history}/> :''}
@@ -95,8 +95,8 @@ function AnimeInfo (props) {
                                                     style={{margin:'0rem 2rem 2rem 2rem'}}
                                                     bordered
                                                     size={'small'}
+                                                    column={{ xxl: 5, xl: 4, lg: 4, md: 3, sm: 2, xs: 1 }}
                                                     // layout="vertical"
-                                                    column={5}
                                                 >
                                                     {
                                                         keys.map(item => <Descriptions.Item label={item} style={{fontSize:'.8rem'}}>{item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]}</Descriptions.Item>)
