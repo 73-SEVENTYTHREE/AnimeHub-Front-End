@@ -227,21 +227,21 @@ function HotWords (props) {
     })
     return (
         <div id="hotwords">
-            <Link to={{pathname:'/detailInfo', state:{name:'伊藤诚', type:'real_person'}}}>伊藤诚</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'我妻由乃', type:'anime'}}}>我妻由乃</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'辉夜大小姐', type:'book'}}}>辉夜大小姐</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'工作细胞', type:'anime'}}}>工作细胞</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'伊藤诚', type:'real_person', guid:'1836'}}}>伊藤诚</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'空中杀手', type:'anime', guid:'1836'}}}>空中杀手</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'辉夜大小姐', type:'book', guid:'1836'}}}>辉夜大小姐</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'工作细胞', type:'anime', guid:'1836'}}}>工作细胞</Link>
             <a href="http://www.lanrentuku.com" target="_blank">时崎狂三</a>
             <a href="http://www.lanrentuku.com" target="_blank">漩涡鸣人</a>
-            <Link to={{pathname:'/detailInfo', state:{name:'火影忍者', type:'anime'}}}>火影忍者</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'进击的巨人', type:'anime'}}}>进击的巨人</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'花泽香菜', type:'real_person'}}}>花泽香菜</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'埃罗芒阿老师', type:'anime'}}}>埃罗芒阿老师</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'名侦探柯南', type:'anime'}}}>名侦探柯南</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'廻廻奇譚', type:'music'}}}>廻廻奇譚</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'火影忍者', type:'anime', guid:'1836'}}}>火影忍者</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'进击的巨人', type:'anime', guid:'1836'}}}>进击的巨人</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'花泽香菜', type:'real_person', guid:'1836'}}}>花泽香菜</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'埃罗芒阿老师', type:'anime', guid:'1836'}}}>埃罗芒阿老师</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'名侦探柯南', type:'anime', guid:'1836'}}}>名侦探柯南</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'廻廻奇譚', type:'music', guid:'1836'}}}>廻廻奇譚</Link>
             <a href="http://www.lanrentuku.com" target="_blank">白上吹雪</a>
-            <Link to={{pathname:'/detailInfo', state:{name:'从零开始的异界生活', type:'anime'}}}>从零开始的异界生活</Link>
-            <Link to={{pathname:'/detailInfo', state:{name:'海贼王', type:'anime'}}}>海贼王</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'从零开始的异界生活', type:'anime', guid:'1836'}}}>从零开始的异界生活</Link>
+            <Link to={{pathname:'/detailInfo', state:{name:'海贼王', type:'anime', guid:'1836'}}}>海贼王</Link>
         </div>
     );
 }

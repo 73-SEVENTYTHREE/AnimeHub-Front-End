@@ -31,6 +31,7 @@ function ResultHeader(props) {
             sessionStorage.setItem('searchString',str);
             PubSub.publish('ChangeInput', str);
         }
+        setRelevantWords([]);
     }
     return (
         <div id={'banner'}>
