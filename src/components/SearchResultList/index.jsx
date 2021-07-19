@@ -18,6 +18,7 @@ function SearchResultList  (props) {
     const [loading, setLoading] = useState(true);
     const [dataLength, setDataLength] =useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedTag, setSelectedTag] = useState('relate')
     let token = null;
     //根据传入的字符串获取相关信息，和后端的交互主要在这个函数里。
     const getDataBySearchString = async (str,page,orderby,type,pageNum) => {
@@ -38,13 +39,14 @@ function SearchResultList  (props) {
         data = data.data
         let data_length = data.data_length
         let ListData = data.items
+        let keywords = data.keywords
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
-            item.zh_name = outLineKeyWords([str], item.zh_name);
-            item.description = outLineKeyWords([str], item.description);
+            item.zh_name = outLineKeyWords(keywords, item.zh_name);
+            item.description = outLineKeyWords(keywords, item.description);
             if(item.tags!==null){
                 item.tags = item.tags.map(tag=>{
-                    return outLineKeyWords([str],tag)
+                    return outLineKeyWords(keywords,tag)
                 })
             }
             // const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
@@ -61,6 +63,13 @@ function SearchResultList  (props) {
         setListData(ListData);
         setLoading(false);
         setCurrentPage(page);
+        switch(orderby){
+            case 'relate': setSelectedTag('相关度');break;
+            case 'comment': setSelectedTag('评论数');break;
+            case 'recent': setSelectedTag('浏览量');break;
+            case 'score': setSelectedTag('评分');break;
+            default:setSelectedTag('相关度');break;
+        }
     }
 
     const getData = async(page,orderby,type,pageNum)=>{
@@ -91,10 +100,10 @@ function SearchResultList  (props) {
         //订阅上方导航栏输入的消息，获取对应字符串
         token = PubSub.subscribe('ChangeInput', async (msg, data) => {
             setSearchString(data);
-            await getDataBySearchString (data,1,'score',props.searchType,10);
+            await getDataBySearchString (data,1,'relate',props.searchType,10);
             // handleMark()
         });
-        await getDataBySearchString(searchString,1,'score',props.searchType,10);
+        await getDataBySearchString(searchString,1,'relate',props.searchType,10);
         // handleMark()
     })
 
@@ -103,7 +112,7 @@ function SearchResultList  (props) {
     })
 
     switch(props.searchType){
-    case 'anime': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage}/>);
+    case 'anime': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
         case 'book': return (loading ? <Skeleton active/> : <BookShowList searchString={searchString} listData={listData}/>);
         case 'music': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
         case 'game': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
