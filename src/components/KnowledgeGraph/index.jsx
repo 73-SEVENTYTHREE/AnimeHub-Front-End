@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import * as d3 from 'd3';
 import axios from "axios";
-import {Button} from "antd";
 
 function KnowledgeGraph (props) {
     useEffect(async () => {
@@ -16,13 +15,16 @@ function KnowledgeGraph (props) {
             link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
         });
 
-        const width = 1400, height = 1000;
+        const width = document.getElementsByTagName('body')[0].offsetWidth;
+        const height = links.length >= 60 ? 1200:800;
         const force = d3.layout.force ()
             .nodes (d3.values (nodes))
             .links (links)
             .size ([width, height])
-            .linkDistance (200)
-            .charge (-700)
+            .linkDistance (100)
+            .linkStrength(0.8)
+            .alpha(0.5)
+            .charge (-2200)
             .on ("tick", tick)
             .start ();
 
@@ -31,12 +33,11 @@ function KnowledgeGraph (props) {
             .attr ("height", height)
             .attr('id', 'graph')
 
-        const marker =
-            svg.append ("marker")
+        const marker = svg.append ("marker")
                 .attr ("id", "resolved")
                 .attr ("markerUnits", "userSpaceOnUse")
                 .attr ("viewBox", "0 -5 10 10")
-                .attr ("refX", 32)
+                .attr ("refX", links.length >= 60 ? 38:32)
                 .attr ("refY", -1)
                 .attr ("markerWidth", 12)
                 .attr ("markerHeight", 12)
@@ -44,7 +45,7 @@ function KnowledgeGraph (props) {
                 .attr ("stroke-width", 2)
                 .append ("path")
                 .attr ("d", "M0,-5L10,0L0,5")
-                .attr ('fill', '#000000');
+                .attr ('fill', '#A254A2');
 
         const edges_line = svg.selectAll (".edgepath")
             .data (force.links ())
@@ -78,7 +79,7 @@ function KnowledgeGraph (props) {
                 'id': function (d, i) {
                     return 'edgepath' + i;
                 },
-                'dx': 80,
+                'dx': 70,
                 'dy': 0
             });
 
@@ -87,7 +88,7 @@ function KnowledgeGraph (props) {
                 return '#edgepath' + i
             })
             .style ("pointer-events", "none")
-            .style("font-size", '.8rem')
+            .style("font-size", links.length >= 60 ? '.6rem':'.8rem')//关系字体大小
             .text (function (d) {
                 return d.rela;
             });
@@ -98,21 +99,21 @@ function KnowledgeGraph (props) {
             .style ("fill", function (node) {
                 var color;
                 var link = links[node.index];
-                color = "#F9EBF9";
+                color = "#f3f3f3";
                 return color;
             })
             .style ('stroke', function (node) {
                 var color;
                 var link = links[node.index];
-                color = "#A254A2";
+                color = "#A254A2";//边框颜色
                 return color;
             })
-            .attr ("r", 28)
+            .attr ("r", links.length >= 60 ? 35:28)
             .on ("click", function (node) {
                 edges_line.style ("stroke-width", function (line) {
-                    console.log (line);
                     if (line.source.name === node.name || line.target.name === node.name) {
-                        return 4;
+                        console.log(line)
+                        return 2;
                     } else {
                         return 0.5;
                     }
@@ -126,11 +127,11 @@ function KnowledgeGraph (props) {
             .append ("text")
             .attr ("dy", ".35em")
             .attr ("text-anchor", "middle")
-            .style('font-size', '.5rem')
+            .style('font-size', links.length >= 60 ? '.5rem':'.8rem')
             .style ('fill', function (node) {
                 var color;
                 var link = links[node.index];
-                color = "#A254A2";
+                color = "#A254A2"; //字体颜色
                 return color;
             }).attr ('x', function (d) {
                 var re_en = /[a-zA-Z]+/g;
@@ -141,7 +142,7 @@ function KnowledgeGraph (props) {
                         .text (function () {
                             return d.name;
                         });
-                } else if (d.name.length <= 4) {
+                } else if (d.name.length <= 6) {
                     d3.select (this).append ('tspan')
                         .attr ('x', 0)
                         .attr ('y', 2)
@@ -149,8 +150,8 @@ function KnowledgeGraph (props) {
                             return d.name;
                         });
                 } else {
-                    var top = d.name.substring (0, 4);
-                    var bot = d.name.substring (4, d.name.length);
+                    var top = d.name.substring (0, 6);
+                    var bot = d.name.substring (6, d.name.length);
 
                     d3.select (this).text (function () {
                         return '';
@@ -177,8 +178,7 @@ function KnowledgeGraph (props) {
             text.attr ("transform", transform2);
 
             edges_line.attr ('d', function (d) {
-                const path = 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
-                return path;
+                return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
             });
 
             edges_text.attr ('transform', function (d, i) {
@@ -203,7 +203,7 @@ function KnowledgeGraph (props) {
     },[props.guid])
 
     return (
-        <div id={'knowledge-graph'}/>
+        <div id={'knowledge-graph'} style={{overflow:'hidden'}}/>
     )
 }
 
