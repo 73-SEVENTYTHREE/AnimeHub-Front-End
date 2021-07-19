@@ -7,59 +7,51 @@ import moment from 'moment';
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
 import BangumiScoreTag from "../BangumiScoreTag";
 import './index.css';
+import removeLastCharacter from "../../utils/removeLastCharacter";
 
 const { CheckableTag } = Tag;
 const { Panel } = Collapse
-const {Paragraph} = Typography
-const tagsData = ['综合排序','最高评分', '最多浏览', '最近更新'];
-
-class InsideFilter extends React.Component{
-    state = {
-        selectedTag: '综合排序',
-    };
-
-    handleChange(tag, checked) {
-        const { selectedTag } = this.state;
-        if(checked){
-            this.setState({selectedTag: tag})
-            console.log(moment('2019年7月'))
-        }
-    }
-
-    render() {
-        const { selectedTag } = this.state;
-        return (
-            <div style={{marginLeft:'1%'}}>
-                <Collapse ghost>
-                    <Panel header={'高级筛选'}>
-                        {tagsData.map(tag => (
-                            <CheckableTag
-                                key={tag}
-                                checked={selectedTag===tag}
-                                onChange={checked => this.handleChange(tag, checked)}
-                            >
-                                {tag}
-                            </CheckableTag>
-                        ))}
-                    </Panel>
-                </Collapse>
-            </div>
-        );
-    }
-}
+const { Paragraph } = Typography
+const tagsData = ['相关度','评论数', '浏览量', '评分'];
 
 function AnimeShowList(props) {
-    const { total,currentPage } = props
-
+    let filter = 'relate'
+    const { total,currentPage,selectedTag } = props
     const onChange = async (page,pageNum) => {
-        console.log(page);
-        console.log(pageNum)
-        await props.getData(page,'score','anime',pageNum)
+        await props.getData(page,filter,'anime',pageNum)
+    }
+
+    const handleChange = async (tag,checked)=>{
+        if(checked){
+            switch(tag){
+                case '相关度': filter = 'relate';break;
+                case '评论数': filter = 'comment';break;
+                case '浏览量': filter = 'recent';break;
+                case '评分': filter = 'score';break;
+            }
+            await onChange(1,10)
+        }
     }
 
     return (
         <div>
-            <InsideFilter/>
+            {
+                <div style={{marginLeft:'1%'}}>
+                    <Collapse ghost >
+                        <Panel header={'高级筛选'} key={1} >
+                            {tagsData.map(tag => (
+                                <CheckableTag
+                                    key={tag}
+                                    checked={selectedTag===tag}
+                                    onChange={checked => handleChange(tag, checked)}
+                                >
+                                    {tag}
+                                </CheckableTag>
+                            ))}
+                        </Panel>
+                    </Collapse>
+                </div>
+            }
             {
                     <List
                         itemLayout="vertical"
@@ -74,7 +66,7 @@ function AnimeShowList(props) {
                                             <img
                                                 style={{width:'10rem'}}
                                                 alt="logo"
-                                                src={item.image_urls.substring(0,item.image_urls.length-1)}
+                                                src={removeLastCharacter(item.image_urls)}
                                             />
                                         </Link>
                                     </div>
@@ -113,6 +105,7 @@ function AnimeShowList(props) {
                                     />
                                 </div>
                                 <div className={'item-info-tag'}><Tag color={'geekblue'}>放送日期</Tag>{item.start_date || '暂无'}</div>
+                                <div className={'item-info-tag'}><Tag color={'geekblue'}>导演</Tag>{item.director || '暂无'}</div>
                                 <div className={'item-info-tag'}><Tag color={'geekblue'}>简介</Tag>
                                     <div id={'description-wrapper'} dangerouslySetInnerHTML={item.description}>
                                     </div>
@@ -123,7 +116,7 @@ function AnimeShowList(props) {
             }
             {
                 <div style={{float:'right'}}>
-                    <Pagination showQuickJumper total={total} onChange={onChange} current={currentPage} pagesize={10}/>
+                    <Pagination showQuickJumper showSizeChanger={false} total={total} onChange={onChange} current={currentPage} defaultPageSize={10}/>
                 </div>
             }
         </div>

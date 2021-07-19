@@ -5,7 +5,6 @@ import {useMount} from "ahooks";
 
 function Result(props) {
     //更改state的初始值，修复了渲染两次导致参数缺失的bug
-    console.log(props)
     const [SearchString, setSearchString] = useState(
         props.location.state && props.location.state.searchString?
             props.location.state.searchString:sessionStorage.getItem('searchString')

@@ -100,8 +100,8 @@ function DetailInfo (props) {
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
                 {type === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'real_person' ? <RealPersonInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'music' ? <MusicInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'real_person' ? <RealPersonInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'music' ? <MusicInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {type === 'book' ? <BookInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {type === 'game' ? <GameInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
             </div>

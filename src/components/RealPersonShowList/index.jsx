@@ -3,6 +3,8 @@ import {useUpdate} from 'ahooks';
 import {Collapse, List, Pagination, Tag, Typography} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
+import moment from 'moment';
+import BiliBiliScoreTag from "../BiliBiliScoreTag";
 import BangumiScoreTag from "../BangumiScoreTag";
 import './index.css';
 import removeLastCharacter from "../../utils/removeLastCharacter";
@@ -12,11 +14,11 @@ const { Panel } = Collapse
 const { Paragraph } = Typography
 const tagsData = ['相关度','评论数', '浏览量', '评分'];
 
-function BookShowList(props) {
+function RealPersonShowList(props) {
     let filter = 'relate'
     const { total,currentPage,selectedTag } = props
     const onChange = async (page,pageNum) => {
-        await props.getData(page,filter,'book',pageNum)
+        await props.getData(page,filter,'real_person',pageNum)
     }
 
     const handleChange = async (tag,checked)=>{
@@ -60,7 +62,7 @@ function BookShowList(props) {
                             key={item.guid}
                             extra={
                                 <div style={{width:'10rem',height:'15rem',display:'flex',justifyContent:'center',alignItems:'center'}}>
-                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'book',name:item.primary_name}}}>
+                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'real_person',name:item.primary_name}}}>
                                         <img
                                             style={{width:'10rem'}}
                                             alt="logo"
@@ -72,7 +74,7 @@ function BookShowList(props) {
                         >
                             <List.Item.Meta
                                 title={<div style={{display:'flex',alignItems:'center',height:'2rem'}}>
-                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'book',name:item.primary_name}}}
+                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'real_person',name:item.primary_name}}}
                                           style={{fontSize:'1.1rem',color:'black'}}
                                           dangerouslySetInnerHTML={item.zh_name}
                                     >
@@ -87,38 +89,7 @@ function BookShowList(props) {
                                     })}
                             />
                             <div className={'item-info-tag'}><Tag color={'geekblue'}>原名</Tag>{<div dangerouslySetInnerHTML={item.primary_name}/> || '暂无'}</div>
-                            <div className={'item-info-tag'}>
-                                <Tag color={'geekblue'}>评分</Tag>
-                                <BangumiScoreTag
-                                    score={item.score}
-                                    user_count={item.vote_count}
-                                    style={{fontSize:'0.7rem',padding:'0.1rem',width:'2.7rem',height:'1.2rem'}}
-                                    logoStyle={{width:'.8rem'}}
-                                />
-                            </div>
-                            <div className={'item-info-tag'}><Tag color={'geekblue'}>作者</Tag>
-                                {item.writer===null?'暂无':
-                                    item.writer.map((item,index)=>{
-                                        if(index===0){
-                                            return <span>{item}</span>
-                                        }else{
-                                            return <span>、{item}</span>
-                                        }
-                                    })
-                                }
-                            </div>
-                            <div className={'item-info-tag'}><Tag color={'geekblue'}>出版社</Tag>
-                                {item.press===null?'暂无':
-                                    item.press.map((item,index)=>{
-                                        if(index===0){
-                                            return <span>{item}</span>
-                                        }else{
-                                            return <span>、{item}</span>
-                                        }
-                                    })
-                                }
-                            </div>
-                            <div className={'item-info-tag'}><Tag color={'geekblue'}>出版日期</Tag>{item.start_date || '暂无'}</div>
+                            <div className={'item-info-tag'}><Tag color={'geekblue'}>生日</Tag>{item.birthday || '暂无'}</div>
                             <div className={'item-info-tag'}><Tag color={'geekblue'}>简介</Tag>
                                 <div id={'description-wrapper'} dangerouslySetInnerHTML={item.description}>
                                 </div>
@@ -136,4 +107,4 @@ function BookShowList(props) {
     );
 }
 
-export default BookShowList;
+export default RealPersonShowList;
