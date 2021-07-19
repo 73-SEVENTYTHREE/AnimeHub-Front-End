@@ -13,7 +13,7 @@ div .search{
     border-radius:10px;
     width: 0;
     height: 0;
-    animation: ease-in-out 1.5s appear forwards;
+    animation: ease-in-out 1s appear forwards;
     background-color: white;
     max-height: 20rem;
     overflow: auto;
