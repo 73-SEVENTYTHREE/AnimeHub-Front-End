@@ -1,7 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './index.css';
-import {List, message} from "antd";
+import {List, message, Skeleton} from "antd";
 import {useMount, useUnmount} from "ahooks";
+import axios from "axios";
+
 
 function SearchBar (props) {
     const [inputString, setInputString] = useState('');
@@ -10,9 +12,9 @@ function SearchBar (props) {
     const onFocus = (e) => {
         let hotWords = document.getElementById('hotwords');
         hotWords.style.transition = 'filter 1s';
-        hotWords.style.filter = 'blur(3px)';
+        hotWords.style.filter = 'blur(2px)';
         let bg = document.getElementById('bg');
-        bg.style.filter = 'blur(3px)';
+        bg.style.filter = 'blur(2px)';
     }
     const onBlur = (e) => {
         let hotWords = document.getElementById('hotwords');
@@ -20,6 +22,7 @@ function SearchBar (props) {
         hotWords.style.filter = 'blur(0px)';
         let bg = document.getElementById('bg');
         bg.style.filter = 'blur(0px)';
+
         // setRelevantWords([])
     }
     const handleSubmit = () => {
@@ -29,6 +32,12 @@ function SearchBar (props) {
             return;
         }
         props.history.push({pathname:'result',state:{searchString:str}});
+    }
+
+    const handleChange = async e => {
+        setInputString(e.target.value);
+        let words = (await axios.post ('/api/inputCompleting', {searchString: inputElement.current.value})).data.data;
+        setRelevantWords(words);
     }
 
     useMount(() => {
@@ -43,10 +52,7 @@ function SearchBar (props) {
                        onBlur={onBlur}
                        id={'indexInput'}
                        ref={inputElement}
-                       onChange={(e) => {
-                           setInputString(e.target.value);
-                           setRelevantWords([...relevantWords, 1234234+Math.random()])
-                       }}
+                       onChange={handleChange}
                        onKeyDown={(e) => {
                            if(e.code === 'Enter'){
                                handleSubmit();
@@ -59,7 +65,7 @@ function SearchBar (props) {
                             onClick={handleSubmit}
                     />
                 {
-                    relevantWords.length === 0 ? "" : <List id={'word-complete'}
+                    relevantWords.length === 0 ? "" :<List id={'word-complete'}
                                                             size="small"
                                                             bordered
                                                             dataSource={relevantWords}

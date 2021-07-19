@@ -2,18 +2,22 @@ import React, {useRef, useState} from 'react';
 import logo from './logo.png';
 import { Link } from 'react-router-dom';
 import './index.css';
-import {List, message} from "antd";
+import {List, message, Skeleton} from "antd";
 import {useUpdate} from "ahooks";
 import PubSub from 'pubsub-js';
+import axios from "axios";
 
 function ResultHeader(props) {
     const [inputString, setInputString] = useState(props.searchString ? props.searchString:'');
     const [relevantWords, setRelevantWords] = useState([]);
     const inputElement = useRef();
-    const handleChange = () => {
-        setInputString(inputElement.current.value);
-        setRelevantWords([...relevantWords, 1234234+Math.random()])
+    const handleChange = async e => {
+        setInputString(e.target.value);
+        let words = (await axios.post ('/api/inputCompleting', {searchString: inputElement.current.value})).data.data;
+        setRelevantWords(words);
+
     }
+
     const handleSubmit = () => {
         //获取当前路由地址
         const currentUrl = props.history.location.pathname
@@ -54,7 +58,7 @@ function ResultHeader(props) {
                 />
                 <button id={'searchButton'} onClick={handleSubmit}/>
                 {
-                    relevantWords.length === 0 ? "" : <List id={'word-complete'}
+                    relevantWords.length === 0 ? "" :<List id={'word-complete'}
                                                             size="small"
                                                             bordered
                                                             dataSource={relevantWords}

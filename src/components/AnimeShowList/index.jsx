@@ -98,7 +98,7 @@ function AnimeShowList(props) {
                                         }
                                     })}
                                 />
-                                <div className={'item-info-tag'}><Tag color={'geekblue'}>原名</Tag>{item.primary_name || '暂无'}</div>
+                                <div className={'item-info-tag'}><Tag color={'geekblue'}>原名</Tag>{<div dangerouslySetInnerHTML={item.primary_name}/> || '暂无'}</div>
                                 <div className={'item-info-tag'}>
                                     <Tag color={'geekblue'}>评分</Tag>
                                     <BiliBiliScoreTag
