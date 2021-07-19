@@ -64,7 +64,7 @@ function CharacterShowList(props) {
                                 <div style={{width:'10rem',height:'15rem',display:'flex',justifyContent:'center',alignItems:'center'}}>
                                     <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'character',name:item.primary_name}}}>
                                         <img
-                                            style={{width:'10rem'}}
+                                            style={{width:'10rem', maxHeight:'15rem'}}
                                             alt="logo"
                                             src={removeLastCharacter(item.image_urls)}
                                         />
