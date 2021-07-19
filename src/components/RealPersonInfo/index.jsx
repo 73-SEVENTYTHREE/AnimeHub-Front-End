@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Col, Divider, Row, Tag, Timeline, List, Avatar} from "antd";
-import './index..css'
+import './index.css'
 import {useMount} from "ahooks";
 import { Tabs } from 'antd';
 import InfoTimeline from "../InfoTimeline";
@@ -21,8 +21,10 @@ function RealPersonInfo (props) {
     const info = {names, gender, birthday, extra_data};
     const words = {names:'别名：', gender:'性别：', birthday:'生日：'}
     useMount(() => {
-        const divider = document.getElementById('person-card-divider');
-        divider.style.height = window.getComputedStyle(document.getElementById('person-card')).height;
+        setTimeout(() => {
+            const divider = document.getElementById('person-card-divider');
+            divider.style.height = window.getComputedStyle(document.getElementById('person-card')).height;
+        }, 200)
     })
     const generateRandomColor = () => {
         const r = Math.floor(Math.random()*200);
@@ -77,20 +79,20 @@ function RealPersonInfo (props) {
                                 <InfoTimeline descriptionArray={descriptionArray}/>
                             </TabPane>
                             <TabPane tab="最近作品" key="2" style={{height:'100%'}}>
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', marginTop:'4rem'}}>
+                                <div style={{marginTop:'4rem', display:'flex', justifyContent:'center', alignItems:'center', flexWrap:'wrap'}}>
                                     {
                                         recently_participated.map(item =>
                                             (
-                                                <div>
+                                                <div style={{width:'80%'}}>
                                                     <Meta
                                                         avatar={
                                                             <Avatar src={item.visuals} draggable/>
                                                         }
-                                                        style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
+                                                        style={{minWidth:'15rem', marginRight:'2rem'}}
                                                         title={<Link to={{pathname:'result', state:{searchString:item.pri_name}}}>{item.pri_name}</Link>}
                                                         description={<div>
                                                             {item.badge_job}
-                                                            <Divider/>
+                                                            <Divider style={{padding:'0', margin:'1rem'}}/>
                                                         </div>}
                                                     />
                                                 </div>

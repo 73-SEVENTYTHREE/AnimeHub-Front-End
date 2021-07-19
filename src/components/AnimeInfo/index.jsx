@@ -133,7 +133,7 @@ function AnimeInfo (props) {
                                                             title={<Link to={{pathname:'result', state:{searchString:item.primary_name}}}>{item.primary_name}</Link>}
                                                             description={<div>
                                                                 中文名：{item.zh_name}<br/>声优：{item.cv}
-                                                                <Divider/>
+                                                                <Divider style={{padding:'0', margin:'1rem'}}/>
                                                             </div>}
                                                         />
                                                     </div>
