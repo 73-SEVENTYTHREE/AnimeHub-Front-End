@@ -5,7 +5,8 @@ import BiliBiliScoreTag from "../BiliBiliScoreTag";
 import BangumiScoreTag from "../BangumiScoreTag";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import KnowledgeGraph from "../KnowledgeGraph";
-import {ClockCircleOutlined, PlayCircleOutlined} from "@ant-design/icons";
+import {PlayCircleOutlined} from "@ant-design/icons";
+import CommentTimeLine from "../CommentTimeLine";
 import InfoItem from "../InfoItem";
 import {Link} from "react-router-dom";
 const { TabPane } = Tabs;
@@ -39,7 +40,7 @@ function AnimeInfo (props) {
 
     return (
         <div>
-            <div id={'result-container-bg'} style={{ background:`url("${data.visuals.substring(0, data.visuals.length - 1)}")`}}/>
+            <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
             <div style={{padding: '0 1.2rem'}}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingTop:'1rem'}}>
                     <Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {}}>
@@ -55,7 +56,7 @@ function AnimeInfo (props) {
                     </Col>
                     <Col className="gutter-row" span={mobile ? 24 : 6} style={mobile ? {marginBottom:'2rem'} : {minHeight:'40rem'}}>
                         <div className="card-container">
-                            <Card hoverable title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', height:'100%', maxHeight:'50rem', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
+                            <Card hoverable title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', height:'100%', maxHeight:'52rem', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
                                 <div style={{minHeight:'40rem', display:'flex', alignItems:'center', flexDirection:'column', justifyContent:'space-around'}}>
                                     <div style={{margin:'1rem', display:'flex', justifyContent:'center'}}>
                                         <Image src={removeLastCharacter(data.visuals)}
@@ -141,27 +142,15 @@ function AnimeInfo (props) {
                                         }
                                     </div>
                                 </TabPane>
-                                <TabPane tab="动漫评论" key="3" style={{borderRadius:'10px'}}>
-                                    <Timeline mode="left" style={{paddingTop:'2rem'}}>
-                                        {
-                                            comments.map(item => <Timeline.Item  style={{marginLeft:'-65%'}} label={item.comment_time} dot={<ClockCircleOutlined style={{ fontSize: '16px'}}/>} >
-                                                <Meta
-                                                    avatar={
-                                                        <Avatar src={item.comment_visuals} draggable/>
-                                                    }
-                                                    title={item.commenter_name}
-                                                    description={item.comment_texts}
-                                                />
-                                            </Timeline.Item>)
-                                        }
-                                    </Timeline>
+                                <TabPane tab="动漫评论" key="3" style={{borderRadius:'10px', paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                                    <CommentTimeLine comments={comments}/>
                                 </TabPane>
                             </Tabs>
                         </div>
                     </Col>
                     <Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {marginBottom:'2rem'}}>
                         <Card title={'知识图谱'} hoverable style={{border:'0', minHeight:'40rem'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
-                            <KnowledgeGraph guid={guid}/>
+                            <KnowledgeGraph guid={guid} name={props.name}/>
                         </Card>
                     </Col>
                 </Row>

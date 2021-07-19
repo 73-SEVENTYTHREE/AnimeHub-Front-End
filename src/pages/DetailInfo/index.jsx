@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Row, Col, Tag, Tabs, Card, message, Popover} from 'antd';
+import {Row, Col, Tag, Tabs, Card, message, Popover, Empty} from 'antd';
 import ResultHeader from "../../components/ResultHeader";
 import NameDivider from "../../components/NameDivider";
 import {useMount, useUnmount} from "ahooks";
@@ -35,7 +35,8 @@ function DetailInfo (props) {
     const [loading, setLoading] = useState(true);
     const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
-    const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1});
+    const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1, jobs:[], description:'',
+                            recently_participated:[]});
 
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
@@ -54,6 +55,7 @@ function DetailInfo (props) {
         if(data.code === 1){
             message.warning('数据获取错误')
         }
+        if (data.data.related_subjects === null) data.data.related_subjects = [];
         setInfo(data.data);
         setMobile(document.documentElement.clientWidth <= 1000);
         let searchResult;
@@ -99,7 +101,7 @@ function DetailInfo (props) {
             <NameDivider title={info.primary_name} type={type}/>
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
-                {type === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history} name={info.primary_name}/> : ''}
                 {type === 'real_person' ? <RealPersonInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {type === 'music' ? <MusicInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {type === 'book' ? <BookInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
@@ -128,6 +130,9 @@ function DetailInfo (props) {
                                                 </Card>
                                             </Popover>
                                         )
+                                    }
+                                    {
+                                        info.related_subjects.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关词条'}/>:''
                                     }
                                 </div>
                             </TabPane>

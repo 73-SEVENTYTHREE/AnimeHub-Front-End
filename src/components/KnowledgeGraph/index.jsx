@@ -1,11 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
 import axios from "axios";
+import {Empty} from "antd";
 
 function KnowledgeGraph (props) {
+    const [Links, setLinks] = useState([]);
     useEffect(async () => {
         let links  = (await axios.post ('/api/getKnowledge', {guid:props.guid})).data;
         console.log(links);
+        setLinks(links)
         if(document.getElementById('graph') !== null || links.length === 0){
             return;
         }
@@ -21,10 +24,11 @@ function KnowledgeGraph (props) {
             .nodes (d3.values (nodes))
             .links (links)
             .size ([width, height])
-            .linkDistance (100)
+            .linkDistance (300)
             .linkStrength(0.8)
             .alpha(0.5)
-            .charge (-2200)
+            .gravity(0.05)
+            .charge (-1000)
             .on ("tick", tick)
             .start ();
 
@@ -100,6 +104,7 @@ function KnowledgeGraph (props) {
                 var color;
                 var link = links[node.index];
                 color = "#f3f3f3";
+                if (node.name === props.name) color='rgb(55, 133, 140)'
                 return color;
             })
             .style ('stroke', function (node) {
@@ -132,6 +137,7 @@ function KnowledgeGraph (props) {
                 var color;
                 var link = links[node.index];
                 color = "#A254A2"; //字体颜色
+                if (node.name === props.name) color='black'
                 return color;
             }).attr ('x', function (d) {
                 var re_en = /[a-zA-Z]+/g;
@@ -203,7 +209,11 @@ function KnowledgeGraph (props) {
     },[props.guid])
 
     return (
-        <div id={'knowledge-graph'} style={{overflow:'hidden'}}/>
+        <div style={{minHeight:'400px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+            {
+                Links.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关信息'}/>:<div id={'knowledge-graph'} style={{overflow:'hidden'}}/>
+            }
+        </div>
     )
 }
 
