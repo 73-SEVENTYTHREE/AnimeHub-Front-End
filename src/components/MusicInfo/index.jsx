@@ -1,18 +1,19 @@
 import React from 'react';
 import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography} from "antd";
-import data from './testdata';
 import {Link} from "react-router-dom";
+import removeLastCharacter from "../../utils/removeLastCharacter";
 
 const {TabPane} = Tabs
 
 function MusicInfo(props) {
-    const {mobile} = props
+    const {mobile,data} = props
+    console.log(data)
     return (
         <Card style={{margin:'1rem 2rem 2rem 2rem', minHeight:'60rem'}} hoverable>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{height:'60rem'}}>
                 <Col span={mobile ? 24 : 6}>
                     <div style={{display:'flex', flexDirection:'column'}}>
-                        <div style={{margin:'0 auto'}}><Image width={'10rem'} src={data.visuals[0]}/></div>
+                        <div style={{margin:'0 auto'}}><Image width={'10rem'} src={removeLastCharacter(data.visuals)}/></div>
                         <div style={{display:'flex', flexDirection:'column'}}>
                             <Divider orientation={'left'}>歌曲名称</Divider>
                             <div >
@@ -21,7 +22,8 @@ function MusicInfo(props) {
                             </div>
                             <Divider orientation={'left'}>歌手</Divider>
                             <div>
-                                {data.singer.map((item,index) => {
+                                {data.singer===undefined?'暂无':
+                                    data.singer===null?'暂无':data.singer.map((item,index) => {
                                     if(index===0){
                                         return <span key={index}><Link>{item}</Link></span>
                                     }else{
@@ -31,7 +33,8 @@ function MusicInfo(props) {
                             </div>
                             <Divider orientation={'left'}>编曲人</Divider>
                             <div>
-                                {data.arranger.map((item,index) => {
+                                {data.arranger===undefined?'暂无':
+                                    data.arranger===null?'暂无':data.arranger.map((item,index) => {
                                     if(index===0){
                                         return <span key={index}><Link>{item}</Link></span>
                                     }else{
@@ -41,7 +44,8 @@ function MusicInfo(props) {
                             </div>
                             <Divider orientation={'left'}>作曲人</Divider>
                             <div>
-                                {data.composer.map((item,index) => {
+                                {data.composer===undefined?'暂无':
+                                    data.composer===null?'暂无':data.composer.map((item,index) => {
                                     if(index===0){
                                         return <span key={index}><Link>{item}</Link></span>
                                     }else{
@@ -51,7 +55,8 @@ function MusicInfo(props) {
                             </div>
                             <Divider orientation={'left'}>作词人</Divider>
                             <div>
-                                {data.lyrics.map((item,index) => {
+                                {data.lyrics===undefined?'暂无':
+                                    data.lyrics===null?'暂无':data.lyrics.map((item,index) => {
                                     if(index===0){
                                         return <span key={index}><Link>{item}</Link></span>
                                     }else{

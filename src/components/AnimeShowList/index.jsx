@@ -14,19 +14,9 @@ const { Panel } = Collapse
 const { Paragraph } = Typography
 const tagsData = ['相关度','评论数', '浏览量', '评分'];
 
-class InsideFilter extends React.Component{
-    state = {
-        selectedTag: '相关度',
-    };
-
-
-
-}
-
 function AnimeShowList(props) {
     let filter = 'relate'
     const { total,currentPage,selectedTag } = props
-    console.log(props.listData)
     const onChange = async (page,pageNum) => {
         await props.getData(page,filter,'anime',pageNum)
     }
@@ -126,7 +116,7 @@ function AnimeShowList(props) {
             }
             {
                 <div style={{float:'right'}}>
-                    <Pagination showQuickJumper total={total} onChange={onChange} current={currentPage} pagesize={10}/>
+                    <Pagination showQuickJumper showSizeChanger={false} total={total} onChange={onChange} current={currentPage} defaultPageSize={10}/>
                 </div>
             }
         </div>

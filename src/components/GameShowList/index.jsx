@@ -3,6 +3,8 @@ import {useUpdate} from 'ahooks';
 import {Collapse, List, Pagination, Tag, Typography} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
+import moment from 'moment';
+import BiliBiliScoreTag from "../BiliBiliScoreTag";
 import BangumiScoreTag from "../BangumiScoreTag";
 import './index.css';
 import removeLastCharacter from "../../utils/removeLastCharacter";
@@ -12,11 +14,11 @@ const { Panel } = Collapse
 const { Paragraph } = Typography
 const tagsData = ['相关度','评论数', '浏览量', '评分'];
 
-function BookShowList(props) {
+function GameShowList(props) {
     let filter = 'relate'
     const { total,currentPage,selectedTag } = props
     const onChange = async (page,pageNum) => {
-        await props.getData(page,filter,'book',pageNum)
+        await props.getData(page,filter,'game',pageNum)
     }
 
     const handleChange = async (tag,checked)=>{
@@ -60,7 +62,7 @@ function BookShowList(props) {
                             key={item.guid}
                             extra={
                                 <div style={{width:'10rem',height:'15rem',display:'flex',justifyContent:'center',alignItems:'center'}}>
-                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'book',name:item.primary_name}}}>
+                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'game',name:item.primary_name}}}>
                                         <img
                                             style={{width:'10rem'}}
                                             alt="logo"
@@ -72,7 +74,7 @@ function BookShowList(props) {
                         >
                             <List.Item.Meta
                                 title={<div style={{display:'flex',alignItems:'center',height:'2rem'}}>
-                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'book',name:item.primary_name}}}
+                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'game',name:item.primary_name}}}
                                           style={{fontSize:'1.1rem',color:'black'}}
                                           dangerouslySetInnerHTML={item.zh_name}
                                     >
@@ -96,9 +98,10 @@ function BookShowList(props) {
                                     logoStyle={{width:'.8rem'}}
                                 />
                             </div>
-                            <div className={'item-info-tag'}><Tag color={'geekblue'}>作者</Tag>
-                                {item.writer===null?'暂无':
-                                    item.writer.map((item,index)=>{
+                            <div className={'item-info-tag'}><Tag color={'geekblue'}>发行日期</Tag>{item.start_date || '暂无'}</div>
+                            <div className={'item-info-tag'}><Tag color={'geekblue'}>开发商</Tag>
+                                {item.developer===null?'暂无':
+                                    item.developer.map((item,index)=>{
                                         if(index===0){
                                             return <span>{item}</span>
                                         }else{
@@ -107,18 +110,6 @@ function BookShowList(props) {
                                     })
                                 }
                             </div>
-                            <div className={'item-info-tag'}><Tag color={'geekblue'}>出版社</Tag>
-                                {item.press===null?'暂无':
-                                    item.press.map((item,index)=>{
-                                        if(index===0){
-                                            return <span>{item}</span>
-                                        }else{
-                                            return <span>、{item}</span>
-                                        }
-                                    })
-                                }
-                            </div>
-                            <div className={'item-info-tag'}><Tag color={'geekblue'}>出版日期</Tag>{item.start_date || '暂无'}</div>
                             <div className={'item-info-tag'}><Tag color={'geekblue'}>简介</Tag>
                                 <div id={'description-wrapper'} dangerouslySetInnerHTML={item.description}>
                                 </div>
@@ -136,4 +127,4 @@ function BookShowList(props) {
     );
 }
 
-export default BookShowList;
+export default GameShowList;

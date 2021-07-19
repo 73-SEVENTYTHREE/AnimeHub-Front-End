@@ -11,6 +11,11 @@ import outLineKeyWords from "../../utils/outLineKeyWords";
 import AnimeShowList from "../AnimeShowList";
 import BookShowList from "../BookShowList";
 import axios from "axios";
+import MusicShowList from "../MusicShowList";
+import GameShowList from "../GameShowList";
+import RealPersonShowList from "../RealPersonShowList";
+import CharacterShowList from "../CharacterShowList";
+import CompanyShowList from "../CompanyShowList";
 
 function SearchResultList  (props) {
     const [searchString, setSearchString] = useState(props.searchString);
@@ -20,6 +25,7 @@ function SearchResultList  (props) {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedTag, setSelectedTag] = useState('relate')
     let token = null;
+
     //根据传入的字符串获取相关信息，和后端的交互主要在这个函数里。
     const getDataBySearchString = async (str,page,orderby,type,pageNum) => {
         setLoading(true);
@@ -43,6 +49,7 @@ function SearchResultList  (props) {
         for(let i=0,length=ListData.length;i<length;i++){
             let item = ListData[i]
             item.zh_name = outLineKeyWords(keywords, item.zh_name);
+            item.primary_name = outLineKeyWords(keywords, item.primary_name);
             item.description = outLineKeyWords(keywords, item.description);
             if(item.tags!==null){
                 item.tags = item.tags.map(tag=>{
@@ -76,35 +83,13 @@ function SearchResultList  (props) {
         await getDataBySearchString(searchString,page,orderby,type,pageNum)
     }
 
-    // const getBilibiliData = async (start_index,end_index,ListData)=>{
-    //     console.log(start_index,end_index, ListData)
-    //     for(let i=start_index;i<=end_index;i++){
-    //         let item = ListData[i]
-    //         if(item!==undefined){
-    //             const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
-    //             const result = bilibili_data.result;
-    //             if(result === undefined){
-    //                 item.bilibili_score='暂无'
-    //                 item.bilibili_user_count='暂无'
-    //             }else{
-    //                 item.bilibili_score = result[0].media_score.score
-    //                 item.bilibili_user_count = result[0].media_score.user_count
-    //             }
-    //             listData[i]=item
-    //         }
-    //     }
-    //     setListData(listData)
-    // }
-
     useMount(async () => {
         //订阅上方导航栏输入的消息，获取对应字符串
         token = PubSub.subscribe('ChangeInput', async (msg, data) => {
             setSearchString(data);
             await getDataBySearchString (data,1,'relate',props.searchType,10);
-            // handleMark()
         });
         await getDataBySearchString(searchString,1,'relate',props.searchType,10);
-        // handleMark()
     })
 
     useUnmount(() => {
@@ -113,13 +98,13 @@ function SearchResultList  (props) {
 
     switch(props.searchType){
     case 'anime': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
-        case 'book': return (loading ? <Skeleton active/> : <BookShowList searchString={searchString} listData={listData}/>);
-        case 'music': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
-        case 'game': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
-        case 'character': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
-        case 'real_person': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
-        case 'company': return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
-        default : return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData}/>);
+        case 'book': return (loading ? <Skeleton active/> : <BookShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
+        case 'music': return (loading ? <Skeleton active/> : <MusicShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
+        case 'game': return (loading ? <Skeleton active/> : <GameShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
+        case 'character': return (loading ? <Skeleton active/> : <CharacterShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
+        case 'real_person': return (loading ? <Skeleton active/> : <RealPersonShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
+        case 'company': return (loading ? <Skeleton active/> : <CompanyShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
+        default : return (loading ? <Skeleton active/> : <AnimeShowList searchString={searchString} listData={listData} total={dataLength} getData={getData} currentPage={currentPage} selectedTag={selectedTag}/>);
     }
 }
 
