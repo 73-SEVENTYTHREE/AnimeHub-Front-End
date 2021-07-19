@@ -1,48 +1,35 @@
-import React from 'react';
-import {useMount} from "ahooks";
+import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
+import axios from "axios";
+import {Button} from "antd";
 
 function KnowledgeGraph (props) {
-
-    useMount(() => {
-        const links =
-            [
-                {source: '艾伦·麦席森·图灵', target: 'Alan Mathison Turing', 'rela': '外文名', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '英国', 'rela': '国籍', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '英国伦敦', 'rela': '出生地', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '1912年6月23日', 'rela': '出生日期', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '1954年6月7日', 'rela': '逝世日期', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '数学家，逻辑学家，密码学家', 'rela': '职业', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '剑桥大学国王学院，普林斯顿大学', 'rela': '毕业院校', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '“计算机科学之父”', 'rela': '主要成就', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '提出“图灵测试”概念', 'rela': '主要成就', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '人工智能', 'rela': '主要成就', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '破解德国的著名密码系统Enigma', 'rela': '主要成就', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '《论数字计算在决断难题中的应用》', 'rela': '代表作品', type: 'resolved'},
-                {source: '艾伦·麦席森·图灵', target: '《机器能思考吗？》', 'rela': '代表作品', type: 'resolved'},
-            ];
-
+    useEffect(async () => {
+        let links  = (await axios.post ('/api/getKnowledge', {guid:props.guid})).data;
+        console.log(links);
+        if(document.getElementById('graph') !== null || links.length === 0){
+            return;
+        }
         const nodes = {};
-
         links.forEach (function (link) {
             link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
             link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
         });
 
-        const width = 800, height = 800;
-
+        const width = 1400, height = 1000;
         const force = d3.layout.force ()
             .nodes (d3.values (nodes))
             .links (links)
             .size ([width, height])
-            .linkDistance (180)
-            .charge (-1500)
+            .linkDistance (200)
+            .charge (-700)
             .on ("tick", tick)
             .start ();
 
         const svg = d3.select ("#knowledge-graph").append ("svg")
             .attr ("width", width)
-            .attr ("height", height);
+            .attr ("height", height)
+            .attr('id', 'graph')
 
         const marker =
             svg.append ("marker")
@@ -213,11 +200,10 @@ function KnowledgeGraph (props) {
         function transform2 (d) {
             return "translate(" + (d.x) + "," + d.y + ")";
         }
-    })
+    },[props.guid])
 
     return (
-        <div id={'knowledge-graph'} style={{width:'100%', height:'100%', display:'flex', justifyContent:'center', alignItems:'center',
-         overflow:'auto'}}/>
+        <div id={'knowledge-graph'}/>
     )
 }
 

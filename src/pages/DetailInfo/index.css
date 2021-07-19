@@ -91,7 +91,7 @@
     overflow: auto;
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-    /*padding: 2rem;*/
+    padding: 2rem;
     background: white;
 }
 .card-container > .ant-tabs-card > .ant-tabs-nav::before {

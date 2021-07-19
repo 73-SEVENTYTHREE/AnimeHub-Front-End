@@ -18,7 +18,7 @@ const { TabPane } = Tabs;
 
 function DetailInfo (props) {
     const {state}=props.location;
-    let name, type, guid;
+    let name, type, guid, observer;
 
     if(state && state.name && state.type && state.guid){//判断当前有参数
         name = state.name;
@@ -35,7 +35,7 @@ function DetailInfo (props) {
     const [loading, setLoading] = useState(true);
     const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
-    const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[]});
+    const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1});
 
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
@@ -79,8 +79,9 @@ function DetailInfo (props) {
         }
         setTimeout(() => {
             const relevantContainer = document.getElementById('relevant-container');
-            console.log(document.getElementById('result-container').offsetHeight)
-            relevantContainer.style.top = document.getElementById('result-container').offsetHeight + 'px'
+            let resultContainer = document.getElementById('result-container');
+            console.log(resultContainer)
+            relevantContainer.style.top = resultContainer.offsetHeight + 'px'
             const container = document.getElementById('detail-container');
             container.style.height = document.body.scrollHeight.toString() + 'px';
             window.addEventListener('resize', handleResize);
@@ -88,6 +89,7 @@ function DetailInfo (props) {
     })
 
     useUnmount(() => {
+        if(observer !== undefined) observer.disconnect();
         window.removeEventListener('resize', handleResize);
     })
 
