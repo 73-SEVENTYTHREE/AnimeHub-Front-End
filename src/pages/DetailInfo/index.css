@@ -4,7 +4,7 @@
     height: auto;
     /*background: #f3f3f3;*/
     position: absolute;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .relevant-title{
@@ -32,7 +32,6 @@
 #relevant-container{
     position: relative;
     padding: 1rem 2rem ;
-
 }
 
 #result-container-bg{

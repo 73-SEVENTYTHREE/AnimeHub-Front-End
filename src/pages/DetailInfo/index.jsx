@@ -39,7 +39,7 @@ function DetailInfo (props) {
 
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
-        relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height;
+        relevantContainer.style.top = document.getElementById('result-container').offsetHeight + 'px'
         const container = document.getElementById('detail-container');
         container.style.height = document.body.scrollHeight.toString() + 'px';
         setMobile(e.target.innerWidth <= 1000);
@@ -77,11 +77,14 @@ function DetailInfo (props) {
         if(searchResult.result !== undefined){
             setBiliBiliData(searchResult.result[0]);
         }
-        const relevantContainer = document.getElementById('relevant-container');
-        relevantContainer.style.top = window.getComputedStyle(document.getElementById('result-container')).height
-        const container = document.getElementById('detail-container');
-        container.style.height = document.body.scrollHeight.toString() + 'px';
-        window.addEventListener('resize', handleResize);
+        setTimeout(() => {
+            const relevantContainer = document.getElementById('relevant-container');
+            console.log(document.getElementById('result-container').offsetHeight)
+            relevantContainer.style.top = document.getElementById('result-container').offsetHeight + 'px'
+            const container = document.getElementById('detail-container');
+            container.style.height = document.body.scrollHeight.toString() + 'px';
+            window.addEventListener('resize', handleResize);
+        }, 200)
     })
 
     useUnmount(() => {
