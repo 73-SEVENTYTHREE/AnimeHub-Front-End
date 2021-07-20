@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Col, Divider, Row, Tag, Timeline, List, Avatar} from "antd";
+import {Card, Col, Divider, Row, Tag, Timeline, List, Avatar, InputNumber, Button, message} from "antd";
 import './index.css'
 import {useMount} from "ahooks";
 import { Tabs } from 'antd';
@@ -34,7 +34,8 @@ function RealPersonInfo (props) {
     }
     return (
         <div>
-            <Card style={{margin:'1rem 2rem 2rem 2rem'}} hoverable id={'person-card'}>
+            <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(visuals)}")`}}/>
+            <Card style={{margin:'2rem 2rem 2rem 2rem'}} hoverable id={'person-card'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={mobile ? 24 : 6}>
                         <div id={'person-description'}>
@@ -79,7 +80,7 @@ function RealPersonInfo (props) {
                                 <InfoTimeline descriptionArray={descriptionArray}/>
                             </TabPane>
                             <TabPane tab="最近作品" key="2" style={{height:'100%'}}>
-                                <div style={{marginTop:'4rem', display:'flex', justifyContent:'center', alignItems:'center', flexWrap:'wrap'}}>
+                                <div style={{marginTop:'2rem', display:'flex', justifyContent:'center', alignItems:'center', flexWrap:'wrap'}}>
                                     {
                                         recently_participated.map(item =>
                                             (
@@ -109,10 +110,18 @@ function RealPersonInfo (props) {
                 </Row>
             </Card>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {marginBottom:'2rem'}}>
-                    <Card title={'知识图谱'} hoverable style={{border:'0', minHeight:'40rem', margin:'0rem 2rem 2rem 2rem'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
-                        <KnowledgeGraph guid={guid} name={primary_name}/>
+                <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
+                    <Card title={'相关推荐'}
+                          hoverable
+                          style={{border:'0', minHeight:'30rem'}}
+                          headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}
+                    >
                     </Card>
+                </Col>
+            </Row>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
+                    <KnowledgeGraph guid={guid} name={primary_name}/>
                 </Col>
             </Row>
         </div>

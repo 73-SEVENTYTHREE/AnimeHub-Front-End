@@ -36,7 +36,7 @@ function DetailInfo (props) {
     const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1, jobs:[], description:'',
-                            recently_participated:[]});
+                            recently_participated:[],writer:[], press:[]});
 
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
@@ -82,7 +82,6 @@ function DetailInfo (props) {
         setTimeout(() => {
             const relevantContainer = document.getElementById('relevant-container');
             let resultContainer = document.getElementById('result-container');
-            console.log(resultContainer)
             relevantContainer.style.top = resultContainer.offsetHeight + 'px'
             const container = document.getElementById('detail-container');
             container.style.height = document.body.scrollHeight.toString() + 'px';
@@ -102,10 +101,10 @@ function DetailInfo (props) {
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
                 {type === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history} name={info.primary_name}/> : ''}
-                {type === 'real_person' ? <RealPersonInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'real_person' ? <RealPersonInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {type === 'music' ? <MusicInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'book' ? <BookInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'game' ? <GameInfo data={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'book' ? <BookInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'game' ? <GameInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
             </div>
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

@@ -1,17 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
 import axios from "axios";
-import {Empty} from "antd";
+import {Button, Card, Empty, InputNumber, message} from "antd";
 
 function KnowledgeGraph (props) {
     const [Links, setLinks] = useState([]);
+    const [layerCount, setLayerCount] = useState(2);
+    const [limitPerLayer, setLimitPerLayer] = useState(6);
+    const generateRandomColor = () => {
+        const r = Math.floor(Math.random()*200);
+        const g = Math.floor(Math.random()*200);
+        const b = Math.floor(Math.random()*200);
+        return `rgba(${r}, ${g}, ${b}, 0.6)`;
+    }
+    let a = 2, b = 6;
     useEffect(async () => {
-        let links  = (await axios.post ('/api/getKnowledge', {guid:props.guid})).data;
+        let links  = (await axios.post ('/api/getKnowledge', {guid:props.guid,layerCount,limitPerLayer})).data;
         console.log(links);
         setLinks(links)
-        if(document.getElementById('graph') !== null || links.length === 0){
+        let graph = document.getElementById('graph');
+        if(graph !== null && links.length !== 0){
+            console.log(graph)
+            graph.parentNode.removeChild(graph);
+            graph.remove();
+            graph = null;
+        }
+        if(graph !== null || links.length === 0){
             return;
         }
+        console.log(layerCount, limitPerLayer)
         const nodes = {};
         links.forEach (function (link) {
             link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
@@ -206,15 +223,33 @@ function KnowledgeGraph (props) {
         function transform2 (d) {
             return "translate(" + (d.x) + "," + d.y + ")";
         }
-    },[props.guid])
+        const relevantContainer = document.getElementById('relevant-container');
+        let resultContainer = document.getElementById('result-container');
+        relevantContainer.style.top = resultContainer.offsetHeight + 'px'
+    },[props.guid, layerCount, limitPerLayer])
 
     return (
+        <Card title={'知识图谱'}
+              hoverable
+              style={{border:'0', minHeight:'40rem'}}
+              headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}
+              extra={<div>
+                  <strong color={'white'}>深度</strong>&nbsp;<InputNumber max={4} min={1} defaultValue={layerCount} onChange={value => a = value}/>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <strong color={'white'}>广度</strong>&nbsp;<InputNumber max={10} min={1} defaultValue={limitPerLayer} onChange={value => b = value}/>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <Button type={'primary'} onClick={() => {
+                      console.log(a, b)
+                      if (a === setLayerCount && b === setLimitPerLayer) message.warning('')
+                      setLayerCount(a);
+                      setLimitPerLayer(b)
+                  }}>更新知识图谱</Button>
+              </div>}
+        >
         <div style={{minHeight:'400px', display:'flex', alignItems:'center', justifyContent:'center'}}>
             {
                 Links.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关信息'}/>:<div id={'knowledge-graph'} style={{overflow:'hidden'}}/>
             }
         </div>
+        </Card>
     )
 }
-
 export default KnowledgeGraph;
