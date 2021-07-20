@@ -43,8 +43,7 @@ function CompanyInfo (props) {
                             }, 200)
                         }}>
                             <TabPane key={'1'} tab={"公司简介"}>
-                                <div style={{display:'flex',flexDirection:'column',padding:'1rem'}}>
-                                    <Typography.Title level={5} color={'blue'}>内容简介</Typography.Title>
+                                <div style={{display:'flex',flexDirection:'column',padding:'1rem', maxHeight:'50rem', overflow:'auto'}}>
                                     <Typography.Paragraph><InfoTimeline descriptionArray={data.description.split('<br>')}/></Typography.Paragraph>
                                 </div>
                             </TabPane>

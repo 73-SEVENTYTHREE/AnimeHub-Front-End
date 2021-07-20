@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar} from "antd";
+import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar, Empty} from "antd";
 import {Link} from "react-router-dom";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import BangumiScoreTag from "../BangumiScoreTag";
@@ -8,17 +8,24 @@ import InfoTimeline from "../InfoTimeline";
 import CommentTimeLine from "../CommentTimeLine";
 import Meta from "antd/es/card/Meta";
 import Tags from "../Tags";
+import {useMount} from "ahooks";
+import WordCloud from "../WordCloud";
 
 const {TabPane} = Tabs
 
 function GameInfo(props) {
     const {mobile,data} = props
     const keys = Object.keys(data.extra_data)
-    console.log(data)
+    useMount(() => {
+        setTimeout(() => {
+            const divider = document.getElementById('game-card-divider');
+            divider.style.height = window.getComputedStyle(document.getElementById('game-card')).height;
+        }, 200)
+    })
     return (
         <div>
             <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
-            <Card style={{margin:'1rem 2rem 2rem 2rem', minHeight:'45rem'}} hoverable>
+            <Card style={{margin:'2rem', minHeight:'45rem'}} hoverable id={'game-card'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col span={mobile ? 24 : 8}>
                         <div style={{display:'flex', flexDirection:'column'}}>
@@ -26,9 +33,9 @@ function GameInfo(props) {
                             <div style={{display:'flex', flexDirection:'column'}}>
                                 <Divider orientation={'left'}>游戏名</Divider>
                                 <div>
-                                    <Tag>中文名称</Tag>
+                                    <Tag style={{marginBottom:'.5rem'}}>中文名称</Tag>
                                     {data.zh_name}<br/>
-                                    <Tag>原名</Tag>
+                                    <Tag style={{marginBottom:'.5rem'}}>原名</Tag>
                                     {data.primary_name}<br/>
                                     <Tag>别名</Tag>
                                     {
@@ -46,15 +53,15 @@ function GameInfo(props) {
                                     data.genre===undefined?'':
                                         data.genre===null?'':
                                             <div>
-                                                <Tag>游戏类型</Tag>
+                                                <Tag style={{marginBottom:'.5rem'}}>游戏类型</Tag>
                                                 {data.genre}
                                             </div>
                                 }
                                 {
                                     <div style={{display:'flex',alignItems:'center'}}>
-                                        <Tag>游戏评分</Tag>
+                                        <Tag style={{marginBottom:'.5rem'}}>游戏评分</Tag>
                                         <BangumiScoreTag score={data.score_general} user_count={data.vote_count}
-                                                         style={{fontSize:'0.7rem',padding:'0.1rem',width:'2.9rem',height:'1.3rem'}}
+                                                         style={{fontSize:'0.7rem',marginBottom:'.5rem', padding:'0.1rem',width:'2.9rem',height:'1.3rem'}}
                                                          logoStyle={{width:'.8rem'}}/>
                                     </div>
                                 }
@@ -62,7 +69,7 @@ function GameInfo(props) {
                                     data.start_date===undefined?'':
                                         data.start_date===null?'':
                                             <div>
-                                                <Tag>发售日期</Tag>
+                                                <Tag style={{marginBottom:'.5rem'}}>发售日期</Tag>
                                                 {data.start_date}
                                             </div>
                                 }
@@ -70,7 +77,7 @@ function GameInfo(props) {
                                     data.platform===undefined?'':
                                         data.platform===null?'':
                                             <div>
-                                                <Tag>发售平台</Tag>
+                                                <Tag style={{marginBottom:'.5rem'}}>发售平台</Tag>
                                                 {data.platform.map((item,index)=>{
                                                     if(index===0){
                                                         return <span>{item}</span>
@@ -84,7 +91,7 @@ function GameInfo(props) {
                                     data.engine===undefined?'':
                                         data.engine===null?'':
                                             <div>
-                                                <Tag>游戏引擎</Tag>
+                                                <Tag style={{marginBottom:'.5rem'}}>游戏引擎</Tag>
                                                 {data.engine}
                                             </div>
                                 }
@@ -97,9 +104,13 @@ function GameInfo(props) {
                                             {
                                                 keys.map((item, index)=>{
                                                     return(
-                                                        <div>
-                                                            <Tag>{item}</Tag>
-                                                            {data.extra_data[item]}
+                                                        <div style={{display: 'inline-block',
+                                                            whiteSpace: 'nowrap',
+                                                            width: '100%',
+                                                            overflow: 'hidden',
+                                                            textOverflow:'ellipsis'}}>
+                                                            <Tag style={{marginBottom:'.5rem'}}>{item}</Tag>
+                                                            {item === "官方网站" ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>: data.extra_data[item]}
                                                         </div>
                                                     )
                                                 })
@@ -109,21 +120,30 @@ function GameInfo(props) {
                             </div>
                         </div>
                     </Col>
-                    <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}}/>
+                    <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}} id={'game-card-divider'}/>
                     <Col span={mobile ? 24:15}>
-                        <Tabs defaultActiveKey="1">
+                        <Tabs defaultActiveKey="1"  onChange={() => {
+                            setTimeout(() => {
+                                const relevantContainer = document.getElementById('relevant-container');
+                                let resultContainer = document.getElementById('result-container');
+                                relevantContainer.style.top = resultContainer.offsetHeight + 'px'
+                                const container = document.getElementById('detail-container');
+                                container.style.height = document.body.scrollHeight.toString() + 'px';
+                            }, 200)
+                        }}>
                             <TabPane key={'1'} tab={"游戏简介"}>
-                                <div style={{display:'flex',flexDirection:'column',padding:'1rem'}}>
+                                <div style={{display:'flex',flexDirection:'column',padding:'1rem 1rem 0 1rem'}}>
                                     <Typography.Title level={5} color={'blue'}>内容简介:</Typography.Title>
                                     <Typography.Paragraph><InfoTimeline descriptionArray={data.description.split('<br>')}/></Typography.Paragraph>
                                     <Typography.Title level={5}>大家倾向于把{data.primary_name}标记为：</Typography.Title>
-                                    <div>
+                                    <div style={{width:'60%', margin:'2rem auto 0 auto'}}>
                                         <Tags tags={data.tags} history={props.history}/>
+                                        <WordCloud words={data.tags.map(item => ({text:item, value:Math.random()}))}/>
                                     </div>
                                 </div>
                             </TabPane>
                             <TabPane tab="游戏角色" key="2" style={{borderRadius:'10px'}}>
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%'}}>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%', marginTop:'2rem'}}>
                                     {
                                         data.chara_list.map(item =>
                                             (
@@ -142,6 +162,9 @@ function GameInfo(props) {
                                                 </div>
                                             )
                                         )
+                                    }
+                                    {
+                                        data.chara_list.length === 0 ? <Empty style={{marginTop:'4rem'}} image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无角色介绍'}/>:''
                                     }
                                 </div>
                             </TabPane>

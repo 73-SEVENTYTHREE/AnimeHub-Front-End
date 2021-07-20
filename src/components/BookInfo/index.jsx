@@ -6,6 +6,7 @@ import Tags from "../Tags";
 import InfoTimeline from "../InfoTimeline";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import Meta from "antd/es/card/Meta";
+import WordCloud from "../WordCloud";
 
 const {TabPane} = Tabs
 
@@ -64,10 +65,9 @@ function BookInfo(props) {
                                 <Typography.Title level={5} color={'blue'}>内容简介</Typography.Title>
                                 <Typography.Paragraph><InfoTimeline descriptionArray={data.description.split('<br>')}/></Typography.Paragraph>
                                 <Typography.Title level={5}>大家倾向于把{data.primary_name}标记为：</Typography.Title>
-                                <div>
-                                    {
-                                        <Tags tags={data.tags} history={props.history}/>
-                                    }
+                                <div style={{width:'60%', margin:'2rem auto 0 auto'}}>
+                                    <Tags tags={data.tags} history={props.history}/>
+                                    <WordCloud words={data.tags.map(item => ({text:item, value:Math.random()}))}/>
                                 </div>
                             </div>
                         </TabPane>

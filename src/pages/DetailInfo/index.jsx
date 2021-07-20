@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Row, Col, Tag, Tabs, Card, message, Popover, Empty} from 'antd';
 import ResultHeader from "../../components/ResultHeader";
 import NameDivider from "../../components/NameDivider";
-import {useMount, useUnmount} from "ahooks";
 import './index.css';
 import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import getBiliBiliDataByRealPersonName from "../../utils/getBiliBiliDataByRealPersonName";
@@ -15,58 +14,48 @@ import MusicInfo from "../../components/MusicInfo";
 import axios from "axios";
 import BookInfo from "../../components/BookInfo";
 import GameInfo from "../../components/GameInfo";
+import {useUpdate} from "ahooks";
 
 const { TabPane } = Tabs;
 
 function DetailInfo (props) {
     const {state}=props.location;
-    let name, type, guid, observer;
-
-    if(state && state.name && state.type && state.guid){//判断当前有参数
-        name = state.name;
-        type = state.type;
-        guid = state.guid;
-        sessionStorage.setItem('name', name);// 存入到sessionStorage中
-        sessionStorage.setItem('type', type);
-        sessionStorage.setItem('guid', guid);
+    const update = useUpdate();
+    let guid;
+    if(state && state.guid){//判断当前有参数
+        guid = state.guid
+        sessionStorage.setItem('guid', state.guid);
     }else {
-        name = sessionStorage.getItem ('name');// 当state没有参数时，取sessionStorage中的参数
-        type = sessionStorage.getItem('type');
-        guid = sessionStorage.getItem('guid')
+        guid = sessionStorage.getItem('guid');
     }
     const [loading, setLoading] = useState(true);
     const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1, jobs:[], description:'',
-                            recently_participated:[],writer:[], press:[], names:[]});
-
+                            recently_participated:[],writer:[], press:[], names:[], typo:'', primary_name:'', pri_name:''});
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
-        relevantContainer.style.top = document.getElementById('result-container').offsetHeight + 'px'
-        const container = document.getElementById('detail-container');
-        container.style.height = document.body.scrollHeight.toString() + 'px';
-        setMobile(e.target.innerWidth <= 1000);
-    }
-
-
-    useMount(async () => {
-        let data = (await axios.post ('/api/detail', {
-            type: type,
-            guid: guid
-        })).data;
-        if(data.code === 1){
-            message.warning('数据获取错误')
+        if (relevantContainer !== null){
+            relevantContainer.style.top = document.getElementById('result-container').offsetHeight + 'px'
+            const container = document.getElementById('detail-container');
+            container.style.height = document.body.scrollHeight.toString() + 'px';
+            setMobile(e.target.innerWidth <= 1000);
         }
-        if (data.data.related_subjects === null) data.data.related_subjects = [];
+    }
+    useEffect(async () => {
+        let data = (await axios.post ('/api/detailByGuid', {
+            guid
+        })).data;
+        if (data.data && data.data.related_subjects === null) data.data.related_subjects = [];
         setInfo(data.data);
         setMobile(document.documentElement.clientWidth <= 1000);
         let searchResult;
-        switch (type) {
+        switch (data.data.typo) {
             case 'anime': {
-                searchResult = await getBiliBiliDataByMediaName(name);
+                searchResult = await getBiliBiliDataByMediaName(data.data.zh_name);
                 break;
             }
-            case 'real_person' : searchResult = await getBiliBiliDataByRealPersonName(name); break;
+            case 'real_person' : searchResult = await getBiliBiliDataByRealPersonName(data.data.zh_name); break;
             case 'music': searchResult = {};break;
             case 'book' : searchResult = {};break;
             case 'game' : searchResult = {};break;
@@ -84,6 +73,7 @@ function DetailInfo (props) {
             setBiliBiliData(searchResult.result[0]);
         }
         setTimeout(() => {
+            console.log(1)
             const relevantContainer = document.getElementById('relevant-container');
             let resultContainer = document.getElementById('result-container');
             relevantContainer.style.top = resultContainer.offsetHeight + 'px'
@@ -91,26 +81,22 @@ function DetailInfo (props) {
             container.style.height = document.body.scrollHeight.toString() + 'px';
             window.addEventListener('resize', handleResize);
         }, 200)
-    })
-
-    useUnmount(() => {
-        if(observer !== undefined) observer.disconnect();
-        window.removeEventListener('resize', handleResize);
-    })
+        return () => window.removeEventListener('resize', handleResize);
+    }, [guid])
 
     return (
         <div id={'detail-container'}>
             <ResultHeader history={props.history}/>
-            <NameDivider title={info.primary_name} type={type}/>
+            <NameDivider title={info.primary_name} type={info.typo}/>
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
-                {type === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history} name={info.primary_name}/> : ''}
-                {type === 'real_person' ? <RealPersonInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'music' ? <MusicInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'book' ? <BookInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'game' ? <GameInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'character' ? <CharacterInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
-                {type === 'company' ? <CompanyInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {info.typo === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history} name={info.primary_name}/> : ''}
+                {info.typo === 'real_person' ? <RealPersonInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {info.typo === 'music' ? <MusicInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {info.typo === 'book' ? <BookInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {info.typo === 'game' ? <GameInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {info.typo === 'character' ? <CharacterInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {info.typo === 'company' ? <CompanyInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
             </div>
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -126,8 +112,15 @@ function DetailInfo (props) {
                                                     className={'relevant-card'}
                                                     cover={<div className="relevant-image"
                                                                 style={{backgroundImage:`url("${item.visuals}")`}}/>}
-                                                    onClick={() => {
-                                                        props.history.push({pathname:'result',state:{searchString:item.primary_name}});
+                                                    onClick={async () => {
+                                                        let data = (await axios.post ('/api/detailByGuid', {
+                                                            guid:item.guid
+                                                        })).data;
+                                                        if(data.code === 1) {
+                                                            message.warning('暂无此页面')
+                                                            return;
+                                                        }
+                                                        props.history.push({pathname:'detailInfo',state:{guid:item.guid}});
                                                     }}
                                                 >
                                                     <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>{item.type}</Tag></div>}

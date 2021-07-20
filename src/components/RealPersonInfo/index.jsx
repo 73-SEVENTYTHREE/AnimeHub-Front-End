@@ -75,11 +75,11 @@ function RealPersonInfo (props) {
                                 container.style.height = document.body.scrollHeight.toString() + 'px';
                             }, 200)
                         }}>
-                            <TabPane tab="详细信息" key="1" style={{paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                            <TabPane tab="详细信息" key="1" style={{paddingLeft:'1rem', maxHeight:'50rem', overflow:'auto'}}>
                                 <Tag color="cyan" style={{marginBottom:'1rem', height:'2rem', maxWidth:'15rem', fontSize:'1.2rem', display:'flex', alignItems:'center', justifyContent:'center'}}>职业: {jobs.join(' ')}</Tag>
                                 <InfoTimeline descriptionArray={descriptionArray}/>
                             </TabPane>
-                            <TabPane tab="最近作品" key="2" style={{height:'100%'}}>
+                            <TabPane tab="最近作品" key="2">
                                 <div style={{marginTop:'2rem', display:'flex', justifyContent:'center', alignItems:'center', flexWrap:'wrap'}}>
                                     {
                                         recently_participated.map(item =>
@@ -102,7 +102,7 @@ function RealPersonInfo (props) {
                                     }
                                 </div>
                             </TabPane>
-                            <TabPane tab="吐槽评论" key="3" style={{paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                            <TabPane tab="吐槽评论" key="3" style={{paddingLeft:'1rem', maxHeight:'50rem', overflow:'auto'}}>
                                 <CommentTimeLine comments={comment_box}/>
                             </TabPane>
                         </Tabs>
