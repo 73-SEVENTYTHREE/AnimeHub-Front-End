@@ -38,7 +38,7 @@ function DetailInfo (props) {
     const [mobile, setMobile] = useState(false);//判断当前设备是否是移动端设备
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1, jobs:[], description:'',
-                            recently_participated:[],writer:[], press:[]});
+                            recently_participated:[],writer:[], press:[], names:[]});
 
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');

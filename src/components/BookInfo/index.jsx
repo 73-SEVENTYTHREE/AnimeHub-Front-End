@@ -11,7 +11,6 @@ const {TabPane} = Tabs
 
 function BookInfo(props) {
     const {mobile, data} = props
-    console.log(data);
     return (
         <div>
             <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>

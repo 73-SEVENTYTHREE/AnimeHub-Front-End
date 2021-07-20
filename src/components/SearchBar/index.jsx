@@ -22,7 +22,6 @@ function SearchBar (props) {
         hotWords.style.filter = 'blur(0px)';
         let bg = document.getElementById('bg');
         bg.style.filter = 'blur(0px)';
-
         // setRelevantWords([])
     }
     const handleSubmit = () => {

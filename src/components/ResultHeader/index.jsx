@@ -54,6 +54,9 @@ function ResultHeader(props) {
                                handleSubmit();
                            }
                        }}
+                       onBlur={e => {
+                           setRelevantWords([])
+                       }}
                        autoComplete="off"
                 />
                 <button id={'searchButton'} onClick={handleSubmit}/>
