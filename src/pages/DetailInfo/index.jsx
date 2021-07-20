@@ -34,6 +34,7 @@ function DetailInfo (props) {
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1, jobs:[], description:'',
                             recently_participated:[],writer:[], press:[], names:[], typo:'', primary_name:'', pri_name:''});
     const handleResize = e => {
+        console.log(1)
         const relevantContainer = document.getElementById('relevant-container');
         if (relevantContainer !== null){
             relevantContainer.style.top = document.getElementById('result-container').offsetHeight + 'px'
@@ -73,7 +74,6 @@ function DetailInfo (props) {
             setBiliBiliData(searchResult.result[0]);
         }
         setTimeout(() => {
-            console.log(1)
             const relevantContainer = document.getElementById('relevant-container');
             let resultContainer = document.getElementById('result-container');
             relevantContainer.style.top = resultContainer.offsetHeight + 'px'
@@ -81,10 +81,11 @@ function DetailInfo (props) {
             container.style.height = document.body.scrollHeight.toString() + 'px';
             window.addEventListener('resize', handleResize);
         }, 200)
+
+        let recommend_items = (await axios.post ('/api/recommend', {guid})).data
+        console.log(recommend_items)
         return () => window.removeEventListener('resize', handleResize);
     }, [guid])
-
-    console.log(props.history)
 
     return (
         <div id={'detail-container'}>
@@ -103,7 +104,9 @@ function DetailInfo (props) {
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={24}>
-                        <Tabs defaultActiveKey="1">
+                        <Tabs defaultActiveKey="1" onChange={() => {
+
+                        }}>
                             <TabPane tab={<strong style={{fontSize:'1.3rem'}}>相关词条</strong>} key="1" style={{paddingBottom:'1rem'}}>
                                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                                     {
@@ -122,6 +125,7 @@ function DetailInfo (props) {
                                                             message.warning('暂无此页面')
                                                             return;
                                                         }
+                                                        window.location.reload();
                                                         props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
                                                     }}
                                                 >
@@ -130,6 +134,17 @@ function DetailInfo (props) {
                                                 </Card>
                                             </Popover>
                                         )
+                                    }
+                                    {
+                                        info.related_subjects.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关词条'}/>:''
+                                    }
+                                </div>
+                            </TabPane>
+                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>词条推荐</strong>} key="2" style={{paddingBottom:'1rem', border:'1px solid black'}}>
+                                111
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
+                                    {
+
                                     }
                                     {
                                         info.related_subjects.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关词条'}/>:''

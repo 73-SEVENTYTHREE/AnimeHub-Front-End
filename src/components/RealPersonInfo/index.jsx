@@ -111,16 +111,6 @@ function RealPersonInfo (props) {
             </Card>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
-                    <Card title={'相关推荐'}
-                          hoverable
-                          style={{border:'0', minHeight:'30rem'}}
-                          headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}
-                    >
-                    </Card>
-                </Col>
-            </Row>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
                     <KnowledgeGraph guid={guid} name={primary_name}/>
                 </Col>
             </Row>
