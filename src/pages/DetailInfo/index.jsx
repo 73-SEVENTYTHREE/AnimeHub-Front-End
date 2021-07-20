@@ -8,6 +8,8 @@ import getBiliBiliDataByMediaName from "../../utils/getBiliBiliDataByMediaName";
 import getBiliBiliDataByRealPersonName from "../../utils/getBiliBiliDataByRealPersonName";
 import AnimeInfo from "../../components/AnimeInfo";
 import RealPersonInfo from "../../components/RealPersonInfo";
+import CharacterInfo from "../../components/CharacterInfo";
+import CompanyInfo from "../../components/CompanyInfo";
 import Meta from "antd/es/card/Meta";
 import MusicInfo from "../../components/MusicInfo";
 import axios from "axios";
@@ -68,6 +70,8 @@ function DetailInfo (props) {
             case 'music': searchResult = {};break;
             case 'book' : searchResult = {};break;
             case 'game' : searchResult = {};break;
+            case 'character' : searchResult = {};break;
+            case 'company' : searchResult = {};break;
             default: {
                 message.warning('错误的类型');
                 searchResult = {}
@@ -105,6 +109,8 @@ function DetailInfo (props) {
                 {type === 'music' ? <MusicInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {type === 'book' ? <BookInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {type === 'game' ? <GameInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'character' ? <CharacterInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
+                {type === 'company' ? <CompanyInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
             </div>
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

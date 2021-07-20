@@ -3,6 +3,8 @@ import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography} from "antd";
 import {Link} from "react-router-dom";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import KnowledgeGraph from "../KnowledgeGraph";
+import Tags from "../Tags";
+import InfoTimeline from "../InfoTimeline";
 
 const {TabPane} = Tabs
 
@@ -13,7 +15,8 @@ function MusicInfo(props) {
     // console.log(data)
     return (
         <div>
-            <Card style={{margin:'1rem 2rem 2rem 2rem', minHeight:'45rem'}} hoverable>
+            <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
+            <Card style={{margin:'2rem 2rem 2rem 2rem'}} hoverable>
                 <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} >
                     <Col span={mobile ? 24 : 6}>
@@ -21,9 +24,9 @@ function MusicInfo(props) {
                             <div style={{margin:'0 auto'}}><Image width={'10rem'} src={removeLastCharacter(data.visuals)}/></div>
                             <div style={{display:'flex', flexDirection:'column'}}>
                                 <Divider orientation={'left'}>歌曲名称</Divider>
-                                <div >
-                                    <Tag>原名:</Tag>{data.primary_name}<br/>
-                                    <Tag>中文名:</Tag>{data.zh_name}
+                                <div>
+                                    <Tag style={{marginBottom:'.5rem'}}>原名</Tag>{data.primary_name}<br/>
+                                    <Tag>中文名</Tag>{data.zh_name}
                                 </div>
                                 <Divider orientation={'left'}>歌手</Divider>
                                 <div>
@@ -78,7 +81,7 @@ function MusicInfo(props) {
                                                 {
                                                     keys.map((item, index)=>{
                                                         return(
-                                                            <div>
+                                                            <div style={{marginBottom:'.5rem'}}>
                                                                 <Tag>{item}</Tag>
                                                                 {data.extra_data[item]}
                                                             </div>
@@ -97,12 +100,12 @@ function MusicInfo(props) {
                             <TabPane key={'1'} tab={"歌曲简介"}>
                                 <div style={{display:'flex',flexDirection:'column',padding:'1rem'}}>
                                     <Typography.Title level={4} color={'blue'}>简介:</Typography.Title>
-                                    <Typography.Paragraph><div dangerouslySetInnerHTML={{__html:data.description}}/></Typography.Paragraph>
-                                    <Typography.Title level={5}>大家倾向于把这首歌标记为：</Typography.Title>
+                                    <Typography.Paragraph><InfoTimeline descriptionArray={data.description.split('<br>')}/></Typography.Paragraph>
+                                    <Typography.Title level={5}>大家倾向于把{data.primary_name}标记为：</Typography.Title>
                                     <div>
-                                        {data.tags.map((item, index)=>{
-                                            return <Tag key={index}>{item}</Tag>
-                                        })}
+                                        {
+                                            <Tags tags={data.tags} history={props.history}/>
+                                        }
                                     </div>
                                 </div>
                             </TabPane>
