@@ -12,12 +12,13 @@ import removeLastCharacter from "../../utils/removeLastCharacter";
 const { CheckableTag } = Tag;
 const { Panel } = Collapse
 const { Paragraph } = Typography
-const tagsData = ['相关度','评论数', '浏览量', '评分'];
+const tagsData = ['相关度','评论数', '最近', '评分'];
 
 function GameShowList(props) {
     let filter = 'relate'
     const { total,currentPage,selectedTag } = props
     const onChange = async (page,pageNum) => {
+        sessionStorage.setItem('currentPage',page)
         await props.getData(page,filter,'game',pageNum)
     }
 
@@ -26,9 +27,10 @@ function GameShowList(props) {
             switch(tag){
                 case '相关度': filter = 'relate';break;
                 case '评论数': filter = 'comment';break;
-                case '浏览量': filter = 'recent';break;
+                case '最近': filter = 'recent';break;
                 case '评分': filter = 'score';break;
             }
+            sessionStorage.setItem('selectedTag',filter)
             await onChange(1,10)
         }
     }
@@ -38,7 +40,7 @@ function GameShowList(props) {
             {
                 <div style={{marginLeft:'1%'}}>
                     <Collapse ghost >
-                        <Panel header={'高级筛选'} key={1} >
+                        <Panel header={'结果排序'} key={1} >
                             {tagsData.map(tag => (
                                 <CheckableTag
                                     key={tag}

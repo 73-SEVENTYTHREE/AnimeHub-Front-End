@@ -30,6 +30,8 @@ function SearchBar (props) {
             message.warning('请输入搜索内容！', 1);
             return;
         }
+        sessionStorage.setItem('searchTabDefaultKey','1')
+        sessionStorage.setItem('currentPage','1')
         props.history.push({pathname:'result',state:{searchString:str}});
     }
 
