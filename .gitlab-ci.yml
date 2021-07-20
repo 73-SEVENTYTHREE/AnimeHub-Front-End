@@ -13,9 +13,9 @@ buildJob:
   tags:
     - AnimeHub-Front-End
   script:
-    - npm install -g cnpm --registry=https://registry.npm.taobao.org
+    - yarn install -g cnpm --registry=https://registry.npm.taobao.org
     - cnpm install
-    - npm run build
+    - yarn build
   artifacts:
     paths:
       - build/
