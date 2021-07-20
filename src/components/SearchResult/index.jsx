@@ -19,7 +19,7 @@ const {TabPane} = Tabs;
 
 function FilterHeader(props) {
     return (
-        <div>
+        <div style={{minHeight:'100vh'}}>
             <Tabs defaultActiveKey="1" centered size={'large'}>
                 <TabPane
                     tab={
