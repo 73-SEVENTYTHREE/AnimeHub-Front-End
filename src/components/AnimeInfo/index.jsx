@@ -120,7 +120,7 @@ function AnimeInfo (props) {
 
                                 </TabPane>
                                 <TabPane tab="虚拟角色" key="2" style={{borderRadius:'10px'}}>
-                                    <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%'}}>
+                                    <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%', marginTop:'2rem'}}>
                                         {
                                             chara_list.map(item =>
                                                 (

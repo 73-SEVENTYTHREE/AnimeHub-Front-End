@@ -101,15 +101,7 @@ function DetailInfo (props) {
             <div id={'relevant-container'}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={24}>
-                        <Tabs defaultActiveKey="1" onChange={() => {
-                            setTimeout(() => {
-                                const relevantContainer = document.getElementById('relevant-container');
-                                let resultContainer = document.getElementById('result-container');
-                                relevantContainer.style.top = resultContainer.offsetHeight + 'px'
-                                const container = document.getElementById('detail-container');
-                                container.style.height = document.body.scrollHeight.toString() + 'px';
-                            }, 200)
-                        }}>
+                        <Tabs defaultActiveKey="1">
                             <TabPane tab={<strong style={{fontSize:'1.3rem'}}>相关词条</strong>} key="1" style={{paddingBottom:'1rem', height:'auto'}}>
                                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                                     {
@@ -144,7 +136,7 @@ function DetailInfo (props) {
                                 </div>
                             </TabPane>
                             <TabPane tab={<strong style={{fontSize:'1.3rem'}}>词条推荐</strong>} key="2" style={{paddingBottom:'1rem', height:'auto',border:'1px solid black'}}>
-                                111
+                                词条推荐
                                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                                     {
 
