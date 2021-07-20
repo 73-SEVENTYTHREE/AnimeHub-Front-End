@@ -98,6 +98,8 @@ function DetailInfo (props) {
         window.removeEventListener('resize', handleResize);
     })
 
+    console.log(props.history)
+
     return (
         <div id={'detail-container'}>
             <ResultHeader history={props.history}/>

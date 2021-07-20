@@ -14,13 +14,21 @@ import Music from "../../images/icons/music.png";
 import './index.css'
 import {Link} from "react-router-dom";
 import WordCloud from "../WordCloud";
+import {useMount} from "ahooks";
 
 const {TabPane} = Tabs;
 
 function FilterHeader(props) {
+
+    const dak = sessionStorage.getItem('searchTabDefaultKey') || '1'
+
     return (
         <div style={{minHeight:'100vh'}}>
-            <Tabs defaultActiveKey="1" centered size={'large'}>
+            <Tabs defaultActiveKey={dak} centered size={'large'}
+                  onChange={(ak)=>{
+                      sessionStorage.setItem('searchTabDefaultKey', ak)
+                      sessionStorage.setItem('currentPage', "1")
+                }}>
                 <TabPane
                     tab={
                         <div>

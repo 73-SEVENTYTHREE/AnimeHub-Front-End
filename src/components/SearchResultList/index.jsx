@@ -23,9 +23,8 @@ function SearchResultList  (props) {
     const [loading, setLoading] = useState(true);
     const [dataLength, setDataLength] =useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedTag, setSelectedTag] = useState('relate')
+    const [selectedTag, setSelectedTag] = useState(sessionStorage.getItem('selectedTag')||'relate')
     let token = null;
-
     //根据传入的字符串获取相关信息，和后端的交互主要在这个函数里。
     const getDataBySearchString = async (str,page,orderby,type,pageNum) => {
         setLoading(true);
@@ -64,11 +63,10 @@ function SearchResultList  (props) {
         switch(orderby){
             case 'relate': setSelectedTag('相关度');break;
             case 'comment': setSelectedTag('评论数');break;
-            case 'recent': setSelectedTag('浏览量');break;
+            case 'recent': setSelectedTag('最近');break;
             case 'score': setSelectedTag('评分');break;
             default:setSelectedTag('相关度');break;
         }
-        await getBilibiliData(ListData);
     }
 
     const getBilibiliData = async (ListData)=>{
@@ -84,9 +82,7 @@ function SearchResultList  (props) {
                 item.bilibili_user_count = result[0].media_score.user_count
             }
             ListData[i]=item
-            // console.log(item)
         }
-        // console.log(ListData)
         setListData(ListData)
     }
 
@@ -98,9 +94,20 @@ function SearchResultList  (props) {
         //订阅上方导航栏输入的消息，获取对应字符串
         token = PubSub.subscribe('ChangeInput', async (msg, data) => {
             setSearchString(data);
-            await getDataBySearchString (data,1,'relate',props.searchType,10);
+            let c = Number(sessionStorage.getItem('currentPage'))||1
+            let t = sessionStorage.getItem('selectedTag')||'relate'
+            if(props.searchType === 'real_person'||props.searchType === 'company'||props.searchType === 'character'){
+                if(t==='recent'||t==='score')t='relate'
+            }
+            await getDataBySearchString (data,c,t,props.searchType,10);
         });
-        await getDataBySearchString(searchString,1,'relate',props.searchType,10);
+        let c = Number(sessionStorage.getItem('currentPage'))||1
+        let t = sessionStorage.getItem('selectedTag')||'relate'
+        if(props.searchType === 'real_person'||props.searchType === 'company'||props.searchType === 'character'){
+            if(t==='recent'||t==='score')t='relate'
+        }
+        console.log(t)
+        await getDataBySearchString(searchString,c,t,props.searchType,10);
     })
 
     useUnmount(() => {
