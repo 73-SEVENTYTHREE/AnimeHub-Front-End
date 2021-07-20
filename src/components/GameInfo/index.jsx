@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar, Empty} from "antd";
+import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar, Empty, message} from "antd";
 import {Link} from "react-router-dom";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import BangumiScoreTag from "../BangumiScoreTag";
@@ -10,6 +10,7 @@ import Meta from "antd/es/card/Meta";
 import Tags from "../Tags";
 import {useMount} from "ahooks";
 import WordCloud from "../WordCloud";
+import axios from "axios";
 
 const {TabPane} = Tabs
 
@@ -153,7 +154,19 @@ function GameInfo(props) {
                                                             <Avatar src={item.visuals} draggable/>
                                                         }
                                                         style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
-                                                        title={<Link to={{pathname:'result', state:{searchString:item.primary_name}}}>{item.primary_name}</Link>}
+                                                        title={<Link
+                                                            onClick={async () => {
+                                                                let data = (await axios.post ('/api/detailByGuid', {
+                                                                    guid:item.guid
+                                                                })).data;
+                                                                if(data.code === 1) {
+                                                                    message.warning('暂无此页面')
+                                                                    return;
+                                                                }
+                                                                window.location.reload();
+                                                                props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
+                                                            }}
+                                                        >{item.primary_name}</Link>}
                                                         description={<div>
                                                             中文名：{item.zh_name}<br/>声优：{item.cv}
                                                             <Divider style={{padding:'0', margin:'1rem'}}/>

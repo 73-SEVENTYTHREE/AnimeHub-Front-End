@@ -77,7 +77,7 @@ function DetailInfo (props) {
             const container = document.getElementById('detail-container');
             container.style.height = document.body.scrollHeight.toString() + 'px';
             window.addEventListener('resize', handleResize);
-        }, 200)
+        }, 250)
 
         let recommend_items = (await axios.post ('/api/recommend', {guid})).data
         console.log(recommend_items)

@@ -1,6 +1,6 @@
 import React from 'react';
 import removeLastCharacter from "../../utils/removeLastCharacter";
-import {Avatar, Card, Col, Divider, Row, Tabs} from "antd";
+import {Avatar, Card, Col, Divider, message, Row, Tabs} from "antd";
 import InfoTimeline from "../InfoTimeline";
 import Meta from "antd/es/card/Meta";
 import {Link} from "react-router-dom";
@@ -8,6 +8,7 @@ import CommentTimeLine from "../CommentTimeLine";
 import KnowledgeGraph from "../KnowledgeGraph";
 import {useMount} from "ahooks";
 import {UserOutlined} from "@ant-design/icons";
+import axios from "axios";
 
 const { TabPane } = Tabs;
 
@@ -65,7 +66,7 @@ function CharacterInfo (props) {
                     </Col>
                     <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}} id={'person-card-divider'}/>
                     <Col className="gutter-row" span={mobile ? 24:17} style={{height:'100%'}}>
-                        <Tabs defaultActiveKey="1" type={'card'} onChange={(key) => {
+                        <Tabs defaultActiveKey="1" onChange={(key) => {
                             setTimeout(() => {
                                 const relevantContainer = document.getElementById('relevant-container');
                                 let resultContainer = document.getElementById('result-container');
@@ -88,7 +89,19 @@ function CharacterInfo (props) {
                                                             <Avatar icon={item.visuals === "https:" ? <UserOutlined />:''} src={item.visuals} draggable/>
                                                         }
                                                         style={{minWidth:'15rem', marginRight:'2rem'}}
-                                                        title={<Link to={{pathname:'result', state:{searchString:item.pri_name}}}>{item.pri_name}</Link>}
+                                                        title={<Link
+                                                            onClick={async () => {
+                                                                let data = (await axios.post ('/api/detailByGuid', {
+                                                                    guid:item.guid
+                                                                })).data;
+                                                                if(data.code === 1) {
+                                                                    message.warning('暂无此页面')
+                                                                    return;
+                                                                }
+                                                                window.location.reload();
+                                                                props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
+                                                            }}
+                                                        >{item.pri_name}</Link>}
                                                         description={<div>
                                                             {item.badge_job}
                                                             <Divider style={{padding:'0', margin:'1rem'}}/>
@@ -107,16 +120,6 @@ function CharacterInfo (props) {
                     </Col>
                 </Row>
             </Card>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
-                    <Card title={'相关推荐'}
-                          hoverable
-                          style={{border:'0', minHeight:'30rem'}}
-                          headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}
-                    >
-                    </Card>
-                </Col>
-            </Row>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
                     <KnowledgeGraph guid={guid} name={primary_name}/>

@@ -10,6 +10,7 @@ import CommentTimeLine from "../CommentTimeLine";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import Meta from "antd/es/card/Meta";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 const { TabPane } = Tabs;
 
@@ -66,7 +67,7 @@ function RealPersonInfo (props) {
                     </Col>
                     <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}} id={'person-card-divider'}/>
                     <Col className="gutter-row" span={mobile ? 24:17} style={{height:'100%'}}>
-                        <Tabs defaultActiveKey="1" type={'card'} onChange={(key) => {
+                        <Tabs defaultActiveKey="1" onChange={(key) => {
                             setTimeout(() => {
                                 const relevantContainer = document.getElementById('relevant-container');
                                 let resultContainer = document.getElementById('result-container');
@@ -90,7 +91,19 @@ function RealPersonInfo (props) {
                                                             <Avatar src={item.visuals} draggable/>
                                                         }
                                                         style={{minWidth:'15rem', marginRight:'2rem'}}
-                                                        title={<Link to={{pathname:'result', state:{searchString:item.pri_name}}}>{item.pri_name}</Link>}
+                                                        title={<Link
+                                                            onClick={async () => {
+                                                                let data = (await axios.post ('/api/detailByGuid', {
+                                                                    guid:item.guid
+                                                                })).data;
+                                                                if(data.code === 1) {
+                                                                    message.warning('暂无此页面')
+                                                                    return;
+                                                                }
+                                                                window.location.reload();
+                                                                props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
+                                                            }}
+                                                        >{item.pri_name}</Link>}
                                                         description={<div>
                                                             {item.badge_job}
                                                             <Divider style={{padding:'0', margin:'1rem'}}/>

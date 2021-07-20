@@ -1,4 +1,18 @@
-import {Button, Card, Col, Descriptions, Image, Row, Skeleton, Tabs, Avatar, Timeline, Divider} from "antd";
+import {
+    Button,
+    Card,
+    Col,
+    Descriptions,
+    Image,
+    Row,
+    Skeleton,
+    Tabs,
+    Avatar,
+    Timeline,
+    Divider,
+    message,
+    Empty
+} from "antd";
 import Meta from "antd/es/card/Meta";
 import Tags from "../Tags";
 import BiliBiliScoreTag from "../BiliBiliScoreTag";
@@ -9,6 +23,7 @@ import {PlayCircleOutlined} from "@ant-design/icons";
 import CommentTimeLine from "../CommentTimeLine";
 import InfoItem from "../InfoItem";
 import {Link} from "react-router-dom";
+import axios from "axios";
 const { TabPane } = Tabs;
 function AnimeInfo (props) {
     const data = props.data;
@@ -74,7 +89,7 @@ function AnimeInfo (props) {
                     </Col>
                     <Col className="gutter-row" span={mobile ? 24 : 18} style={mobile ? {} : {minHeight:'40rem'}}>
                         <div className="card-container">
-                            <Tabs type="card" size={'small'} onChange={(key) => {
+                            <Tabs size={'small'} onChange={(key) => {
                                 setTimeout(() => {
                                     const relevantContainer = document.getElementById('relevant-container');
                                     let resultContainer = document.getElementById('result-container');
@@ -82,8 +97,8 @@ function AnimeInfo (props) {
                                     const container = document.getElementById('detail-container');
                                     container.style.height = document.body.scrollHeight.toString() + 'px';
                                 }, 200)
-                            }}>
-                                <TabPane tab="作品详情" key="1" style={{borderRadius:'0 10px 10px 10px'}}>
+                            }} style={{backgroundColor:'white', padding:'1rem 1.5rem 0 1.5rem', borderRadius:'10px', marginBottom:'2rem', minHeight:'40rem'}}>
+                                <TabPane tab="作品详情" key="1" style={{borderRadius:'0 10px 10px 10px', minHeight:'40rem'}}>
                                     {
                                         loading ? <Skeleton active />:
                                             <div>
@@ -119,8 +134,8 @@ function AnimeInfo (props) {
                                     }
 
                                 </TabPane>
-                                <TabPane tab="虚拟角色" key="2" style={{borderRadius:'10px'}}>
-                                    <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%', marginTop:'2rem'}}>
+                                <TabPane tab="虚拟角色" key="2" style={{borderRadius:'10px', minHeight:'40rem'}}>
+                                    <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%'}}>
                                         {
                                             chara_list.map(item =>
                                                 (
@@ -130,7 +145,19 @@ function AnimeInfo (props) {
                                                                 <Avatar src={item.visuals} draggable/>
                                                             }
                                                             style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
-                                                            title={<Link to={{pathname:'result', state:{searchString:item.primary_name}}}>{item.primary_name}</Link>}
+                                                            title={<Link
+                                                                onClick={async () => {
+                                                                    let data = (await axios.post ('/api/detailByGuid', {
+                                                                        guid:item.guid
+                                                                    })).data;
+                                                                    if(data.code === 1) {
+                                                                        message.warning('暂无此页面')
+                                                                        return;
+                                                                    }
+                                                                    window.location.reload();
+                                                                    props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
+                                                                }}
+                                                            >{item.primary_name}</Link>}
                                                             description={<div>
                                                                 中文名：{item.zh_name}<br/>声优：{item.cv}
                                                                 <Divider style={{padding:'0', margin:'1rem'}}/>
@@ -140,9 +167,12 @@ function AnimeInfo (props) {
                                                 )
                                             )
                                         }
+                                        {
+                                            chara_list.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关角色'}/>:''
+                                        }
                                     </div>
                                 </TabPane>
-                                <TabPane tab="动漫评论" key="3" style={{borderRadius:'10px', paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                                <TabPane tab="动漫评论" key="3" style={{borderRadius:'10px', paddingLeft:'1rem', maxHeight:'60rem', minHeight:'40rem'}}>
                                     <CommentTimeLine comments={comments}/>
                                 </TabPane>
                             </Tabs>

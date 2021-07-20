@@ -9,7 +9,6 @@ function InfoItem (props) {
         minWidth:'10rem',
         fontSize:'.8rem'
     }
-    // if(Array.isArray(content) && content.length === 1) style.width='50%'
     if(Array.isArray(content) && content.length > 1) style.width='100%'
     return (
         <Card style={{padding:'0', border:'0', marginRight:'.1rem', marginBottom:'.2rem'}}
@@ -22,9 +21,9 @@ function InfoItem (props) {
                             dataSource={content}
                             size={'small'}
                             renderItem={item => (
-                                <Link to={{pathname:'result',state:{searchString:item}}} style={{fontSize:'.8rem'}}>{item}<br/></Link>
+                                <div>{item}<br/></div>
                             )}
-                        />:<Link to={{pathname:'result',state:{searchString:content}}} style={{fontSize:'.8rem'}}>{content}</Link>
+                        />:content
                     }
                 </div>
             </div>

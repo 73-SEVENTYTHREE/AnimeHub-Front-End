@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar, Empty} from "antd";
+import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar, Empty, message} from "antd";
 import {Link} from "react-router-dom";
 import KnowledgeGraph from "../KnowledgeGraph";
 import Tags from "../Tags";
@@ -7,15 +7,23 @@ import InfoTimeline from "../InfoTimeline";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import Meta from "antd/es/card/Meta";
 import WordCloud from "../WordCloud";
+import axios from "axios";
+import {useMount} from "ahooks";
 
 const {TabPane} = Tabs
 
 function BookInfo(props) {
     const {mobile, data} = props
+    useMount(() => {
+        setTimeout(() => {
+            const divider = document.getElementById('book-card-divider');
+            divider.style.height = window.getComputedStyle(document.getElementById('book-card')).height;
+        }, 200)
+    })
     return (
         <div>
             <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
-        <Card style={{margin:'2rem 2rem 2rem 2rem', minHeight:'30rem'}} hoverable>
+        <Card style={{margin:'2rem 2rem 2rem 2rem', minHeight:'30rem'}} hoverable id={'book-card'}>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 <Col span={mobile ? 24 : 6}>
                     <div style={{display:'flex', flexDirection:'column'}}>
@@ -49,9 +57,9 @@ function BookInfo(props) {
                         </div>
                     </div>
                 </Col>
-                <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}}/>
+                <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}} id={'book-card-divider'}/>
                 <Col span={mobile ? 24:17}>
-                    <Tabs defaultActiveKey="1" type={'card'} onChange={(key) => {
+                    <Tabs defaultActiveKey="1" onChange={(key) => {
                         setTimeout(() => {
                             const relevantContainer = document.getElementById('relevant-container');
                             let resultContainer = document.getElementById('result-container');
@@ -76,15 +84,27 @@ function BookInfo(props) {
                             {
                                 data.chara_list.map(item =>
                                     (
-                                        <div style={{width:'70%'}}>
+                                        <div style={{width:'60%'}}>
                                             <Meta
                                                 avatar={
                                                     <Avatar src={item.visuals} draggable/>
                                                 }
                                                 style={{minWidth:'15rem', marginRight:'2rem'}}
-                                                title={<Link to={{pathname:'result', state:{searchString:item.primary_name}}}>{item.primary_name}</Link>}
+                                                title={<Link
+                                                    onClick={async () => {
+                                                        let data = (await axios.post ('/api/detailByGuid', {
+                                                            guid:item.guid
+                                                        })).data;
+                                                        if(data.code === 1) {
+                                                            message.warning('暂无此页面')
+                                                            return;
+                                                        }
+                                                        window.location.reload();
+                                                        props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
+                                                    }}
+                                                >{item.primary_name}</Link>}
                                                 description={<div>
-                                                    <Tag>中文名：{item.zh_name}</Tag>
+                                                    中文名：{item.zh_name}
                                                     <Divider style={{padding:'0', margin:'1rem'}}/>
                                                 </div>}
                                             />

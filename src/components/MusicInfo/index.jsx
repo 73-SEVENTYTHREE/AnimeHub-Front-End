@@ -6,18 +6,23 @@ import KnowledgeGraph from "../KnowledgeGraph";
 import Tags from "../Tags";
 import InfoTimeline from "../InfoTimeline";
 import WordCloud from "../WordCloud";
+import {useMount} from "ahooks";
 
 const {TabPane} = Tabs
 
 function MusicInfo(props) {
     const {mobile,data} = props
     const keys = Object.keys(data.extra_data)
-    // console.log(keys)
-    // console.log(data)
+    useMount(() => {
+        setTimeout(() => {
+            const divider = document.getElementById('music-card-divider');
+            divider.style.height = window.getComputedStyle(document.getElementById('music-card')).height;
+        }, 200)
+    })
     return (
         <div>
             <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
-            <Card style={{margin:'2rem 2rem 2rem 2rem'}} hoverable>
+            <Card style={{margin:'2rem 2rem 2rem 2rem'}} hoverable id={'music-card'}>
                 <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} >
                     <Col span={mobile ? 24 : 6}>
@@ -95,7 +100,7 @@ function MusicInfo(props) {
                             </div>
                         </div>
                     </Col>
-                    <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}}/>
+                    <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}} id={'music-card-divider'}/>
                     <Col span={mobile ? 24:17}>
                         <Tabs defaultActiveKey="1">
                             <TabPane key={'1'} tab={"歌曲简介"}>

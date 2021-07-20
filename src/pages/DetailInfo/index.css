@@ -87,7 +87,6 @@
     padding-bottom: 1rem;
     /*min-height: 50rem;*/
     height: 100%;
-    overflow: auto;
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     padding: 2rem;
