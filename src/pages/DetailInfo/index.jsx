@@ -122,7 +122,7 @@ function DetailInfo (props) {
                                                             message.warning('暂无此页面')
                                                             return;
                                                         }
-                                                        props.history.push({pathname:'detailInfo',state:{guid:item.guid}});
+                                                        props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
                                                     }}
                                                 >
                                                     <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>{item.type}</Tag></div>}
