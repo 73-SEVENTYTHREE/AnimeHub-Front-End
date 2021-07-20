@@ -79,8 +79,8 @@ function DetailInfo (props) {
             window.addEventListener('resize', handleResize);
         }, 200)
 
-        // let recommend_items = (await axios.post ('/api/recommend', {guid})).data
-        // console.log(recommend_items)
+        let recommend_items = (await axios.post ('/api/recommend', {guid})).data
+        console.log(recommend_items)
         return () => window.removeEventListener('resize', handleResize);
     }, [guid])
 
@@ -102,9 +102,15 @@ function DetailInfo (props) {
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={24}>
                         <Tabs defaultActiveKey="1" onChange={() => {
-
+                            setTimeout(() => {
+                                const relevantContainer = document.getElementById('relevant-container');
+                                let resultContainer = document.getElementById('result-container');
+                                relevantContainer.style.top = resultContainer.offsetHeight + 'px'
+                                const container = document.getElementById('detail-container');
+                                container.style.height = document.body.scrollHeight.toString() + 'px';
+                            }, 200)
                         }}>
-                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>相关词条</strong>} key="1" style={{paddingBottom:'1rem'}}>
+                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>相关词条</strong>} key="1" style={{paddingBottom:'1rem', height:'auto'}}>
                                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                                     {
                                         info.related_subjects.map(item =>
@@ -137,7 +143,7 @@ function DetailInfo (props) {
                                     }
                                 </div>
                             </TabPane>
-                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>词条推荐</strong>} key="2" style={{paddingBottom:'1rem', border:'1px solid black'}}>
+                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>词条推荐</strong>} key="2" style={{paddingBottom:'1rem', height:'auto',border:'1px solid black'}}>
                                 111
                                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                                     {
