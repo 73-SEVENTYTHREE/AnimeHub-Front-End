@@ -2,15 +2,19 @@ import React from 'react';
 import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography} from "antd";
 import {Link} from "react-router-dom";
 import removeLastCharacter from "../../utils/removeLastCharacter";
+import KnowledgeGraph from "../KnowledgeGraph";
 
 const {TabPane} = Tabs
 
 function MusicInfo(props) {
     const {mobile,data} = props
-    console.log(data)
+    const keys = Object.keys(data.extra_data)
+    // console.log(keys)
+    // console.log(data)
     return (
-        <Card style={{margin:'1rem 2rem 2rem 2rem', minHeight:'60rem'}} hoverable>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{height:'60rem'}}>
+        <Card style={{margin:'1rem 2rem 2rem 2rem', minHeight:'45rem'}} hoverable>
+            <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} >
                 <Col span={mobile ? 24 : 6}>
                     <div style={{display:'flex', flexDirection:'column'}}>
                         <div style={{margin:'0 auto'}}><Image width={'10rem'} src={removeLastCharacter(data.visuals)}/></div>
@@ -31,38 +35,57 @@ function MusicInfo(props) {
                                     }
                                 })}
                             </div>
-                            <Divider orientation={'left'}>编曲人</Divider>
                             <div>
-                                {data.arranger===undefined?'暂无':
-                                    data.arranger===null?'暂无':data.arranger.map((item,index) => {
-                                    if(index===0){
-                                        return <span key={index}><Link>{item}</Link></span>
-                                    }else{
-                                        return <span key={index}>、<Link>{item}</Link></span>
-                                    }
-                                })}
+                                {data.arranger===undefined?'':
+                                    data.arranger===null?'':
+                                    <div>
+                                        <Divider orientation={'left'}>编曲人</Divider>
+                                        {
+                                            data.arranger.map((item, index) => {
+                                                if (index === 0) {
+                                                    return <span key={index}><Link>{item}</Link></span>
+                                                } else {
+                                                    return <span key={index}>、<Link>{item}</Link></span>
+                                                }
+                                            })
+                                        }
+                                    </div>
+                                }
                             </div>
-                            <Divider orientation={'left'}>作曲人</Divider>
                             <div>
-                                {data.composer===undefined?'暂无':
-                                    data.composer===null?'暂无':data.composer.map((item,index) => {
-                                    if(index===0){
-                                        return <span key={index}><Link>{item}</Link></span>
-                                    }else{
-                                        return <span key={index}>、<Link>{item}</Link></span>
-                                    }
-                                })}
+                                {data.composer===undefined?'':
+                                    data.composer===null?'':
+                                    <div>
+                                        <Divider orientation={'left'}>作曲人</Divider>
+                                        {
+                                            data.composer.map((item,index) => {
+                                                if(index===0){
+                                                return <span key={index}><Link>{item}</Link></span>
+                                            }else{
+                                                return <span key={index}>、<Link>{item}</Link></span>
+                                            }
+                                            })
+                                        }
+                                    </div>
+                                }
                             </div>
-                            <Divider orientation={'left'}>作词人</Divider>
                             <div>
-                                {data.lyrics===undefined?'暂无':
-                                    data.lyrics===null?'暂无':data.lyrics.map((item,index) => {
-                                    if(index===0){
-                                        return <span key={index}><Link>{item}</Link></span>
-                                    }else{
-                                        return <span key={index}>、<Link>{item}</Link></span>
-                                    }
-                                })}
+                                {data.extra_data===undefined?'':
+                                    data.extra_data===null?'':
+                                        <div>
+                                            <Divider orientation={'left'}>其他信息</Divider>
+                                            {
+                                                keys.map((item, index)=>{
+                                                    return(
+                                                        <div>
+                                                            <Tag>{item}</Tag>
+                                                            {data.extra_data[item]}
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -73,7 +96,7 @@ function MusicInfo(props) {
                         <TabPane key={'1'} tab={"歌曲简介"}>
                             <div style={{display:'flex',flexDirection:'column',padding:'1rem'}}>
                                 <Typography.Title level={4} color={'blue'}>简介:</Typography.Title>
-                                <Typography.Paragraph>{data.description}</Typography.Paragraph>
+                                <Typography.Paragraph><div dangerouslySetInnerHTML={{__html:data.description}}/></Typography.Paragraph>
                                 <Typography.Title level={5}>大家倾向于把这首歌标记为：</Typography.Title>
                                 <div>
                                     {data.tags.map((item, index)=>{
@@ -83,6 +106,11 @@ function MusicInfo(props) {
                             </div>
                         </TabPane>
                     </Tabs>
+                </Col>
+                <Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {marginBottom:'2rem'}}>
+                    <Card title={'知识图谱'} hoverable style={{border:'0', minHeight:'40rem'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
+                        <KnowledgeGraph guid={data.guid} name={props.name}/>
+                    </Card>
                 </Col>
             </Row>
         </Card>
