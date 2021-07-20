@@ -1,12 +1,12 @@
 import React from 'react';
 import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar} from "antd";
-import data from './testdata';
 import {Link} from "react-router-dom";
 
 const {TabPane} = Tabs
 
 function BookInfo(props) {
-    const {mobile} = props
+    const {mobile, data} = props
+    console.log(data);
     return (
         <Card style={{margin:'1rem 2rem 2rem 2rem', minHeight:'60rem'}} hoverable>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{height:'60rem'}}>

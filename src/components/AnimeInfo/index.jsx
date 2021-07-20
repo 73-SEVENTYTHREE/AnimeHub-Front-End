@@ -149,9 +149,7 @@ function AnimeInfo (props) {
                         </div>
                     </Col>
                     <Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {marginBottom:'2rem'}}>
-                        <Card title={'知识图谱'} hoverable style={{border:'0', minHeight:'40rem'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
-                            <KnowledgeGraph guid={guid} name={props.name}/>
-                        </Card>
+                        <KnowledgeGraph guid={guid} name={props.name}/>
                     </Col>
                 </Row>
             </div>
