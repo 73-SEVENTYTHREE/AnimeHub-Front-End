@@ -56,15 +56,6 @@ function SearchResultList  (props) {
                     return outLineKeyWords(keywords,tag)
                 })
             }
-            // const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
-            // const result = bilibili_data.result;
-            // if(result === undefined){
-            //     item.bilibili_score='暂无'
-            //     item.bilibili_user_count='暂无'
-            // }else{
-            //     item.bilibili_score = result[0].media_score.score
-            //     item.bilibili_user_count = result[0].media_score.user_count
-            // }
         }
         setDataLength(data_length);
         setListData(ListData);
@@ -77,6 +68,26 @@ function SearchResultList  (props) {
             case 'score': setSelectedTag('评分');break;
             default:setSelectedTag('相关度');break;
         }
+        await getBilibiliData(ListData);
+    }
+
+    const getBilibiliData = async (ListData)=>{
+        for(let i=0;i<ListData.length;i++){
+            let item = ListData[i];
+            const bilibili_data  = await getBiliBiliDataByMediaName(item.zh_name);
+            const result = bilibili_data.result;
+            if(result === undefined){
+                item.bilibili_score='暂无'
+                item.bilibili_user_count='暂无'
+            }else{
+                item.bilibili_score = result[0].media_score.score
+                item.bilibili_user_count = result[0].media_score.user_count
+            }
+            ListData[i]=item
+            // console.log(item)
+        }
+        // console.log(ListData)
+        setListData(ListData)
     }
 
     const getData = async(page,orderby,type,pageNum)=>{

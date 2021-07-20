@@ -4,6 +4,10 @@ import {Link} from "react-router-dom";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import BangumiScoreTag from "../BangumiScoreTag";
 import KnowledgeGraph from "../KnowledgeGraph";
+import InfoTimeline from "../InfoTimeline";
+import CommentTimeLine from "../CommentTimeLine";
+import Meta from "antd/es/card/Meta";
+import Tags from "../Tags";
 
 const {TabPane} = Tabs
 
@@ -111,34 +115,38 @@ function GameInfo(props) {
                             <TabPane key={'1'} tab={"游戏简介"}>
                                 <div style={{display:'flex',flexDirection:'column',padding:'1rem'}}>
                                     <Typography.Title level={5} color={'blue'}>内容简介:</Typography.Title>
-                                    <Typography.Paragraph>{data.description}</Typography.Paragraph>
+                                    <Typography.Paragraph><InfoTimeline descriptionArray={data.description.split('<br>')}/></Typography.Paragraph>
                                     <Typography.Title level={5}>大家倾向于把{data.primary_name}标记为：</Typography.Title>
                                     <div>
-                                        {data.tags.map((item, index)=>{
-                                            return <Tag key={index}>{item}</Tag>
-                                        })}
+                                        <Tags tags={data.tags} history={props.history}/>
                                     </div>
                                 </div>
                             </TabPane>
-                            <TabPane key="2" tab={"游戏人物"}>
-                                <List
-                                    itemLayout="horizontal"
-                                    dataSource={data.chara_list}
-                                    renderItem={item => (
-                                        <List.Item>
-                                            <List.Item.Meta
-                                                avatar={<Avatar src={item.visuals} />}
-                                                title={<a href="https://ant.design">{item.primary_name}</a>}
-                                                description={
-                                                    <div>
-                                                        <Tag>中文名：{item.zh_name}</Tag>
-                                                        <Tag>{item.role}</Tag>
-                                                    </div>
-                                                }
-                                            />
-                                        </List.Item>
-                                    )}
-                                />
+                            <TabPane tab="游戏角色" key="2" style={{borderRadius:'10px'}}>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%'}}>
+                                    {
+                                        data.chara_list.map(item =>
+                                            (
+                                                <div>
+                                                    <Meta
+                                                        avatar={
+                                                            <Avatar src={item.visuals} draggable/>
+                                                        }
+                                                        style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
+                                                        title={<Link to={{pathname:'result', state:{searchString:item.primary_name}}}>{item.primary_name}</Link>}
+                                                        description={<div>
+                                                            中文名：{item.zh_name}<br/>声优：{item.cv}
+                                                            <Divider style={{padding:'0', margin:'1rem'}}/>
+                                                        </div>}
+                                                    />
+                                                </div>
+                                            )
+                                        )
+                                    }
+                                </div>
+                            </TabPane>
+                            <TabPane tab="吐槽评论" key="3" style={{paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                                <CommentTimeLine comments={data.comment_box}/>
                             </TabPane>
                         </Tabs>
                     </Col>
