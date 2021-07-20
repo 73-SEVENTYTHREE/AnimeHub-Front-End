@@ -14,13 +14,11 @@ import MusicInfo from "../../components/MusicInfo";
 import axios from "axios";
 import BookInfo from "../../components/BookInfo";
 import GameInfo from "../../components/GameInfo";
-import {useUpdate} from "ahooks";
 
 const { TabPane } = Tabs;
 
 function DetailInfo (props) {
     const {state}=props.location;
-    const update = useUpdate();
     let guid;
     if(state && state.guid){//判断当前有参数
         guid = state.guid
@@ -34,7 +32,6 @@ function DetailInfo (props) {
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1, jobs:[], description:'',
                             recently_participated:[],writer:[], press:[], names:[], typo:'', primary_name:'', pri_name:''});
     const handleResize = e => {
-        console.log(1)
         const relevantContainer = document.getElementById('relevant-container');
         if (relevantContainer !== null){
             relevantContainer.style.top = document.getElementById('result-container').offsetHeight + 'px'
@@ -82,8 +79,8 @@ function DetailInfo (props) {
             window.addEventListener('resize', handleResize);
         }, 200)
 
-        let recommend_items = (await axios.post ('/api/recommend', {guid})).data
-        console.log(recommend_items)
+        // let recommend_items = (await axios.post ('/api/recommend', {guid})).data
+        // console.log(recommend_items)
         return () => window.removeEventListener('resize', handleResize);
     }, [guid])
 
