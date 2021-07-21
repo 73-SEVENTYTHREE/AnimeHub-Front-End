@@ -63,37 +63,37 @@ function CompanyInfo (props) {
                                     {
                                         data.recently_participated.map(item =>
                                             (
-                                                <div style={{width:'80%'}}>
+                                                <Card hoverable style={{marginBottom:'1rem', marginRight:'1rem'}}
+                                                      onClick={async () => {
+                                                          let data = (await axios.post ('/api/detailByGuid', {
+                                                              guid:item.guid
+                                                          })).data;
+                                                          if(data.code === 1) {
+                                                              message.warning('暂无此页面')
+                                                              return;
+                                                          }
+                                                          props.history.push({pathname:`/detailInfo/${item.guid}`});
+                                                          window.location.reload();
+                                                      }}
+                                                >
                                                     <Meta
                                                         avatar={
                                                             <Avatar icon={item.visuals === "https:" ? <UserOutlined />:''} src={item.visuals} draggable/>
                                                         }
                                                         style={{minWidth:'15rem', marginRight:'2rem'}}
-                                                        title={<Link
-                                                            onClick={async () => {
-                                                                let data = (await axios.post ('/api/detailByGuid', {
-                                                                    guid:item.guid
-                                                                })).data;
-                                                                if(data.code === 1) {
-                                                                    message.warning('暂无此页面')
-                                                                    return;
-                                                                }
-                                                                props.history.replace({pathname:`/detailInfo/${item.guid}`});
-                                                                window.location.reload();
-                                                            }}
-                                                        >{item.pri_name}</Link>}
+                                                        title={<Link>{item.pri_name}</Link>}
                                                         description={<div>
                                                             {item.badge_job}
                                                             <Divider style={{padding:'0', margin:'1rem'}}/>
                                                         </div>}
                                                     />
-                                                </div>
+                                                </Card>
                                             )
                                         )
                                     }
                                 </div>
                             </TabPane>
-                            <TabPane tab="吐槽评论" key="3" style={{paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                            <TabPane tab="吐槽评论" key="3" style={{paddingLeft:'1rem', maxHeight:'60rem', overflowY:'scroll', overflowX:'hidden'}}>
                                 <CommentTimeLine comments={data.comment_box}/>
                             </TabPane>
                         </Tabs>

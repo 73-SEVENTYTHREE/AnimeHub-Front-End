@@ -145,35 +145,35 @@ function GameInfo(props) {
                                 </div>
                             </TabPane>
                             <TabPane tab="游戏角色" key="2" style={{borderRadius:'10px'}}>
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%', marginTop:'2rem'}}>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', marginTop:'2rem'}}>
                                     {
                                         data.chara_list.map(item =>
                                             (
-                                                <div>
+                                                <Card hoverable style={{marginBottom:'1rem', marginRight:'1rem'}}
+
+                                                      onClick={async () => {
+                                                          let data = (await axios.post ('/api/detailByGuid', {
+                                                              guid:item.guid
+                                                          })).data;
+                                                          if(data.code === 1) {
+                                                              message.warning('暂无此页面')
+                                                              return;
+                                                          }
+                                                          props.history.push({pathname:`/detailInfo/${item.guid}`});
+                                                          window.location.reload();
+                                                      }}
+                                                >
                                                     <Meta
                                                         avatar={
                                                             <Avatar src={item.visuals} draggable/>
                                                         }
-                                                        style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
-                                                        title={<Link
-                                                            onClick={async () => {
-                                                                let data = (await axios.post ('/api/detailByGuid', {
-                                                                    guid:item.guid
-                                                                })).data;
-                                                                if(data.code === 1) {
-                                                                    message.warning('暂无此页面')
-                                                                    return;
-                                                                }
-                                                                props.history.replace({pathname:`/detailInfo/${item.guid}`});
-                                                                window.location.reload();
-                                                            }}
-                                                        >{item.primary_name}</Link>}
+                                                        style={{minWidth:'15rem', marginRight:'2rem'}}
+                                                        title={<Link>{item.primary_name}</Link>}
                                                         description={<div>
                                                             中文名：{item.zh_name}<br/>声优：{item.cv}
-                                                            <Divider style={{padding:'0', margin:'1rem'}}/>
                                                         </div>}
                                                     />
-                                                </div>
+                                                </Card>
                                             )
                                         )
                                     }
@@ -182,7 +182,7 @@ function GameInfo(props) {
                                     }
                                 </div>
                             </TabPane>
-                            <TabPane tab="吐槽评论" key="3" style={{paddingLeft:'1rem', maxHeight:'60rem', overflow:'auto'}}>
+                            <TabPane tab="吐槽评论" key="3" style={{paddingLeft:'1rem', maxHeight:'60rem', overflowY:'scroll', overflowX:'hidden'}}>
                                 <CommentTimeLine comments={data.comment_box}/>
                             </TabPane>
                         </Tabs>

@@ -171,7 +171,7 @@ function DetailInfo (props) {
                                                                     size={{ xs: 56, sm: 56, md: 56, lg: 56, xl: 64, xxl: 80 }}
                                                             />
                                                         }
-                                                        style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
+                                                        style={{minWidth:'20rem', marginRight:'2rem'}}
                                                         title={<div style={{display:'flex'}}><Link>{item.target}{item.targetType==='entity' ? '':<TypeTag type={item.targetType}/>}</Link></div>}
                                                         description={<div>
                                                             {item.rela}
