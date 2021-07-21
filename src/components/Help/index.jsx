@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import HelpLogo from '../../images/help.png'
 import {Modal} from 'antd'
+import './index.css'
 
 
 
