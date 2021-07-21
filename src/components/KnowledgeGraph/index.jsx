@@ -233,7 +233,7 @@ function KnowledgeGraph (props) {
                   <div>
                       <strong color={'white'}>深度</strong>&nbsp;<InputNumber max={10} min={1} defaultValue={layerCount} onChange={value => setLayerCount(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
                       <strong color={'white'}>广度</strong>&nbsp;<InputNumber max={15} min={1} defaultValue={limitPerLayer} onChange={value => setLimitPerLayer(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <Button type={'dashed'} size={'middle'} style={{border:'0', zIndex:'2'}} onClick={() => {
+                      <Button type={'dashed'} size={'middle'} style={{border:'0'}} onClick={() => {
                           setUpdate(!update);
                       }}>更新知识图谱</Button>
                   </div>
