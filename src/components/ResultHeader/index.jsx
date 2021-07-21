@@ -6,6 +6,7 @@ import {Button, List, message, Skeleton} from "antd";
 import {useMount, useUpdate} from "ahooks";
 import PubSub from 'pubsub-js';
 import axios from "axios";
+import Help from "../Help";
 
 function ResultHeader(props) {
     const [inputString, setInputString] = useState(props.searchString ? props.searchString:'');
@@ -63,6 +64,7 @@ function ResultHeader(props) {
     })
     return (
         <div id={'banner'}>
+            <Help/>
             <div id="banner-bg" />
             <Link to={"/Index"}>
                 <img style={{width:'10rem',paddingLeft:'.6rem'}} src={logo} alt="logo"/>
