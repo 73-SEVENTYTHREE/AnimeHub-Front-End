@@ -11,7 +11,7 @@ import {
     Timeline,
     Divider,
     message,
-    Empty
+    Empty, Tag
 } from "antd";
 import Meta from "antd/es/card/Meta";
 import Tags from "../Tags";
@@ -103,33 +103,44 @@ function AnimeInfo (props) {
                                         loading ? <Skeleton active />:
                                             <div>
                                                 <div style={{display:'flex', alignContent:'flex-start',justifyContent:'space-around', alignItems:'self-start', flexWrap:'wrap',marginTop:'1rem', overflow:'auto'}}>
-                                                    <div style={{width:'70%',height:'100%', display:'flex', flexWrap:'wrap', justifyContent:'space-around', alignContent:'flex-start', alignItems:'self-start'}}>
-                                                        {zh_name ? <InfoItem title={'中文名'} content={zh_name} history={props.history}/> :''}
-                                                        {animation_company ? <InfoItem title={'动画制作公司'} content={animation_company} history={props.history}/> :''}
-                                                        {director ? <InfoItem title={'导演'} content={director} history={props.history}/> :''}
-                                                        {made ? <InfoItem title={'全局制作'} content={made} history={props.history}/> :''}
-                                                        {producer ? <InfoItem title={'动画制作人'} content={producer} history={props.history}/> :''}
-                                                        {episode_count ? <InfoItem title={'话数'} content={episode_count} history={props.history}/> :''}
-                                                    </div>
-                                                    <div style={{width:'30%',height:'100%', display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
-                                                        {names[0] !== "" ? <InfoItem title={'别名'} content={names} history={props.history}/> :''}
-                                                        <div style={{display:'flex', width:'40%', height:'100%', alignContent:'flex-start',justifyContent:'space-around', alignItems:'self-start', flexWrap:'wrap'}}>
-                                                            {music_composer ? <InfoItem title={'音乐制作人'} content={music_composer} history={props.history}/> :''}
+                                                    {zh_name ? <InfoItem title={'中文名'} content={zh_name} history={props.history}/> :''}
+                                                    {animation_company ? <InfoItem title={'动画制作公司'} content={animation_company} history={props.history}/> :''}
+                                                    {director ? <InfoItem title={'导演'} content={director} history={props.history}/> :''}
+                                                    {made ? <InfoItem title={'全局制作'} content={made} history={props.history}/> :''}
+                                                    {producer ? <InfoItem title={'动画制作人'} content={producer} history={props.history}/> :''}
+                                                    {episode_count ? <InfoItem title={'话数'} content={episode_count} history={props.history}/> :''}
+                                                    {names[0] !== "" ? <InfoItem title={'别名'} content={names} history={props.history}/> :''}
+                                                    {music_composer ? <InfoItem title={'音乐制作人'} content={music_composer} history={props.history}/> :''}
 
-                                                        </div>
+                                                </div>
+                                                <Divider orientation={'left'}>其他信息</Divider>
+                                                <div style={{display:'flex', marginBottom:'2rem', justifyContent:'space-around'}}>
+                                                    <div style={{width:'45%'}}>
+                                                        {
+                                                            keys.slice(0, Math.floor(keys.length / 2)).map(item => (
+                                                                <div style={{marginBottom:'.3rem'}}>
+                                                                    <Tag>{item}</Tag>
+                                                                    {
+                                                                        item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]
+                                                                    }
+                                                                </div>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                    <Divider type={'vertical'} style={{height:'100%'}}/>
+                                                    <div style={{width:'45%'}}>
+                                                        {
+                                                            keys.slice(Math.floor(keys.length / 2), keys.length).map(item => (
+                                                                <div style={{marginBottom:'.3rem'}}>
+                                                                    <Tag>{item}</Tag>
+                                                                    {
+                                                                        item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]
+                                                                    }
+                                                                </div>
+                                                            ))
+                                                        }
                                                     </div>
                                                 </div>
-                                                <Descriptions
-                                                    style={{margin:'0rem 2rem 2rem 2rem', maxHeight:'40rem', overflow:'auto'}}
-                                                    bordered
-                                                    size={'small'}
-                                                    column={{ xxl: 5, xl: 5, lg: 4, md: 3, sm: 2, xs: 1 }}
-                                                    // layout="vertical"
-                                                >
-                                                    {
-                                                        keys.map(item => <Descriptions.Item label={item} style={{fontSize:'.8rem'}}>{item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]}</Descriptions.Item>)
-                                                    }
-                                                </Descriptions>
                                             </div>
                                     }
 
