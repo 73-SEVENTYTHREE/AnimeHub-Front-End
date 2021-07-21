@@ -20,7 +20,7 @@ function Result(props) {
     return (
         <div>
             <ResultHeader history={props.history} searchString={SearchString}/>
-            <SearchResult searchString={SearchString}/>
+            <SearchResult history={props.history} searchString={SearchString}/>
         </div>
     );
 }

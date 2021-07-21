@@ -17,6 +17,12 @@ const tagsData = ['相关度','评论数'];
 function CompanyShowList(props) {
     let filter = 'relate'
     const { total,currentPage,selectedTag } = props
+    switch(selectedTag){
+        case '相关度': filter = 'relate';break;
+        case '评论数': filter = 'comment';break;
+        case '最近': filter = 'recent';break;
+        case '评分': filter = 'score';break;
+    }
     const onChange = async (page,pageNum) => {
         sessionStorage.setItem('currentPage',page)
         await props.getData(page,filter,'company',pageNum)

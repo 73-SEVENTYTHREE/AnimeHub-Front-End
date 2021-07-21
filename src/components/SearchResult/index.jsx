@@ -15,6 +15,7 @@ import './index.css'
 import {Link} from "react-router-dom";
 import WordCloud from "../WordCloud";
 import {useMount} from "ahooks";
+import axios from "axios";
 
 const {TabPane} = Tabs;
 
@@ -112,6 +113,28 @@ function FilterHeader(props) {
 }
 
 function SearchResult(props) {
+    const [words,setWords] = useState([])
+
+    const callbacks = {
+        onWordClick:(word)=>{
+          props.history.push({pathname:'/detailinfo',state:{guid:word.guid}})
+        },
+    }
+
+    useMount(async ()=>{
+        let data = (await axios.post ('/api/hotWords')).data.data
+        data = data.map((item)=>{
+            return {
+                text:item.name,
+                value:item.heat,
+                type:item.type,
+                guid:item.guid
+            }
+        })
+        setWords(data)
+    })
+
+
     return (
         <div style={{backgroundColor: '#f3f3f3', minHeight:'100vh'}}>
             <div style={{display: 'flex', justifyContent: 'space-between'}} id={'searchContainer'}>
@@ -120,18 +143,10 @@ function SearchResult(props) {
                 </div>
                 <div id={'relatedContainer'}>
                     <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem'}}>
-                        <Divider>相关搜索条目</Divider>
-                        <ul className={'related-search-list'}>
-                            <li ><Link>工作细胞</Link></li>
-                            <li><Link>红细胞</Link></li>
-                        </ul>
-                    </div>
-                    <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem',marginTop:'1rem'}}>
                         <Divider>搜索热榜</Divider>
-                        <WordCloud />
+                        <WordCloud words={words} callbacks={callbacks}/>
                     </div>
                 </div>
-
             </div>
         </div>
     );
