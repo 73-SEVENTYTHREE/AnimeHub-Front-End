@@ -75,9 +75,9 @@ function AnimeInfo (props) {
                                 <div style={{minHeight:'40rem', display:'flex', alignItems:'center', flexDirection:'column', justifyContent:'space-around'}}>
                                     <div style={{margin:'1rem', display:'flex', justifyContent:'center'}}>
                                         <Image src={removeLastCharacter(data.visuals)}
-                                               style={{borderRadius:'10px', width:'13rem'}}
+                                               style={{borderRadius:'10px', width:'13rem',minHeight:'20rem'}}
                                                placeholder = {
-                                                   <Skeleton.Image active={true} style={{width:'15rem', height:'20rem'}}/>
+                                                   <Skeleton.Image active={true} style={{width:'13rem', height:'20rem'}}/>
                                                }
                                         />
                                     </div>
@@ -97,7 +97,7 @@ function AnimeInfo (props) {
                                     const container = document.getElementById('detail-container');
                                     container.style.height = document.body.scrollHeight.toString() + 'px';
                                 }, 200)
-                            }} style={{backgroundColor:'white', padding:'1rem 1.5rem 0 1.5rem', borderRadius:'10px', marginBottom:'2rem', minHeight:'40rem'}}>
+                            }} style={{backgroundColor:'white', padding:'1rem 1.5rem 0 1.5rem', borderRadius:'10px', marginBottom:'2rem', minHeight:'40rem', border:'1px #f3f3f3 solid'}}>
                                 <TabPane tab="作品详情" key="1" style={{borderRadius:'0 10px 10px 10px', minHeight:'40rem'}}>
                                     {
                                         loading ? <Skeleton active />:
