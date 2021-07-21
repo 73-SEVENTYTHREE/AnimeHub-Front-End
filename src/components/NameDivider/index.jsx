@@ -4,7 +4,7 @@ import TypeTag from "../TypeTag";
 
 function NameDivider (props) {
     return (
-        <div style={{overflow:'auto'}}>
+        <div style={{overflowX:'auto', overflowY:'hidden'}}>
             <Divider orientation="left" style={{fontSize:'1.4rem', marginTop:'1.5rem'}}>
                 <div style={{display:'flex', alignItems:'center'}}>
                     {props.title}
