@@ -40,11 +40,11 @@ function BookInfo(props) {
                             </div>
                             <Divider orientation={'left'}>作者</Divider>
                             <div>
-                                {data.writer.map((item,index) => {
+                                {data.writer === null ? '暂无':data.writer.map((item,index) => {
                                     if(index===0){
-                                        return <span key={index}><Link>{item}</Link></span>
+                                        return <span key={index}>{item}</span>
                                     }else{
-                                        return <span key={index}>、<Link>{item}</Link></span>
+                                        return <span key={index}>、{item}</span>
                                     }
                                 })}
                             </div>
@@ -52,9 +52,9 @@ function BookInfo(props) {
                             <div>
                                 {data.press.map((item,index) => {
                                     if(index===0){
-                                        return <span key={index}><Link>{item}</Link></span>
+                                        return <span key={index}>{item}</span>
                                     }else{
-                                        return <span key={index}>、<Link>{item}</Link></span>
+                                        return <span key={index}>、{item}</span>
                                     }
                                 })}
                             </div>
@@ -87,31 +87,30 @@ function BookInfo(props) {
                             {
                                 data.chara_list.map(item =>
                                     (
-                                        <div style={{width:'60%'}}>
+                                        <Card hoverable style={{marginBottom:'1rem', marginRight:'1rem'}}
+                                              onClick={async () => {
+                                                  let data = (await axios.post ('/api/detailByGuid', {
+                                                      guid:item.guid
+                                                  })).data;
+                                                  if(data.code === 1) {
+                                                      message.warning('暂无此页面')
+                                                      return;
+                                                  }
+                                                  props.history.push({pathname:`/detailInfo/${item.guid}`});
+                                                  window.location.reload();
+                                              }}
+                                        >
                                             <Meta
                                                 avatar={
                                                     <Avatar src={item.visuals} draggable/>
                                                 }
                                                 style={{minWidth:'15rem', marginRight:'2rem'}}
-                                                title={<Link
-                                                    onClick={async () => {
-                                                        let data = (await axios.post ('/api/detailByGuid', {
-                                                            guid:item.guid
-                                                        })).data;
-                                                        if(data.code === 1) {
-                                                            message.warning('暂无此页面')
-                                                            return;
-                                                        }
-                                                        props.history.replace({pathname:`/detailInfo/${item.guid}`});
-                                                        window.location.reload();
-                                                    }}
-                                                >{item.primary_name}</Link>}
+                                                title={<Link>{item.primary_name}</Link>}
                                                 description={<div>
                                                     中文名：{item.zh_name}
-                                                    <Divider style={{padding:'0', margin:'1rem'}}/>
                                                 </div>}
                                             />
-                                        </div>
+                                        </Card>
                                     )
                                 )
                             }

@@ -24,6 +24,7 @@ import CommentTimeLine from "../CommentTimeLine";
 import InfoItem from "../InfoItem";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import React from "react";
 const { TabPane } = Tabs;
 function AnimeInfo (props) {
     const data = props.data;
@@ -71,7 +72,7 @@ function AnimeInfo (props) {
                     </Col>
                     <Col className="gutter-row" span={mobile ? 24 : 6} style={mobile ? {marginBottom:'2rem'} : {minHeight:'40rem'}}>
                         <div className="card-container">
-                            <Card hoverable title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', height:'100%', maxHeight:'52rem', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
+                            <Card hoverable title="作品评分" extra={<Score/>} style={{ marginBottom:'1rem', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
                                 <div style={{minHeight:'40rem', display:'flex', alignItems:'center', flexDirection:'column', justifyContent:'space-around'}}>
                                     <div style={{margin:'1rem', display:'flex', justifyContent:'center'}}>
                                         <Image src={removeLastCharacter(data.visuals)}
@@ -81,7 +82,6 @@ function AnimeInfo (props) {
                                                }
                                         />
                                     </div>
-                                    {/*<WordCloud words={data.tags.map(item => ({text:item, value:Math.floor(Math.random()*256)}))}/>*/}
                                     <Tags tags={data.tags} history={props.history}/>
                                 </div>
                             </Card>
@@ -97,8 +97,8 @@ function AnimeInfo (props) {
                                     const container = document.getElementById('detail-container');
                                     container.style.height = document.body.scrollHeight.toString() + 'px';
                                 }, 200)
-                            }} style={{backgroundColor:'white', padding:'1rem 1.5rem 0 1.5rem', borderRadius:'10px', marginBottom:'2rem', minHeight:'40rem', border:'1px #f3f3f3 solid'}}>
-                                <TabPane tab="作品详情" key="1" style={{borderRadius:'0 10px 10px 10px', minHeight:'40rem'}}>
+                            }} style={{backgroundColor:'white',height:'100%', padding:'1rem 1.5rem 0 1.5rem', borderRadius:'10px', marginBottom:'2rem', minHeight:'40rem', border:'1px #f3f3f3 solid'}}>
+                                <TabPane tab="作品详情" key="1" style={{borderRadius:'0 10px 10px 10px'}}>
                                     {
                                         loading ? <Skeleton active />:
                                             <div>
@@ -145,36 +145,35 @@ function AnimeInfo (props) {
                                     }
 
                                 </TabPane>
-                                <TabPane tab="虚拟角色" key="2" style={{borderRadius:'10px', minHeight:'40rem'}}>
-                                    <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', alignContent:'center', height:'100%'}}>
+                                <TabPane tab="虚拟角色" key="2" style={{borderRadius:'10px'}}>
+                                    <div style={{marginTop:'2rem', display:'flex', justifyContent:'center', alignItems:'center', flexWrap:'wrap'}}>
                                         {
                                             chara_list.map(item =>
                                                 (
-                                                    <div>
+                                                    <Card hoverable style={{marginBottom:'1rem', marginRight:'1rem'}}
+                                                          onClick={async () => {
+                                                              let data = (await axios.post ('/api/detailByGuid', {
+                                                                  guid:item.guid
+                                                              })).data;
+                                                              if(data.code === 1) {
+                                                                  message.warning('暂无此页面')
+                                                                  return;
+                                                              }
+                                                              props.history.push({pathname:`/detailInfo/${item.guid}`});
+                                                              window.location.reload();
+                                                          }}
+                                                    >
                                                         <Meta
                                                             avatar={
                                                                 <Avatar src={item.visuals} draggable/>
                                                             }
-                                                            style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
-                                                            title={<Link
-                                                                onClick={async () => {
-                                                                    let data = (await axios.post ('/api/detailByGuid', {
-                                                                        guid:item.guid
-                                                                    })).data;
-                                                                    if(data.code === 1) {
-                                                                        message.warning('暂无此页面')
-                                                                        return;
-                                                                    }
-                                                                    props.history.replace({pathname:`/detailInfo/${item.guid}`});
-                                                                    window.location.reload();
-                                                                }}
-                                                            >{item.primary_name}</Link>}
+                                                            style={{minWidth:'15rem', marginRight:'2rem'}}
+                                                            title={<Link>{item.primary_name}</Link>}
                                                             description={<div>
                                                                 中文名：{item.zh_name}<br/>声优：{item.cv}
-                                                                <Divider style={{padding:'0', margin:'1rem'}}/>
                                                             </div>}
                                                         />
-                                                    </div>
+                                                    </Card>
                                                 )
                                             )
                                         }
@@ -183,7 +182,7 @@ function AnimeInfo (props) {
                                         }
                                     </div>
                                 </TabPane>
-                                <TabPane tab="动漫评论" key="3" style={{borderRadius:'10px', paddingLeft:'1rem', maxHeight:'60rem', minHeight:'40rem'}}>
+                                <TabPane tab="动漫评论" key="3" style={{borderRadius:'10px', paddingLeft:'1rem', minHeight:'40rem', overflowY:'scroll', overflowX:'hidden'}}>
                                     <CommentTimeLine comments={comments}/>
                                 </TabPane>
                             </Tabs>
