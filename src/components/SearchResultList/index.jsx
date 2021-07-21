@@ -65,7 +65,6 @@ function SearchResultList  (props) {
             case 'comment': setSelectedTag('评论数');break;
             case 'recent': setSelectedTag('最近');break;
             case 'score': setSelectedTag('评分');break;
-            default:setSelectedTag('相关度');break;
         }
     }
 
