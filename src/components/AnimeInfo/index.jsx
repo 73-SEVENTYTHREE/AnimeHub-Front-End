@@ -189,9 +189,11 @@ function AnimeInfo (props) {
                             </Tabs>
                         </div>
                     </Col>
-                    <Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {marginBottom:'2rem'}}>
-                        <KnowledgeGraph guid={guid} name={props.name}/>
-                    </Col>
+                    {
+                        mobile ? '':<Col className="gutter-row" span={24} style={mobile ? {marginBottom:'2rem'} : {marginBottom:'2rem'}}>
+                            <KnowledgeGraph guid={guid} name={props.name}/>
+                        </Col>
+                    }
                 </Row>
             </div>
         </div>

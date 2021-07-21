@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import {Avatar, Card, Col, Divider, Empty, Image, message, Row, Tabs, Tag, Typography} from "antd";
 import {Link} from "react-router-dom";
@@ -9,18 +9,21 @@ import KnowledgeGraph from "../KnowledgeGraph";
 import CommentTimeLine from "../CommentTimeLine";
 import {UserOutlined} from "@ant-design/icons";
 import axios from "axios";
-import {useMount} from "ahooks";
 
 const {TabPane} = Tabs
 
 function CompanyInfo (props) {
     const {data, mobile} = props
-    useMount(() => {
+    useEffect(() => {
         setTimeout(() => {
             const divider = document.getElementById('company-card-divider');
-            divider.style.height = window.getComputedStyle(document.getElementById('company-card')).height;
+            if(!mobile) divider.style.height = window.getComputedStyle(document.getElementById('company-card')).height;
+            else {
+                divider.style.height = '0px'
+                divider.style.width = window.getComputedStyle(document.getElementById('company-card')).width;
+            }
         }, 200)
-    })
+    }, [mobile])
     return (
         <div>
             <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
@@ -97,11 +100,13 @@ function CompanyInfo (props) {
                     </Col>
                 </Row>
             </Card>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
-                    <KnowledgeGraph guid={data.guid} name={data.zh_name}/>
-                </Col>
-            </Row>
+            {
+                mobile ? '':<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
+                        <KnowledgeGraph guid={data.guid} name={data.zh_name}/>
+                    </Col>
+                </Row>
+            }
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import {Avatar, Card, Col, Divider, message, Row, Tabs} from "antd";
 import InfoTimeline from "../InfoTimeline";
@@ -19,12 +19,16 @@ function CharacterInfo (props) {
     console.log(descriptionArray)
     const info = {names, gender, extra_data};
     const words = {names:'别名：', gender:'性别：'}
-    useMount(() => {
+    useEffect(() => {
         setTimeout(() => {
             const divider = document.getElementById('person-card-divider');
-            divider.style.height = window.getComputedStyle(document.getElementById('person-card')).height;
+            if(!mobile) divider.style.height = window.getComputedStyle(document.getElementById('person-card')).height;
+            else {
+                divider.style.height = '0px'
+                divider.style.width = window.getComputedStyle(document.getElementById('person-card')).width;
+            }
         }, 200)
-    })
+    }, [mobile])
     const generateRandomColor = () => {
         const r = Math.floor(Math.random()*200);
         const g = Math.floor(Math.random()*200);
@@ -120,11 +124,13 @@ function CharacterInfo (props) {
                     </Col>
                 </Row>
             </Card>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
-                    <KnowledgeGraph guid={guid} name={zh_name}/>
-                </Col>
-            </Row>
+            {
+                mobile ? '':<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
+                        <KnowledgeGraph guid={guid} name={zh_name}/>
+                    </Col>
+                </Row>
+            }
         </div>
     );
 }

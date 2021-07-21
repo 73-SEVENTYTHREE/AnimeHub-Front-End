@@ -168,7 +168,7 @@ function DetailInfo (props) {
                                                                 visuals.filter(i => i.guid===item.targetGuid).length === 0 ? '':
                                                                     removeLastCharacter(visuals.filter(i => i.guid===Number(item.targetGuid))[0].image_url)
                                                             } draggable
-                                                                    size={{ xs: 24, sm: 32, md: 40, lg: 56, xl: 64, xxl: 80 }}
+                                                                    size={{ xs: 56, sm: 56, md: 56, lg: 56, xl: 64, xxl: 80 }}
                                                             />
                                                         }
                                                         style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}

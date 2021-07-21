@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Card, Col, Divider, Row, Image, Tag, Tabs, Typography, List, Avatar, Empty, message} from "antd";
 import {Link} from "react-router-dom";
 import KnowledgeGraph from "../KnowledgeGraph";
@@ -6,25 +6,29 @@ import Tags from "../Tags";
 import InfoTimeline from "../InfoTimeline";
 import removeLastCharacter from "../../utils/removeLastCharacter";
 import Meta from "antd/es/card/Meta";
-import WordCloud from "../WordCloud";
 import axios from "axios";
-import {useMount} from "ahooks";
 
 const {TabPane} = Tabs
 
 function BookInfo(props) {
     const {mobile, data} = props
-    useMount(() => {
+    useEffect(() => {
         setTimeout(() => {
             const divider = document.getElementById('book-card-divider');
-            divider.style.height = window.getComputedStyle(document.getElementById('book-card')).height;
+            if (!mobile) {
+                divider.style.height = window.getComputedStyle(document.getElementById('book-card')).height;
+            }
+            else {
+                divider.style.height = '0px'
+                divider.style.width = window.getComputedStyle(document.getElementById('book-card')).width
+            }
         }, 200)
-    })
+    }, [mobile])
     return (
         <div>
             <div id={'result-container-bg'} style={{ background:`url("${removeLastCharacter(data.visuals)}")`}}/>
         <Card style={{margin:'2rem 2rem 2rem 2rem', minHeight:'30rem'}} hoverable id={'book-card'}>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{display:'flex'}}>
                 <Col span={mobile ? 24 : 6}>
                     <div style={{display:'flex', flexDirection:'column'}}>
                         <div style={{margin:'0 auto'}}><Image width={'10rem'} src={removeLastCharacter(data.visuals)}/></div>
@@ -57,7 +61,7 @@ function BookInfo(props) {
                         </div>
                     </div>
                 </Col>
-                <Divider type={mobile ? "horizontal": "vertical"} style={mobile? {}:{height:'100%'}} id={'book-card-divider'}/>
+                <Divider type={mobile ? "horizontal": "vertical"} id={'book-card-divider'}/>
                 <Col span={mobile ? 24:17}>
                     <Tabs defaultActiveKey="1" onChange={(key) => {
                         setTimeout(() => {
@@ -120,11 +124,13 @@ function BookInfo(props) {
                 </Col>
             </Row>
         </Card>
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
-                <KnowledgeGraph guid={data.guid} name={data.zh_name}/>
-            </Col>
-        </Row>
+            {
+                mobile ? '':<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
+                        <KnowledgeGraph guid={data.guid} name={data.zh_name}/>
+                    </Col>
+                </Row>
+            }
     </div>
     );
 }
