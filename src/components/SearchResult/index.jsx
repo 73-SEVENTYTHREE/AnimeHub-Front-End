@@ -142,7 +142,7 @@ function SearchResult(props) {
                     <FilterHeader searchString={props.searchString}/>
                 </div>
                 <div id={'relatedContainer'}>
-                    <div  style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem'}}>
+                    <div style={{backgroundColor: '#fff', padding:'1rem',borderRadius:'1rem'}}>
                         <Divider>搜索热榜</Divider>
                         <WordCloud words={words} callbacks={callbacks}/>
                     </div>

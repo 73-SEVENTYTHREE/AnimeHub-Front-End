@@ -114,32 +114,46 @@ function AnimeInfo (props) {
 
                                                 </div>
                                                 <Divider orientation={'left'}>其他信息</Divider>
-                                                <div style={{display:'flex', marginBottom:'2rem', justifyContent:'space-around'}}>
-                                                    <div style={{width:'45%'}}>
-                                                        {
-                                                            keys.slice(0, Math.floor(keys.length / 2)).map(item => (
-                                                                <div style={{marginBottom:'.3rem'}}>
-                                                                    <Tag>{item}</Tag>
+                                                <div style={{display:'flex', marginBottom:'2rem', justifyContent:`space-around`}}>
+                                                    {
+                                                        mobile ? <div>
+                                                                {(keys.map(item => (
+                                                                    <div style={{marginBottom:'.3rem'}}>
+                                                                        <Tag>{item}</Tag>
+                                                                        {
+                                                                            item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]
+                                                                        }
+                                                                    </div>
+                                                                )))}
+                                                            </div>:
+                                                            (<div style={{display:'flex', justifyContent:`space-around`}}>
+                                                                <div style={{width:'45%'}}>
                                                                     {
-                                                                        item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]
+                                                                        keys.slice(0, Math.floor(keys.length / 2)).map(item => (
+                                                                            <div style={{marginBottom:'.3rem'}}>
+                                                                                <Tag>{item}</Tag>
+                                                                                {
+                                                                                    item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]
+                                                                                }
+                                                                            </div>
+                                                                        ))
                                                                     }
                                                                 </div>
-                                                            ))
-                                                        }
-                                                    </div>
-                                                    <Divider type={'vertical'} style={{height:'100%'}}/>
-                                                    <div style={{width:'45%'}}>
-                                                        {
-                                                            keys.slice(Math.floor(keys.length / 2), keys.length).map(item => (
-                                                                <div style={{marginBottom:'.3rem'}}>
-                                                                    <Tag>{item}</Tag>
+                                                                <Divider type={'vertical'} style={{height:'100%'}}/>
+                                                                <div style={{width:'45%'}}>
                                                                     {
-                                                                        item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]
+                                                                        keys.slice(Math.floor(keys.length / 2), keys.length).map(item => (
+                                                                            <div style={{marginBottom:'.3rem'}}>
+                                                                                <Tag>{item}</Tag>
+                                                                                {
+                                                                                    item === '官方网站' ? <a href={data.extra_data[item]}>{data.extra_data[item]}</a>:data.extra_data[item]
+                                                                                }
+                                                                            </div>
+                                                                        ))
                                                                     }
                                                                 </div>
-                                                            ))
-                                                        }
-                                                    </div>
+                                                            </div>)
+                                                    }
                                                 </div>
                                             </div>
                                     }
