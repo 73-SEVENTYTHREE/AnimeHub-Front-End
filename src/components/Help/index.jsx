@@ -31,6 +31,7 @@ function info() {
         onOk() {},
         width:600,
         centered:true,
+        okText:'明白了!'
     });
 }
 

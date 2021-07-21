@@ -22,7 +22,6 @@ const { TabPane } = Tabs;
 
 function DetailInfo (props) {
     const {params}=props.match;
-    console.log(params)
     let guid;
     if(params && params.guid){//判断当前有参数
         guid = params.guid
@@ -58,6 +57,7 @@ function DetailInfo (props) {
         })).data;
         if (data.data && data.data.related_subjects === null) data.data.related_subjects = [];
         setInfo(data.data);
+        console.log(data.data)
         setMobile(document.documentElement.clientWidth <= 1000);
         let searchResult;
         switch (data.data.typo) {
@@ -141,11 +141,11 @@ function DetailInfo (props) {
                                             }
                                         }}>换一批</Button>
                                 }
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-around', marginTop:'3rem'}}>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', marginTop:'3rem'}}>
                                     {
                                         recommendItems.map(item => (
                                             <Popover content={item.description}>
-                                                <Card hoverable style={{padding:'0', backgroundColor:generateRandomColor(), marginBottom:'1rem'}}
+                                                <Card hoverable style={{padding:'0', backgroundColor:generateRandomColor(), marginBottom:'1rem', marginRight:'1rem'}}
                                                       onClick={async () => {
                                                           if(item.targetGuid < 0){
                                                               message.warning('暂无此页面');

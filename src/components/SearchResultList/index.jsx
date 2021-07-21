@@ -105,7 +105,7 @@ function SearchResultList  (props) {
         if(props.searchType === 'real_person'||props.searchType === 'company'||props.searchType === 'character'){
             if(t==='recent'||t==='score')t='relate'
         }
-        console.log(t)
+        console.log(searchString)
         await getDataBySearchString(searchString,c,t,props.searchType,10);
     })
 
