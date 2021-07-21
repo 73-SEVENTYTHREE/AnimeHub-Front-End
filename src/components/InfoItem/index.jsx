@@ -15,7 +15,7 @@ function InfoItem (props) {
                 <div className="ribbon-box">
                     <div className="ribbon ribbon-mark bg-info">{title}</div>
                     {
-                        content
+                        Array.isArray(content) ? content.join('、'):content
                     }
                 </div>
             </div>
