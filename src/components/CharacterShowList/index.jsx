@@ -26,6 +26,7 @@ function CharacterShowList(props) {
     const onChange = async (page,pageNum) => {
         sessionStorage.setItem('currentPage',page)
         await props.getData(page,filter,'character',pageNum)
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
 
     const handleChange = async (tag,checked)=>{

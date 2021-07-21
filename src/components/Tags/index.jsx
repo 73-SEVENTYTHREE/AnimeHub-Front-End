@@ -15,7 +15,7 @@ function Tags (props) {
                 tags.map(item =>
                     <Tag style={{marginBottom:'.4rem'}} color={generateRandomColor()} onClick={() => {
                         props.history.push({pathname:'/result',state:{searchString:item}});
-                        window.location.reload();
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
                     }}>
                         {item}
                     </Tag>

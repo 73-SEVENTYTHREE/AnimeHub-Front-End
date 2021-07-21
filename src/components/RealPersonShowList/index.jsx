@@ -22,6 +22,7 @@ function RealPersonShowList(props) {
     const onChange = async (page,pageNum) => {
         sessionStorage.setItem('currentPage',page)
         await props.getData(page,filter,'real_person',pageNum)
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
 
     const handleChange = async (tag,checked)=>{

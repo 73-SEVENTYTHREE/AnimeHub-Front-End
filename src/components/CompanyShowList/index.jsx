@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
-import {useUpdate} from 'ahooks';
 import {Collapse, List, Pagination, Tag, Typography} from "antd";
 import {Link} from "react-router-dom";
 import TypeTag from "../TypeTag";
-import moment from 'moment';
-import BiliBiliScoreTag from "../BiliBiliScoreTag";
-import BangumiScoreTag from "../BangumiScoreTag";
 import './index.css';
 import removeLastCharacter from "../../utils/removeLastCharacter";
 
@@ -26,6 +22,7 @@ function CompanyShowList(props) {
     const onChange = async (page,pageNum) => {
         sessionStorage.setItem('currentPage',page)
         await props.getData(page,filter,'company',pageNum)
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
 
     const handleChange = async (tag,checked)=>{

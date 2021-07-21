@@ -8,6 +8,7 @@ import BiliBiliScoreTag from "../BiliBiliScoreTag";
 import BangumiScoreTag from "../BangumiScoreTag";
 import './index.css';
 import removeLastCharacter from "../../utils/removeLastCharacter";
+import scrollTo from "antd/es/_util/scrollTo";
 
 const { CheckableTag } = Tag;
 const { Panel } = Collapse
@@ -27,6 +28,7 @@ function AnimeShowList(props) {
     const onChange = async (page,pageNum) => {
         sessionStorage.setItem('currentPage',page)
         await props.getData(page,filter,'anime',pageNum)
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
 
     const handleChange = async (tag,checked)=>{
