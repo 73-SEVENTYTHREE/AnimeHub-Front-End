@@ -37,7 +37,7 @@ function info() {
 function Help(props) {
 
     return (
-        <div style={{position:'absolute',top:'2.1rem', right:'2.1rem', transform:'translate(50%,-50%)'}}>
+        <div style={{position:'absolute',top:'2.1rem', right:'2.1rem', transform:'translate(50%,-50%)', cursor:'pointer'}}>
             <img style={{width:'1.5rem'}} src={HelpLogo} alt="帮助" onClick={info}/>
         </div>
     );
