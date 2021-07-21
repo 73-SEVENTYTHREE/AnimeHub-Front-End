@@ -224,19 +224,21 @@ function KnowledgeGraph (props) {
         let resultContainer = document.getElementById('result-container');
         relevantContainer.style.top = resultContainer.offsetHeight + 'px'
     },[props.guid, update])
-
+    const color = generateRandomColor();
     return (
         <Card title={'知识图谱'}
               hoverable
               style={{border:'0', minHeight:'40rem'}}
-              headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}
-              extra={<div>
-                  <strong color={'white'}>深度</strong>&nbsp;<InputNumber max={4} min={1} defaultValue={layerCount} onChange={value => setLayerCount(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
-                  <strong color={'white'}>广度</strong>&nbsp;<InputNumber max={10} min={1} defaultValue={limitPerLayer} onChange={value => setLimitPerLayer(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
-                  <Button type={'primary'} onClick={() => {
-                      setUpdate(!update);
-                  }}>更新知识图谱</Button>
-              </div>}
+              headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${color} 0, ${color} 100%)`}}
+              extra={Links.length === 0 ? '':
+                  <div>
+                      <strong color={'white'}>深度</strong>&nbsp;<InputNumber max={4} min={1} defaultValue={layerCount} onChange={value => setLayerCount(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <strong color={'white'}>广度</strong>&nbsp;<InputNumber max={10} min={1} defaultValue={limitPerLayer} onChange={value => setLimitPerLayer(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Button type={'primary'} onClick={() => {
+                          setUpdate(!update);
+                      }}>更新知识图谱</Button>
+                  </div>
+              }
         >
         <div style={{minHeight:'400px', display:'flex', alignItems:'center', justifyContent:'center'}}>
             {

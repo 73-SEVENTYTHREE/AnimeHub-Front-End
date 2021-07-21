@@ -35,7 +35,7 @@ function TypeTag (props) {
     let nameSelector = {
         anime:'番剧',
         game:'游戏',
-        book:'漫画 / 小说',
+        book:'漫画/小说',
         character:'虚拟人物',
         company:'公司',
         real_person:'人物',
@@ -43,7 +43,7 @@ function TypeTag (props) {
     }
     return (
         <Tag icon={<img src={iconSelector[type]} alt={type} style={{display:'inline-block', width:'.8rem'}}/>}
-             style={{height:'1.4rem', display:'flex', alignItems:'center', justifyContent:'center'}}
+             style={{height:'1.4rem', display:'flex', alignItems:'center', justifyContent:'center',maxWidth:'5rem'}}
         >
             &nbsp;{nameSelector[type]}
         </Tag>
