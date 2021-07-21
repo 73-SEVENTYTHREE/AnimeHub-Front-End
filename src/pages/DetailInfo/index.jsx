@@ -159,7 +159,7 @@ function DetailInfo (props) {
                                                               return;
                                                           }
                                                           props.history.push({pathname:`/detailInfo/${item.targetGuid}`});
-                                                          window.location.reload();
+                                                          document.body.scrollTop = document.documentElement.scrollTop = 0;
                                                       }}
                                                 >
                                                     <Meta
@@ -205,7 +205,7 @@ function DetailInfo (props) {
                                                             return;
                                                         }
                                                         props.history.replace({pathname:`/detailInfo/${item.guid}`});
-                                                        window.location.reload();
+                                                        document.body.scrollTop = document.documentElement.scrollTop = 0;
                                                     }}
                                                 >
                                                     <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>{item.type}</Tag></div>}

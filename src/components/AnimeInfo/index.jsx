@@ -64,7 +64,7 @@ function AnimeInfo (props) {
                                 <Button style={{backgroundColor:'#EA7A99', border:'0', display:'flex', alignItems:'center'}}
                                         type={'primary'}
                                         onClick={() => window.location.href=bilibiliData.goto_url}><PlayCircleOutlined />
-                                    B站播放</Button>:''} style={{marginBottom:'2rem', overflow:'scroll', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
+                                    B站播放</Button>:''} style={{marginBottom:'2rem', border:'0'}} headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}>
                             {
                                 loading ? <Skeleton active />:<div dangerouslySetInnerHTML={{__html:data.description}}/>
                             }
@@ -174,7 +174,7 @@ function AnimeInfo (props) {
                                                                   return;
                                                               }
                                                               props.history.push({pathname:`/detailInfo/${item.guid}`});
-                                                              window.location.reload();
+                                                              document.body.scrollTop = document.documentElement.scrollTop = 0;
                                                           }}
                                                     >
                                                         <Meta

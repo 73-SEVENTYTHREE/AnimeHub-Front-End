@@ -97,7 +97,7 @@ function BookInfo(props) {
                                                       return;
                                                   }
                                                   props.history.push({pathname:`/detailInfo/${item.guid}`});
-                                                  window.location.reload();
+                                                  document.body.scrollTop = document.documentElement.scrollTop = 0;
                                               }}
                                         >
                                             <Meta
