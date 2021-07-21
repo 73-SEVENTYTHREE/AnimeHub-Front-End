@@ -68,7 +68,7 @@ function CharacterShowList(props) {
                             key={item.guid}
                             extra={
                                 <div style={{width:'10rem',height:'15rem',display:'flex',justifyContent:'center',alignItems:'center'}}>
-                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'character',name:item.primary_name}}}>
+                                    <Link to={{pathname:`/detailInfo/${item.guid}`}}>
                                         <img
                                             style={{width:'10rem', maxHeight:'15rem'}}
                                             alt="logo"
@@ -80,7 +80,7 @@ function CharacterShowList(props) {
                         >
                             <List.Item.Meta
                                 title={<div style={{display:'flex',alignItems:'center',height:'2rem'}}>
-                                    <Link to={{pathname:'/detailinfo',state:{guid:item.guid,type:'character',name:item.primary_name}}}
+                                    <Link to={{pathname:`/detailInfo/${item.guid}`}}
                                           style={{fontSize:'1.1rem',color:'black'}}
                                           dangerouslySetInnerHTML={item.zh_name}
                                     >

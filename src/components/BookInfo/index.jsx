@@ -98,8 +98,8 @@ function BookInfo(props) {
                                                             message.warning('暂无此页面')
                                                             return;
                                                         }
+                                                        props.history.replace({pathname:`/detailInfo/${item.guid}`});
                                                         window.location.reload();
-                                                        props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
                                                     }}
                                                 >{item.primary_name}</Link>}
                                                 description={<div>

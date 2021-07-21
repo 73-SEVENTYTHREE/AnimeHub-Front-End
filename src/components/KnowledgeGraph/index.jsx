@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
 import axios from "axios";
-import {Button, Card, Empty, InputNumber, message} from "antd";
+import {Button, Card, Empty, InputNumber} from "antd";
 
 function KnowledgeGraph (props) {
     const [Links, setLinks] = useState([]);
@@ -224,17 +224,16 @@ function KnowledgeGraph (props) {
         let resultContainer = document.getElementById('result-container');
         relevantContainer.style.top = resultContainer.offsetHeight + 'px'
     },[props.guid, update])
-    const color = generateRandomColor();
     return (
         <Card title={'知识图谱'}
               hoverable
               style={{border:'0', minHeight:'40rem'}}
-              headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${color} 0, ${color} 100%)`}}
+              headStyle={{color:'white', fontSize:'1.3rem', backgroundImage: `linear-gradient(120deg, ${generateRandomColor()} 0, ${generateRandomColor()} 100%)`}}
               extra={Links.length === 0 ? '':
                   <div>
-                      <strong color={'white'}>深度</strong>&nbsp;<InputNumber max={4} min={1} defaultValue={layerCount} onChange={value => setLayerCount(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <strong color={'white'}>广度</strong>&nbsp;<InputNumber max={10} min={1} defaultValue={limitPerLayer} onChange={value => setLimitPerLayer(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <Button type={'primary'} onClick={() => {
+                      <strong color={'white'}>深度</strong>&nbsp;<InputNumber max={10} min={1} defaultValue={layerCount} onChange={value => setLayerCount(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <strong color={'white'}>广度</strong>&nbsp;<InputNumber max={15} min={1} defaultValue={limitPerLayer} onChange={value => setLimitPerLayer(value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Button type={'dashed'} size={'middle'} style={{border:'0', zIndex:'2'}} onClick={() => {
                           setUpdate(!update);
                       }}>更新知识图谱</Button>
                   </div>

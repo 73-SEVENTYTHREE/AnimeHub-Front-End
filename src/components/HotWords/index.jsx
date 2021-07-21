@@ -227,7 +227,7 @@ function HotWords (props) {
     return (
         <div id="hotwords">
             {
-                hotWords.map(item => <Link to={{pathname:'/detailInfo', state:{name:item.name, type:item.type, guid:item.guid}}}>{item.name}</Link>)
+                hotWords.map(item => <Link to={{pathname:`/detailInfo/${item.guid}`}}>{item.name}</Link>)
             }
         </div>
     );

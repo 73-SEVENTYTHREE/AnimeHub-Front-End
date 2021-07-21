@@ -10,7 +10,7 @@ function App() {
             <Switch>
                 <Route path={"/index"} component={Index}/>
                 <Route path={"/result"} component={Result}/>
-                <Route path={"/detailInfo"} component={DetailInfo}/>
+                <Route path={"/detailInfo/:guid"} component={DetailInfo}/>
                 <Redirect to={"/index"}/>
             </Switch>
        </div>

@@ -45,8 +45,9 @@ function ResultHeader(props) {
             localStorage.setItem('historyWords', JSON.stringify([str]));
         }
         //如果不是result路由，则代表当前在详情页，直接跳转至对应路由即可
+        console.log(currentUrl)
         if (currentUrl !== '/result'){
-            props.history.push({pathname:'result',state:{searchString:str}});
+            props.history.push({pathname:'/result',state:{searchString:str}});
         }
         //如果当前页面就是result路由，则无需跳转，直接将参数传给SearchResultList组件
         else{
