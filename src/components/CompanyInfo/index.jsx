@@ -99,7 +99,7 @@ function CompanyInfo (props) {
             </Card>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
-                    <KnowledgeGraph guid={data.guid} name={data.primary_name}/>
+                    <KnowledgeGraph guid={data.guid} name={data.zh_name}/>
                 </Col>
             </Row>
         </div>

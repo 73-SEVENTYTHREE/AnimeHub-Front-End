@@ -11,19 +11,13 @@ function InfoItem (props) {
     }
     if(Array.isArray(content) && content.length > 1) style.width='100%'
     return (
-        <Card style={{padding:'0', border:'0', marginRight:'.1rem', marginBottom:'.2rem'}}
+        <Card style={{padding:'0', border:'0', marginRight:'.1rem', marginBottom:'1rem'}}
               hoverable>
             <div className="ribbon-1" style={{...style}}>
                 <div className="ribbon-box">
                     <div className="ribbon ribbon-mark bg-info">{title}</div>
                     {
-                        Array.isArray(content) ? <List
-                            dataSource={content}
-                            size={'small'}
-                            renderItem={item => (
-                                <div>{item}<br/></div>
-                            )}
-                        />:content
+                        content
                     }
                 </div>
             </div>

@@ -124,7 +124,7 @@ function RealPersonInfo (props) {
             </Card>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 <Col className="gutter-row" span={24} style={{padding:'0 3rem 2rem 3rem'}}>
-                    <KnowledgeGraph guid={guid} name={primary_name}/>
+                    <KnowledgeGraph guid={guid} name={zh_name}/>
                 </Col>
             </Row>
         </div>

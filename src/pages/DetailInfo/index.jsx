@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Row, Col, Tag, Tabs, Card, message, Popover, Empty} from 'antd';
+import {Row, Col, Tag, Tabs, Card, message, Popover, Empty, Avatar, Divider, Button} from 'antd';
 import ResultHeader from "../../components/ResultHeader";
 import NameDivider from "../../components/NameDivider";
 import './index.css';
@@ -14,6 +14,9 @@ import MusicInfo from "../../components/MusicInfo";
 import axios from "axios";
 import BookInfo from "../../components/BookInfo";
 import GameInfo from "../../components/GameInfo";
+import {Link} from "react-router-dom";
+import TypeTag from "../../components/TypeTag";
+import removeLastCharacter from "../../utils/removeLastCharacter";
 
 const { TabPane } = Tabs;
 
@@ -31,6 +34,23 @@ function DetailInfo (props) {
     const [bilibiliData, setBiliBiliData] = useState({media_score:{score:'暂无', user_count:'暂无'}, org_title:''});
     const [info, setInfo] = useState({visuals:'', tags:[], related_subjects:[], extra_data:[], chara_list:[], comment_box:[], guid:1, jobs:[], description:'',
                             recently_participated:[],writer:[], press:[], names:[], typo:'', primary_name:'', pri_name:''});
+    const [recommendItems, setRecommendItems] = useState([])
+    const [visuals, setVisuals] = useState([]);
+    const generateRandomColor = () => {
+        const r = Math.floor(Math.random()*200);
+        const g = Math.floor(Math.random()*200);
+        const b = Math.floor(Math.random()*200);
+        return `rgba(${r}, ${g}, ${b}, 0.1)`;
+    }
+    let nameSelector = {
+        anime:'番剧',
+        game:'游戏',
+        book:'漫画 / 小说',
+        character:'虚拟人物',
+        company:'公司',
+        real_person:'人物',
+        music:'音乐'
+    }
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
         if (relevantContainer !== null){
@@ -72,15 +92,27 @@ function DetailInfo (props) {
         }
         setTimeout(() => {
             const relevantContainer = document.getElementById('relevant-container');
-            let resultContainer = document.getElementById('result-container');
-            relevantContainer.style.top = resultContainer.offsetHeight + 'px'
-            const container = document.getElementById('detail-container');
-            container.style.height = document.body.scrollHeight.toString() + 'px';
-            window.addEventListener('resize', handleResize);
+            if(relevantContainer){
+                let resultContainer = document.getElementById('result-container');
+                relevantContainer.style.top = resultContainer.offsetHeight + 'px'
+                const container = document.getElementById('detail-container');
+                container.style.height = document.body.scrollHeight.toString() + 'px';
+                window.addEventListener('resize', handleResize);
+            }
         }, 250)
+        let recommend_items = (await axios.post ('/api/recommend', {guid:Number(guid), count:20})).data
+        setRecommendItems(recommend_items);
+        let recommend_query = recommend_items.map(item => ({guid:Number(item.targetGuid), type:item.targetType}));
+        let arr = recommend_query.filter(item => item.guid > 0);
+        let visuals = (await axios.post('/api/visuals', arr)).data;
+        if(visuals.code === 1){
+            message.warning('获取推荐词条图片出错')
+        }
+        else{
+            setVisuals(visuals.data);
+        }
 
-        let recommend_items = (await axios.post ('/api/recommend', {guid})).data
-        console.log(recommend_items)
+        console.log(visuals)
         return () => window.removeEventListener('resize', handleResize);
     }, [guid])
 
@@ -90,7 +122,7 @@ function DetailInfo (props) {
             <NameDivider title={info.primary_name} type={info.typo}/>
             <div style={{backgroundColor:'white', height:'.1rem', marginBottom:'-1px'}}/>
             <div id={'result-container'}>
-                {info.typo === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history} name={info.primary_name}/> : ''}
+                {info.typo === 'anime' ? <AnimeInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history} name={info.zh_name}/> : ''}
                 {info.typo === 'real_person' ? <RealPersonInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {info.typo === 'music' ? <MusicInfo data={info} bilibiliData={bilibiliData} mobile={mobile} loading={loading} history={props.history}/> : ''}
                 {info.typo === 'book' ? <BookInfo data={info} mobile={mobile} loading={loading} history={props.history}/> : ''}
@@ -102,8 +134,70 @@ function DetailInfo (props) {
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={24}>
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>相关词条</strong>} key="1" style={{paddingBottom:'1rem', height:'auto'}}>
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
+                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>词条推荐</strong>} key="1" style={{paddingBottom:'1rem', height:'auto'}}>
+                                {
+                                    recommendItems.length === 0 ? '':
+                                        <Button style={{float:'right'}} onClick={async () => {
+                                            let recommend_items = (await axios.post ('/api/recommend', {guid:Number(guid), count:20})).data
+                                            setRecommendItems(recommend_items);
+                                            let recommend_query = recommend_items.map(item => ({guid:Number(item.targetGuid), type:item.targetType}));
+                                            let arr = recommend_query.filter(item => item.guid > 0);
+                                            let visuals = (await axios.post('/api/visuals', arr)).data;
+                                            if(visuals.code === 1){
+                                                message.warning('获取推荐词条图片出错')
+                                            }
+                                            else{
+                                                setVisuals(visuals.data);
+                                            }
+                                        }}>换一批</Button>
+                                }
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-around', marginTop:'3rem'}}>
+                                    {
+                                        recommendItems.map(item => (
+                                            <Popover content={item.description}>
+                                                <Card hoverable style={{padding:'0', backgroundColor:generateRandomColor(), marginBottom:'1rem'}}
+                                                      onClick={async () => {
+                                                          if(item.targetGuid < 0){
+                                                              message.warning('暂无此页面');
+                                                              return;
+                                                          }
+                                                          let data = (await axios.post ('/api/detailByGuid', {
+                                                              guid:item.targetGuid
+                                                          })).data;
+                                                          if(data.code === 1) {
+                                                              message.warning('暂无此页面')
+                                                              return;
+                                                          }
+                                                          window.location.reload();
+                                                          props.history.replace({pathname:'detailInfo',state:{guid:item.targetGuid}});
+                                                      }}
+                                                >
+                                                    <Meta
+                                                        avatar={
+                                                            <Avatar src={
+                                                                visuals.filter(i => i.guid===item.targetGuid).length === 0 ? '':
+                                                                    removeLastCharacter(visuals.filter(i => i.guid===Number(item.targetGuid))[0].image_url)
+                                                            } draggable
+                                                                    size={{ xs: 24, sm: 32, md: 40, lg: 56, xl: 64, xxl: 80 }}
+                                                            />
+                                                        }
+                                                        style={{minWidth:'15rem', marginRight:'2rem', marginBottom:'2rem'}}
+                                                        title={<div style={{display:'flex'}}><Link>{item.target}{item.targetType==='entity' ? '':<TypeTag type={item.targetType}/>}</Link></div>}
+                                                        description={<div>
+                                                            {item.rela}
+                                                        </div>}
+                                                    />
+                                                </Card>
+                                            </Popover>
+                                        ))
+                                    }
+                                    {
+                                        recommendItems.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无推荐词条'}/>:''
+                                    }
+                                </div>
+                            </TabPane>
+                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>相关词条</strong>} key="2" style={{paddingBottom:'1rem', height:'auto'}}>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', marginTop:'3rem'}}>
                                     {
                                         info.related_subjects.map(item =>
                                             <Popover content={item.primary_name}>
@@ -129,17 +223,6 @@ function DetailInfo (props) {
                                                 </Card>
                                             </Popover>
                                         )
-                                    }
-                                    {
-                                        info.related_subjects.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关词条'}/>:''
-                                    }
-                                </div>
-                            </TabPane>
-                            <TabPane tab={<strong style={{fontSize:'1.3rem'}}>词条推荐</strong>} key="2" style={{paddingBottom:'1rem', height:'auto',border:'1px solid black'}}>
-                                词条推荐
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
-                                    {
-
                                     }
                                     {
                                         info.related_subjects.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无相关词条'}/>:''
