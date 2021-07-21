@@ -23,6 +23,7 @@ function AnimeShowList(props) {
         case '最近': filter = 'recent';break;
         case '评分': filter = 'score';break;
     }
+
     const onChange = async (page,pageNum) => {
         sessionStorage.setItem('currentPage',page)
         await props.getData(page,filter,'anime',pageNum)
@@ -40,8 +41,6 @@ function AnimeShowList(props) {
             await onChange(1,10)
         }
     }
-
-    console.log(selectedTag)
 
     return (
         <div>
