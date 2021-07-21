@@ -33,9 +33,7 @@
     "start": "node_modules/.bin/react-app-rewired start",
     "build": "CI=false && node_modules/.bin/react-app-rewired build",
     "test": "node_modules/.bin/react-app-rewired test",
-    "eject": "node_modules/.bin/react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "node_modules/.bin/react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -55,7 +53,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://73-SEVENTYTHREE.github.io/AnimeHub-Front-End",
+  "homepage": ".",
   "devDependencies": {
     "@ant-design/icons": "^4.6.2"
   }
