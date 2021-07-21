@@ -117,7 +117,7 @@ function SearchResult(props) {
 
     const callbacks = {
         onWordClick:(word)=>{
-          props.history.push({pathname:'/detailinfo',state:{guid:word.guid}})
+          props.history.push({pathname:`/detailInfo/${word.guid}`})
         },
     }
 

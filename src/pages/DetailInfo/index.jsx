@@ -21,11 +21,12 @@ import removeLastCharacter from "../../utils/removeLastCharacter";
 const { TabPane } = Tabs;
 
 function DetailInfo (props) {
-    const {state}=props.location;
+    const {params}=props.match;
+    console.log(params)
     let guid;
-    if(state && state.guid){//判断当前有参数
-        guid = state.guid
-        sessionStorage.setItem('guid', state.guid);
+    if(params && params.guid){//判断当前有参数
+        guid = params.guid
+        sessionStorage.setItem('guid', params.guid);
     }else {
         guid = sessionStorage.getItem('guid');
     }
@@ -41,15 +42,6 @@ function DetailInfo (props) {
         const g = Math.floor(Math.random()*200);
         const b = Math.floor(Math.random()*200);
         return `rgba(${r}, ${g}, ${b}, 0.1)`;
-    }
-    let nameSelector = {
-        anime:'番剧',
-        game:'游戏',
-        book:'漫画 / 小说',
-        character:'虚拟人物',
-        company:'公司',
-        real_person:'人物',
-        music:'音乐'
     }
     const handleResize = e => {
         const relevantContainer = document.getElementById('relevant-container');
@@ -99,7 +91,7 @@ function DetailInfo (props) {
                 container.style.height = document.body.scrollHeight.toString() + 'px';
                 window.addEventListener('resize', handleResize);
             }
-        }, 250)
+        }, 200)
         let recommend_items = (await axios.post ('/api/recommend', {guid:Number(guid), count:20})).data
         setRecommendItems(recommend_items);
         let recommend_query = recommend_items.map(item => ({guid:Number(item.targetGuid), type:item.targetType}));
@@ -111,8 +103,6 @@ function DetailInfo (props) {
         else{
             setVisuals(visuals.data);
         }
-
-        console.log(visuals)
         return () => window.removeEventListener('resize', handleResize);
     }, [guid])
 
@@ -168,8 +158,8 @@ function DetailInfo (props) {
                                                               message.warning('暂无此页面')
                                                               return;
                                                           }
+                                                          props.history.push({pathname:`/detailInfo/${item.targetGuid}`});
                                                           window.location.reload();
-                                                          props.history.replace({pathname:'detailInfo',state:{guid:item.targetGuid}});
                                                       }}
                                                 >
                                                     <Meta
@@ -214,8 +204,8 @@ function DetailInfo (props) {
                                                             message.warning('暂无此页面')
                                                             return;
                                                         }
+                                                        props.history.replace({pathname:`/detailInfo/${item.guid}`});
                                                         window.location.reload();
-                                                        props.history.replace({pathname:'detailInfo',state:{guid:item.guid}});
                                                     }}
                                                 >
                                                     <Meta title={<div style={{display:'flex', justifyContent:'center'}}><Tag>{item.type}</Tag></div>}
