@@ -139,7 +139,7 @@ function GameInfo(props) {
                                     <Typography.Title level={5} color={'blue'}>内容简介:</Typography.Title>
                                     <Typography.Paragraph><InfoTimeline descriptionArray={data.description.split('<br>')}/></Typography.Paragraph>
                                     <Typography.Title level={5}>大家倾向于把{data.primary_name}标记为：</Typography.Title>
-                                    <div style={{width:'60%', margin:'2rem auto 2rem auto'}}>
+                                    <div style={{width:`${mobile ? '100%':'60%'}`, margin:'2rem auto 2rem auto'}}>
                                         <Tags tags={data.tags} history={props.history}/>
                                     </div>
                                 </div>
